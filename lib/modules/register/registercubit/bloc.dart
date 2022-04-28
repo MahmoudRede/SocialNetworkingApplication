@@ -87,6 +87,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
               depertment: departmentValue!,
               fullname: setNameController.text,
               bio: setBioController.text,
+              specialist: dropDownValue3,
               isDoctor: CashHelper.getData(key: 'isDoctor')
           ).then((value) {
             navigateTo(context, widget);
@@ -147,6 +148,8 @@ class RegisterCubit extends Cubit<RegisterStates>{
 
   String dropDownValue1 = '';
   String dropDownValue2 = '';
+  String dropDownValue3 = '';
+
 
   void changeDropDownValue1 (value)
   {
@@ -162,6 +165,12 @@ class RegisterCubit extends Cubit<RegisterStates>{
     emit(ChangeDropDownValeState());
   }
 
+  void changeDropDownValue3 (value)
+  {
+    dropDownValue3 = value ;
+    print(value);
+    emit(ChangeDropDownValeState());
+  }
 
   File? profileImage;
 
@@ -276,7 +285,8 @@ class RegisterCubit extends Cubit<RegisterStates>{
     required String fullname,
     required String bio,
     context,
-    required bool isDoctor
+    required bool isDoctor,
+    String? specialist,
   })
   {
      return FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password).
@@ -289,8 +299,9 @@ class RegisterCubit extends Cubit<RegisterStates>{
            depertment: depertment,
            fullname: fullname,
            bio: bio,
-            isDoctor: isDoctor,
-            image:image,
+           isDoctor: isDoctor,
+           image:image,
+           specialist: specialist??'younger',
            uId: value.user!.uid);
 
           if(depertment=='General'){
@@ -305,6 +316,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
                   bio: bio,
                   image:image,
                   isDoctor: isDoctor,
+                  specialist: specialist??'younger',
                   uId: value.user!.uid);
             }
             else if(grade=='Second'){
@@ -318,6 +330,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
                   bio: bio,
                   image:image,
                   isDoctor: isDoctor,
+                  specialist: specialist??'younger',
                   uId: value.user!.uid);
             }
             else if(grade=='Fourth'){
@@ -331,6 +344,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
                   bio: bio,
                   isDoctor: isDoctor,
                   image:image,
+                  specialist: specialist,
                   uId: value.user!.uid);
             }
             else{
@@ -344,6 +358,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
                   fullname: fullname,
                   bio: bio,
                   image:image,
+                  specialist: specialist,
                   uId: value.user!.uid);
             }
           }
@@ -359,6 +374,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
                   bio: bio,
                   isDoctor: isDoctor,
                   image:image,
+                  specialist: specialist??'younger',
                   uId: value.user!.uid);
             }
             else if(grade=='Second'){
@@ -372,6 +388,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
                   bio: bio,
                   isDoctor: isDoctor,
                   image:image,
+                  specialist: specialist??'younger',
                   uId: value.user!.uid);
             }
             else if(grade=='Fourth'){
@@ -385,6 +402,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
                   bio: bio,
                   image:image,
                   isDoctor: isDoctor,
+                  specialist: specialist,
                   uId: value.user!.uid);
             }
             else{
@@ -398,6 +416,8 @@ class RegisterCubit extends Cubit<RegisterStates>{
                   bio: bio,
                   image:image,
                   isDoctor: isDoctor,
+                  specialist: specialist,
+
                   uId: value.user!.uid);
             }
           }
@@ -412,6 +432,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
                   fullname: fullname,
                   bio: bio,
                   image:image,
+                  specialist: specialist??'younger',
                   isDoctor: isDoctor,
                   uId: value.user!.uid);
             }
@@ -426,6 +447,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
                   bio: bio,
                   image:image,
                   isDoctor: isDoctor,
+                  specialist: specialist??'younger',
                   uId: value.user!.uid);
             }
             else if(grade=='Fourth'){
@@ -439,6 +461,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
                   bio: bio,
                   image:image,
                   isDoctor: isDoctor,
+                  specialist: specialist,
                   uId: value.user!.uid);
             }
             else{
@@ -452,6 +475,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
                   bio: bio,
                   image:image,
                   isDoctor: isDoctor,
+                  specialist: specialist,
                   uId: value.user!.uid);
             }
           }
@@ -467,6 +491,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
                   bio: bio,
                   image:image,
                   uId: value.user!.uid,
+                  specialist: specialist??'younger',
                   isDoctor: isDoctor
               );
             }
@@ -480,6 +505,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
                   fullname: fullname,
                   bio: bio,
                   image:image,
+                  specialist: specialist??'younger',
                   isDoctor: isDoctor,
                   uId: value.user!.uid);
             }
@@ -494,6 +520,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
                   bio: bio,
                   image:image,
                   isDoctor: isDoctor,
+                  specialist: specialist,
                   uId: value.user!.uid);
             }
             else{
@@ -506,6 +533,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
                   fullname: fullname,
                   bio: bio,
                   image:image,
+                  specialist: specialist,
                   isDoctor: isDoctor,
                   uId: value.user!.uid);
             }
@@ -530,8 +558,8 @@ class RegisterCubit extends Cubit<RegisterStates>{
     required String fullname,
     required String bio,
     required String uId,
-    required bool isDoctor
-
+    required bool isDoctor,
+    String? specialist,
 
   })
   {
@@ -546,7 +574,8 @@ class RegisterCubit extends Cubit<RegisterStates>{
       department: depertment,
       fullName: fullname,
       uId: uId,
-      isDoctor: isDoctor
+      isDoctor: isDoctor,
+      specialist: specialist??'younger',
     );
     
      FirebaseFirestore.instance
@@ -575,7 +604,9 @@ class RegisterCubit extends Cubit<RegisterStates>{
     required String fullname,
     required String bio,
     required String uId,
-    required bool isDoctor
+    required bool isDoctor,
+    String? specialist,
+
 
   })
   {
@@ -590,6 +621,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
         department: depertment,
         fullName: fullname,
         uId: uId,
+        specialist: specialist??'younger',
         isDoctor: isDoctor
     );
 
@@ -620,7 +652,8 @@ class RegisterCubit extends Cubit<RegisterStates>{
     required String fullname,
     required String bio,
     required String uId,
-    required bool isDoctor
+    required bool isDoctor,
+    String? specialist,
 
   })
   {
@@ -635,6 +668,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
         department: depertment,
         fullName: fullname,
         uId: uId,
+        specialist: specialist??'younger',
         isDoctor: isDoctor
     );
 
@@ -665,7 +699,8 @@ class RegisterCubit extends Cubit<RegisterStates>{
     required String fullname,
     required String bio,
     required String uId,
-    required bool isDoctor
+    required bool isDoctor,
+    String? specialist,
 
   })
   {
@@ -680,7 +715,8 @@ class RegisterCubit extends Cubit<RegisterStates>{
         department: depertment,
         fullName: fullname,
         uId: uId,
-        isDoctor: isDoctor
+        isDoctor: isDoctor,
+        specialist: specialist
     );
 
     FirebaseFirestore.instance
@@ -710,7 +746,10 @@ class RegisterCubit extends Cubit<RegisterStates>{
     required String fullname,
     required String bio,
     required String uId,
-    required bool isDoctor
+    required bool isDoctor,
+    String? specialist,
+
+
 
   })
   {
@@ -725,7 +764,9 @@ class RegisterCubit extends Cubit<RegisterStates>{
         department: depertment,
         fullName: fullname,
         uId: uId,
-        isDoctor: isDoctor
+        isDoctor: isDoctor,
+        specialist: specialist
+
     );
 
     FirebaseFirestore.instance
@@ -768,6 +809,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
                 depertment: departmentValue??'Doctor',
                 fullname: setNameController.text,
                 bio: setBioController.text,
+                specialist: dropDownValue3,
                 isDoctor:CashHelper.getData(key: 'isDoctor'),
             );
             checkRegister=true;

@@ -1,3 +1,4 @@
+import 'package:final_project/constants/constants.dart';
 import 'package:final_project/layoutes/homepage/home_bloc/app_cubit.dart';
 import 'package:final_project/layoutes/homepage/home_bloc/app_states.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class SearchScreen extends StatelessWidget {
                 title: Text(
                   'Friends' ,
                   style: GoogleFonts.lato(
-                    color: Colors.blue,
+                    color: mainColorLayout,
                     fontWeight: FontWeight.w900,
                     fontSize: 24.0,
                   ),
@@ -34,9 +35,9 @@ class SearchScreen extends StatelessWidget {
                   onPressed: (){
                     Navigator.pop(context);
                   },
-                  icon: const Icon(
+                  icon:Icon(
                     Icons.arrow_back,
-                    color: Colors.blue,
+                    color: mainColorLayout,
                   ),
                 ),
               ),
@@ -69,12 +70,12 @@ class SearchScreen extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0 , vertical: 5.0),
       child: Container(
-        height: 80.0,
-        width: MediaQuery.of(context).size.width * 1,
-        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+        width: 70,
+        height: 70.0,
         decoration: BoxDecoration(
           color: Colors.grey[200],
-          borderRadius: BorderRadius.circular(20.0),
+          borderRadius: BorderRadius.circular(10.0),
         ),
         child: Row(
           children: [
@@ -87,10 +88,11 @@ class SearchScreen extends StatelessWidget {
             ),
             Text(
               '${model.fullName}' ,
+              overflow: TextOverflow.clip,
               style: GoogleFonts.lato(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
-                fontSize: 18.0,
+                fontSize: 16.5,
               ),
             ),
           ],

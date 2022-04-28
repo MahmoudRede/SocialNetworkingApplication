@@ -59,8 +59,14 @@ dependencies:
   lottie: ^1.2.2
   socket_io_client: ^1.0.1
   get: ^4.6.1
+  audioplayers: ^0.20.1
   file_picker: ^4.2.4
+  permission_handler: ^9.2.0
   email_auth:
+  record_mp3:
+
+
+
 
 
 dependency_overrides:

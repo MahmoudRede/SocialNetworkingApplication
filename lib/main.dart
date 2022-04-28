@@ -3,6 +3,8 @@ import 'package:final_project/layoutes/homepage/container_screen.dart';
 import 'package:final_project/layoutes/homepage/home_bloc/app_cubit.dart';
 import 'package:final_project/layoutes/homepage/home_bloc/app_states.dart';
 import 'package:final_project/modules/BotScreen/BotScreen.dart';
+import 'package:final_project/modules/BotScreen/botContainer.dart';
+import 'package:final_project/modules/BotScreen/botDesign.dart';
 import 'package:final_project/modules/CommentScreen/CommentScreen.dart';
 import 'package:final_project/modules/NewPost/NewPost.dart';
 import 'package:final_project/modules/addPost/add_post.dart';
@@ -21,6 +23,8 @@ import 'package:final_project/modules/register/student_register_screen.dart';
 import 'package:final_project/modules/welcomeScreen/welcome_screen.dart';
 import 'package:final_project/shared/Componant/Constants.dart';
 import 'package:final_project/shared/local/cash_helper.dart';
+import 'package:final_project/shared/local/dio_helper_analysis.dart';
+import 'package:final_project/shared/local/dio_helper_chat_bot.dart';
 import 'package:final_project/shared/local/diohelper.dart';
 import 'package:final_project/splashScreen/splash_screen.dart';
 import 'package:final_project/test.dart';
@@ -30,6 +34,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'firebase_options.dart';
+import 'modules/chatScreen/image_screen.dart';
 
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,6 +44,8 @@ void main()async {
   );
   await CashHelper.init();
   await DioHelper.init();
+  await DioHelperChatBot.init();
+  await DioHelperAnalysis.init();
   uId = CashHelper.getData(key: 'uId');
   runApp(const MyApp());
 }
@@ -49,7 +56,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => AppCubit()..getUserData()..getHomePost()..getMaterialTitles()..getGroupPosts(),
+      create: (BuildContext context) => AppCubit()..getUserData()..getHomePost()..getGroupPosts()..printAnalysis(),
       child: BlocConsumer<AppCubit,AppState>(
         listener: (context,state){},
         builder: (context,state){
@@ -72,7 +79,7 @@ class MyApp extends StatelessWidget {
                 Theme.of(context).textTheme,
               ),
             ),
-            home: LoginScreen(),
+            home: ContainerScreen(),
           );
         },
       ),

@@ -2,6 +2,8 @@ import 'package:final_project/constants/componts.dart';
 import 'package:final_project/layoutes/homepage/home_bloc/app_cubit.dart';
 import 'package:final_project/layoutes/homepage/home_bloc/app_states.dart';
 import 'package:final_project/modules/BotScreen/BotScreen.dart';
+import 'package:final_project/modules/BotScreen/botContainer.dart';
+import 'package:final_project/modules/BotScreen/botDesign.dart';
 import 'package:final_project/modules/analysisScreen/analysis_screen.dart';
 import 'package:final_project/modules/messageScreen/message_screen.dart';
 import 'package:final_project/modules/profile/profile.dart';
@@ -33,13 +35,14 @@ class DrawerScreen extends StatelessWidget {
           text: 'Profile',
           icon: Icons.person,
           function: () {
-            navigateTo(context, ProfileScreen());
+            navigateTo(context, const ProfileScreen());
           }),
 
       ItemModel(
           text: 'Analysis',
           icon:Icons.analytics,
           function: () {
+            AppCubit.get(context).postAnalyis(studentid: 180268, year: 4, dep: 'CS');
             navigateTo(context, AnalysisScreen());
           }),
 
@@ -54,13 +57,14 @@ class DrawerScreen extends StatelessWidget {
           text: 'Call us ',
           icon: Icons.smart_toy_outlined,
           function: () {
-            navigateTo(context, BotScreen());
+            navigateTo(context, const BotContainer());
           }),
 
       ItemModel(
           text: 'Chats',
           icon:Icons.chat,
           function: () {
+            AppCubit.get(context).getMaterialTitles();
             navigateTo(context, const MessageScreen());
           }),
 

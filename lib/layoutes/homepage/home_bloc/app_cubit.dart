@@ -1,5 +1,13 @@
 import 'dart:io';
-
+import 'package:audioplayers/audioplayers.dart';
+import 'package:final_project/models/analysisModel/analysis_model.dart';
+import 'package:final_project/modules/groupsScreen/doctorGroup/group_doctor_screen.dart';
+import 'package:final_project/shared/local/dio_helper_analysis.dart';
+import 'package:final_project/shared/local/dio_helper_chat_bot.dart';
+import 'dart:async';
+import 'package:path_provider/path_provider.dart';
+import 'package:record_mp3/record_mp3.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:final_project/constants/componts.dart';
@@ -62,6 +70,9 @@ class AppCubit extends Cubit<AppState> {
 
   void changeBottomNavigate(index){
     currentIndex=index;
+    // if(index==1){
+    // getMaterialTitles();
+    // }
     emit(ChangeBottomNavigateState());
   }
 
@@ -74,7 +85,7 @@ class AppCubit extends Cubit<AppState> {
 
   List <Widget> doctorScreens =[
     const HomeScreen(),
-    const GroupScreen(),
+    GroupDoctorScreen(),
     DoctorMaterialScreen(),
     const SettingScreen(),
   ];
@@ -100,6 +111,7 @@ class AppCubit extends Cubit<AppState> {
       doctorCheck=userModel!.isDoctor;
       CashHelper.saveData(key: 'gradeUser',value: userModel!.grade);
       CashHelper.saveData(key: 'departmentUser',value: userModel!.department);
+      CashHelper.saveData(key: 'specialUser',value: userModel!.specialist);
 
       print('user Data : ${value.data()}');
       getUserFriends();
@@ -109,7 +121,6 @@ class AppCubit extends Cubit<AppState> {
       emit(GetUserDataErrorState());
     });
   }
-
 
 
   File? uploadedPostImage ;
@@ -234,15 +245,20 @@ class AppCubit extends Cubit<AppState> {
   }
 
 
+
   List <GroupModel> groupPosts=[];
 
   String ?gradeGroup=CashHelper.getData(key: 'gradeUser');
   String ?departmentGroup=CashHelper.getData(key: 'departmentUser');
+  String ?userSpecial=CashHelper.getData(key: 'specialUser');
 
   void prin(){
     print(gradeGroup);
     print(departmentGroup);
   }
+
+
+
 
 
   void getGroupPosts(){
@@ -347,6 +363,196 @@ class AppCubit extends Cubit<AppState> {
   }
 
 
+  String ?selectedGrade;
+  String ?selectedDepartment;
+
+  List<GroupModel> DoctorPosts=[];
+
+   void getGroupPostsDoctor(){
+    DoctorPosts=[];
+
+    if(selectedGrade == 'First'){
+      FirebaseFirestore.instance.collection(selectedDepartment!)
+          .doc('grade1')
+          .collection('posts').orderBy('postDate')
+          .get()
+          .then((value) {
+        value.docs.forEach((element) {
+          element.reference.collection('comments').get().then((value) {
+            groupCommentsNumber.add(value.docs.length);
+            groupPostsId.add(element.id);
+            DoctorPosts.add(GroupModel.fromFire(element.data()));
+            emit(GetGroupDoctorSuccessState());
+          });
+          element.reference.collection('likes').get().then((value) {
+            groupLikes.add(value.docs.length);
+          });
+        });
+        emit(GetGroupDoctorSuccessState());
+      }).catchError((error){
+
+        print('Error in Get GroupPost is ${error.toString()}');
+        emit(GetGroupDoctorErrorState());
+      });
+    }
+    else if(selectedGrade =='Second'){
+      FirebaseFirestore.instance.collection(selectedDepartment!)
+          .doc('grade2')
+          .collection('posts')
+          .get().then((value) {
+        value.docs.forEach((element) {
+          element.reference.collection('comments').get().then((value) {
+            groupCommentsNumber.add(value.docs.length);
+            groupPostsId.add(element.id);
+            DoctorPosts.add(GroupModel.fromFire(element.data()));
+            emit(GetGroupDoctorSuccessState());
+
+          });
+          element.reference.collection('likes').get().then((value) {
+            groupLikes.add(value.docs.length);
+          });
+        });
+        emit(GetGroupDoctorSuccessState());
+      }).catchError((error){
+
+        print('Error in Get GroupPost is ${error.toString()}');
+        emit(GetGroupDoctorErrorState());
+      });
+
+
+    }
+    else if(selectedGrade =='Third'){
+      FirebaseFirestore.instance.collection(selectedDepartment!)
+          .doc('grade3')
+          .collection('posts')
+          .get().then((value) {
+        value.docs.forEach((element) {
+          element.reference.collection('comments').get().then((value) {
+            groupCommentsNumber.add(value.docs.length);
+            groupPostsId.add(element.id);
+            DoctorPosts.add(GroupModel.fromFire(element.data()));
+            emit(GetGroupDoctorSuccessState());
+
+          });
+          element.reference.collection('likes').get().then((value) {
+            groupLikes.add(value.docs.length);
+          });
+        });
+        emit(GetGroupDoctorSuccessState());
+      }).catchError((error){
+
+        print('Error in Get GroupPost is ${error.toString()}');
+        emit(GetGroupDoctorErrorState());
+      });
+
+
+    }
+    else if(selectedGrade =='Fourth'){
+      FirebaseFirestore.instance.collection(selectedDepartment!)
+          .doc('grade4')
+          .collection('posts')
+          .get().then((value) {
+        value.docs.forEach((element) {
+          element.reference.collection('comments').get().then((value) {
+            groupCommentsNumber.add(value.docs.length);
+            groupPostsId.add(element.id);
+            DoctorPosts.add(GroupModel.fromFire(element.data()));
+            emit(GetGroupDoctorSuccessState());
+          });
+          element.reference.collection('likes').get().then((value) {
+            groupLikes.add(value.docs.length);
+          });
+        });
+        emit(GetGroupDoctorSuccessState());
+      }).catchError((error){
+
+        print('Error in Get GroupPost is ${error.toString()}');
+        emit(GetGroupDoctorErrorState());
+      });
+
+    }
+    emit(GetGroupDoctorSuccessState());
+
+
+   }
+
+  void selectedDoctorValue(int indexGrade,int indexDepartment) {
+  if(indexDepartment==0 ){
+    if(indexGrade==0){
+      selectedDepartment='General';
+      selectedGrade='First';
+    }
+    else if(indexGrade==1){
+      selectedDepartment='General';
+      selectedGrade='Second';
+    }
+    else if(indexGrade==2){
+      selectedDepartment='General';
+      selectedGrade='Third';
+    }
+    else{
+      selectedDepartment='General';
+      selectedGrade='Fourth';
+    }
+  }
+  else if(indexDepartment==1 ){
+    if(indexGrade==0){
+      selectedDepartment='Medical';
+      selectedGrade='First';
+    }
+    else if(indexGrade==0){
+      selectedDepartment='Medical';
+      selectedGrade='Second';
+    }
+    else if(indexGrade==0){
+      selectedDepartment='Medical';
+      selectedGrade='Third';
+    }
+    else{
+      selectedDepartment='Medical';
+      selectedGrade='Fourth';
+    }
+  }
+  else if(indexDepartment==2 ){
+    if(indexGrade==0){
+      selectedDepartment='Security';
+      selectedGrade='First';
+    }
+    else if(indexGrade==1){
+      selectedDepartment='Security';
+      selectedGrade='Second';
+    }
+    else if(indexGrade==2){
+      selectedDepartment='Security';
+      selectedGrade='Third';
+    }
+    else{
+      selectedDepartment='Security';
+      selectedGrade='Fourth';
+    }
+  }
+  else {
+    if(indexGrade==0){
+      selectedDepartment='Network';
+      selectedGrade='First';
+    }
+    else if(indexGrade==1){
+      selectedDepartment='Network';
+      selectedGrade='Second';
+    }
+    else if(indexGrade==2){
+      selectedDepartment='Network';
+      selectedGrade='Third';
+    }
+    else{
+      selectedDepartment='Network';
+      selectedGrade='Fourth';
+    }
+  }
+  getGroupPostsDoctor();
+  emit(SelectedValueSuccessState());
+
+  }
 
 
   File? uploadedPostGroupImage ;
@@ -586,9 +792,8 @@ class AppCubit extends Cubit<AppState> {
   void getMaterialTitles ()
   {
     coursesTitle = [];
-    switch (gradeGroup)
-    {
-      case 'First' : {
+
+    if(gradeGroup=='First')  {
         FirebaseFirestore.instance.collection(departmentGroup!)
             .doc('grade1')
             .collection('Material')
@@ -601,9 +806,9 @@ class AppCubit extends Cubit<AppState> {
           print('Error When get user Posts : ${error.toString()}');
           emit(GetUserPostErrorState());
         });
-        break;
+
       }
-      case 'Second' : {
+    else if(gradeGroup=='Second') {
         FirebaseFirestore.instance.collection(departmentGroup!)
             .doc('grade2')
             .collection('Material')
@@ -617,9 +822,8 @@ class AppCubit extends Cubit<AppState> {
           print('Error When get user Posts : ${error.toString()}');
           emit(GetUserPostErrorState());
         });
-        break;
       }
-      case 'Third' : {
+   else if(gradeGroup=='Third' && departmentGroup !='General') {
         FirebaseFirestore.instance.collection(departmentGroup!)
             .doc('grade3')
             .collection('Material')
@@ -633,13 +837,27 @@ class AppCubit extends Cubit<AppState> {
           print('Error When get user Posts : ${error.toString()}');
           emit(GetUserPostErrorState());
         });
-        break;
       }
+    else if(gradeGroup=='Third' && departmentGroup =='General') {
+      FirebaseFirestore.instance.collection(departmentGroup!)
+          .doc('grade3')
+          .collection(userSpecial!)
+          .get().then((value) {
+        value.docs.forEach((element) {
+          coursesTitle.add(element.id.toString());
+        });
+        print(coursesTitle.length);
+        emit(GetUserPostSuccessState());
+      }).catchError((error){
+        print('Error When get user Posts : ${error.toString()}');
+        emit(GetUserPostErrorState());
+      });
+    }
 
-      case 'Fourth' : {
+    else if(gradeGroup=='Fourth' && departmentGroup !='General') {
         FirebaseFirestore.instance.collection(departmentGroup!)
             .doc('grade4')
-            .collection('CS')
+            .collection('Material')
             .get().then((value) {
           value.docs.forEach((element) {
             coursesTitle.add(element.id.toString());
@@ -650,8 +868,23 @@ class AppCubit extends Cubit<AppState> {
           print('Error When get user Posts : ${error.toString()}');
           emit(GetUserPostErrorState());
         });
-        break;
-      }
+
+    }
+    else  {
+      FirebaseFirestore.instance.collection(departmentGroup!)
+          .doc('grade4')
+          .collection(userSpecial!)
+          .get().then((value) {
+        value.docs.forEach((element) {
+          coursesTitle.add(element.id.toString());
+        });
+        print(coursesTitle.length);
+        emit(GetUserPostSuccessState());
+      }).catchError((error){
+        print('Error When get user Posts : ${error.toString()}');
+        emit(GetUserPostErrorState());
+      });
+
     }
   }
 
@@ -1964,9 +2197,41 @@ class AppCubit extends Cubit<AppState> {
         emit(GetSectionsErrorState());
       });
     }
-    else if(gradeGroup=='Third'){
+    else if(gradeGroup=='Third' && departmentGroup !='General'){
       FirebaseFirestore.instance.collection(departmentGroup!)
           .doc('grade3')
+          .collection('Material')
+          .doc(courseName)
+          .collection('section')
+          .get().then((value) {
+        value.docs.forEach((element) {
+          section.add(MaterialModel.fromFire(element.data()));
+        });
+        emit(GetSectionsSuccessState());
+      }).catchError((error){
+        print('Error when get Material : ${error.toString()}');
+        emit(GetSectionsErrorState());
+      });
+    }
+    else if(gradeGroup=='Third' && departmentGroup =='General'){
+      FirebaseFirestore.instance.collection(departmentGroup!)
+          .doc('grade3')
+          .collection(userSpecial!)
+          .doc(courseName)
+          .collection('section')
+          .get().then((value) {
+        value.docs.forEach((element) {
+          section.add(MaterialModel.fromFire(element.data()));
+        });
+        emit(GetSectionsSuccessState());
+      }).catchError((error){
+        print('Error when get Material : ${error.toString()}');
+        emit(GetSectionsErrorState());
+      });
+    }
+    else if(gradeGroup=='Fourth' && departmentGroup !='General'){
+      FirebaseFirestore.instance.collection(departmentGroup!)
+          .doc('grade4')
           .collection('Material')
           .doc(courseName)
           .collection('section')
@@ -1983,7 +2248,7 @@ class AppCubit extends Cubit<AppState> {
     else {
       FirebaseFirestore.instance.collection(departmentGroup!)
           .doc('grade4')
-          .collection('Material')
+          .collection(userSpecial!)
           .doc(courseName)
           .collection('section')
           .get().then((value) {
@@ -2038,7 +2303,7 @@ class AppCubit extends Cubit<AppState> {
         emit(GetMaterialErrorState());
       });
     }
-    else if(gradeGroup=='Third'){
+    else if(gradeGroup=='Third'&& departmentGroup !='General'){
       FirebaseFirestore.instance.collection(departmentGroup!)
           .doc('grade3')
           .collection('Material')
@@ -2055,10 +2320,44 @@ class AppCubit extends Cubit<AppState> {
         emit(GetMaterialErrorState());
       });
     }
-    else {
+    else if(gradeGroup=='Third'&& departmentGroup =='General'){
+      FirebaseFirestore.instance.collection(departmentGroup!)
+          .doc('grade3')
+          .collection(userSpecial!)
+          .doc(courseName)
+          .collection('lecture')
+          .get().then((value) {
+        value.docs.forEach((element) {
+          lecture.add(MaterialModel.fromFire(element.data()));
+        });
+        print('lecture size : ${lecture.length}');
+        emit(GetMaterialSuccessState());
+      }).catchError((error){
+        print('Error when get Material : ${error.toString()}');
+        emit(GetMaterialErrorState());
+      });
+    }
+    else if(gradeGroup=='Fourth' && departmentGroup !='General'){
       FirebaseFirestore.instance.collection(departmentGroup!)
           .doc('grade4')
           .collection('Material')
+          .doc(courseName)
+          .collection('lecture')
+          .get().then((value) {
+        for (var element in value.docs) {
+          lecture.add(MaterialModel.fromFire(element.data()));
+        }
+        print('lecture size : ${lecture.length}');
+        emit(GetMaterialSuccessState());
+      }).catchError((error){
+        print('Error when get Material : ${error.toString()}');
+        emit(GetMaterialErrorState());
+      });
+    }
+    else {
+      FirebaseFirestore.instance.collection(departmentGroup!)
+          .doc('grade4')
+          .collection(userSpecial!)
           .doc(courseName)
           .collection('lecture')
           .get().then((value) {
@@ -2255,304 +2554,6 @@ class AppCubit extends Cubit<AppState> {
 
   ];
 
-  // Future showMaterials() async{
-  //
-  //   if(departmentDropMenu=='General'){
-  //
-  //     if(gradeDropMenu=='First'){
-  //       texts =[
-  //         'Introduction',
-  //         'Language 1',
-  //         'Math 1',
-  //         'Physics 1',
-  //         'Language of Computer',
-  //         'Human Behavior',
-  //         'Operating System',
-  //         'Language 2',
-  //         'Physics 2',
-  //         'Language 2',
-  //         'C++',
-  //         'Electronics',
-  //       ];
-  //
-  //     }
-  //     else if(gradeDropMenu=='Second'){
-  //       texts =[
-  //         'Image Processing',
-  //         'Compiler',
-  //         'Network',
-  //         'Simulation',
-  //         'NLP',
-  //         'Security',
-  //         'Cloud',
-  //         'Distribution',
-  //         'Theory of Compilation',
-  //         'Project',
-  //         'Cloud',
-  //         'Distribution',
-  //       ];
-  //
-  //     }
-  //     else if(gradeDropMenu=='Third'){
-  //       texts =[
-  //         'Image Processing',
-  //         'Compiler',
-  //         'Network',
-  //         'Simulation',
-  //         'NLP',
-  //         'Security',
-  //         'Cloud',
-  //         'Distribution',
-  //         'Theory of Compilation',
-  //         'Project',
-  //         'Cloud',
-  //         'Distribution',
-  //       ];
-  //
-  //     }
-  //     else {
-  //       texts =[
-  //         'Image Processing',
-  //         'Compiler',
-  //         'Network',
-  //         'Simulation',
-  //         'NLP',
-  //         'Security',
-  //         'Cloud',
-  //         'Distribution',
-  //         'Theory of Compilation',
-  //         'Project',
-  //         'Cloud',
-  //         'Distribution',
-  //       ];
-  //
-  //     }
-  //
-  //   }
-  //
-  //   else if(departmentDropMenu=='Security'){
-  //
-  //     if(gradeDropMenu=='First'){
-  //       texts =[
-  //         'Image Processing',
-  //         'Compiler',
-  //         'Network',
-  //         'Simulation',
-  //         'NLP',
-  //         'Security',
-  //         'Cloud',
-  //         'Distribution',
-  //         'Theory of Compilation',
-  //         'Project',
-  //         'Cloud',
-  //         'Distribution',
-  //       ];
-  //
-  //     }
-  //     else if(gradeDropMenu=='Second'){
-  //       texts =[
-  //         'Image Processing',
-  //         'Compiler',
-  //         'Network',
-  //         'Simulation',
-  //         'NLP',
-  //         'Security',
-  //         'Cloud',
-  //         'Distribution',
-  //         'Theory of Compilation',
-  //         'Project',
-  //         'Cloud',
-  //         'Distribution',
-  //       ];
-  //
-  //     }
-  //     else if(gradeDropMenu=='Third'){
-  //       texts =[
-  //         'Image Processing',
-  //         'Compiler',
-  //         'Network',
-  //         'Simulation',
-  //         'NLP',
-  //         'Security',
-  //         'Cloud',
-  //         'Distribution',
-  //         'Theory of Compilation',
-  //         'Project',
-  //         'Cloud',
-  //         'Distribution',
-  //       ];
-  //
-  //     }
-  //     else {
-  //       texts =[
-  //         'Image Processing',
-  //         'Compiler',
-  //         'Network',
-  //         'Simulation',
-  //         'NLP',
-  //         'Security',
-  //         'Cloud',
-  //         'Distribution',
-  //         'Theory of Compilation',
-  //         'Project',
-  //         'Cloud',
-  //         'Distribution',
-  //       ];
-  //
-  //     }
-  //
-  //   }
-  //
-  //   else if(departmentDropMenu=='Network'){
-  //
-  //     if(gradeDropMenu=='First'){
-  //       texts =[
-  //         'Image Processing',
-  //         'Compiler',
-  //         'Network',
-  //         'Simulation',
-  //         'NLP',
-  //         'Security',
-  //         'Cloud',
-  //         'Distribution',
-  //         'Theory of Compilation',
-  //         'Project',
-  //         'Cloud',
-  //         'Distribution',
-  //       ];
-  //
-  //     }
-  //     else if(gradeDropMenu=='Second'){
-  //       texts =[
-  //         'Image Processing',
-  //         'Compiler',
-  //         'Network',
-  //         'Simulation',
-  //         'NLP',
-  //         'Security',
-  //         'Cloud',
-  //         'Distribution',
-  //         'Theory of Compilation',
-  //         'Project',
-  //         'Cloud',
-  //         'Distribution',
-  //       ];
-  //
-  //     }
-  //     else if(gradeDropMenu=='Third'){
-  //       texts =[
-  //         'Image Processing',
-  //         'Compiler',
-  //         'Network',
-  //         'Simulation',
-  //         'NLP',
-  //         'Security',
-  //         'Cloud',
-  //         'Distribution',
-  //         'Theory of Compilation',
-  //         'Project',
-  //         'Cloud',
-  //         'Distribution',
-  //       ];
-  //
-  //     }
-  //     else {
-  //       texts =[
-  //         'Image Processing',
-  //         'Compiler',
-  //         'Network',
-  //         'Simulation',
-  //         'NLP',
-  //         'Security',
-  //         'Cloud',
-  //         'Distribution',
-  //         'Theory of Compilation',
-  //         'Project',
-  //         'Cloud',
-  //         'Distribution',
-  //       ];
-  //
-  //     }
-  //
-  //   }
-  //
-  //   else {
-  //
-  //     if(gradeDropMenu=='First'){
-  //       texts =[
-  //         'Image Processing',
-  //         'Compiler',
-  //         'Network',
-  //         'Simulation',
-  //         'NLP',
-  //         'Security',
-  //         'Cloud',
-  //         'Distribution',
-  //         'Theory of Compilation',
-  //         'Project',
-  //         'Cloud',
-  //         'Distribution',
-  //       ];
-  //
-  //     }
-  //     else if(gradeDropMenu=='Second'){
-  //       texts =[
-  //         'Image Processing',
-  //         'compiler',
-  //         'Network',
-  //         'Simulation',
-  //         'NLP',
-  //         'Security',
-  //         'Cloud',
-  //         'Distribution',
-  //         'Theory of Compilation',
-  //         'Project',
-  //         'Cloud',
-  //         'Distribution',
-  //       ];
-  //
-  //     }
-  //     else if(gradeDropMenu=='Third'){
-  //       texts =[
-  //         'Image Processing',
-  //         'Compiler',
-  //         'Network',
-  //         'Simulation',
-  //         'NLP',
-  //         'Security',
-  //         'Cloud',
-  //         'Distribution',
-  //         'Theory of Compilation',
-  //         'Project',
-  //         'Cloud',
-  //         'Distribution',
-  //       ];
-  //
-  //     }
-  //     else {
-  //       texts =[
-  //         'Image Processing',
-  //         'Compiler',
-  //         'Network',
-  //         'Simulation',
-  //         'NLP',
-  //         'Security',
-  //         'Cloud',
-  //         'Distribution',
-  //         'Theory of Compilation',
-  //         'Project',
-  //         'Cloud',
-  //         'Distribution',
-  //       ];
-  //
-  //     }
-  //
-  //   }
-  //
-  //
-  //
-  // }
-
   String url= "";
 
 
@@ -2603,7 +2604,7 @@ class AppCubit extends Cubit<AppState> {
       }
       else if (gradeDropMenu=='Third'){
         await FirebaseFirestore.instance.collection('General')
-            .doc('grade3').collection('Material').doc(title).collection('lecture').doc('${lecture.length+1}')
+            .doc('grade3').collection(userSpecial!).doc(title).collection('lecture').doc('${lecture.length+1}')
             .set(materialModel.toMap()).then((value) {
           print('Upload Success');
           emit(UploadPDFSuccessState());
@@ -2611,7 +2612,7 @@ class AppCubit extends Cubit<AppState> {
       }
       else{
         await FirebaseFirestore.instance.collection('General')
-            .doc('grade4').collection('Material').doc(title).collection('lecture').doc('${lecture.length+1}')
+            .doc('grade4').collection(userSpecial!).doc(title).collection('lecture').doc('${lecture.length+1}')
             .set(materialModel.toMap()).then((value) {
           print('Upload Success');
           emit(UploadPDFSuccessState());
@@ -2728,8 +2729,6 @@ class AppCubit extends Cubit<AppState> {
   String gradeDropMenu='';
   String departmentDropMenu='';
 
-
-
   void setGradeDrop(value){
     gradeDropMenu=value;
     CashHelper.saveData(key: 'gradeDrop',value: gradeDropMenu);
@@ -2743,5 +2742,285 @@ class AppCubit extends Cubit<AppState> {
     emit(SetDepartmentDropState());
   }
 
+
+  // String statusText = "";
+  // bool isComplete = false;
+  //
+  // Future<bool> checkPermission() async {
+  //   if (!await Permission.microphone.isGranted) {
+  //     PermissionStatus status = await Permission.microphone.request();
+  //     if (status != PermissionStatus.granted) {
+  //       return false;
+  //     }
+  //   }
+  //   emit(SetPermissionSuccessState());
+  //   return true;
+  // }
+  //
+  // void startRecord() async {
+  //   bool hasPermission = await checkPermission();
+  //   if (hasPermission) {
+  //     statusText = "Recording...";
+  //     recordFilePath = await getFilePath();
+  //     isComplete = false;
+  //     RecordMp3.instance.start(recordFilePath, (type) {
+  //       statusText = "Record error--->$type";
+  //     });
+  //     emit(SetStartRecordSuccessState());
+  //   } else {
+  //     statusText = "No microphone permission";
+  //     emit(SetStartRecordSuccessState());
+  //
+  //   }
+  // }
+  //
+  // void pauseRecord() {
+  //   if (RecordMp3.instance.status == RecordStatus.PAUSE) {
+  //     bool s = RecordMp3.instance.resume();
+  //     if (s) {
+  //       statusText = "Recording...";
+  //       emit(SetPauseRecordSuccessState());
+  //
+  //     }
+  //   } else {
+  //     bool s = RecordMp3.instance.pause();
+  //     if (s) {
+  //       statusText = "Recording pause...";
+  //     }
+  //     emit(SetPauseRecordSuccessState());
+  //
+  //   }
+  // }
+  //
+  // void stopRecord() {
+  //   bool s = RecordMp3.instance.stop();
+  //   if (s) {
+  //     statusText = "Record complete";
+  //     isComplete = true;
+  //     emit(SetStopRecordSuccessState());
+  //
+  //   }
+  // }
+  //
+  // void resumeRecord() {
+  //   bool s = RecordMp3.instance.resume();
+  //   if (s) {
+  //     statusText = "Recording...";
+  //     emit(SetStopRecordSuccessState());
+  //
+  //   }
+  // }
+  //
+  // late String recordFilePath;
+  //
+  // void play() {
+  //   if (recordFilePath != null && File(recordFilePath).existsSync()) {
+  //     AudioPlayer audioPlayer = AudioPlayer();
+  //     audioPlayer.play(recordFilePath, isLocal: true);
+  //   }
+  // }
+  //
+  // int i = 0;
+  //
+  // Future<String> getFilePath() async {
+  //   Directory storageDirectory = await getApplicationDocumentsDirectory();
+  //   String sdPath = storageDirectory.path + "/record";
+  //   var d = Directory(sdPath);
+  //   if (!d.existsSync()) {
+  //     d.createSync(recursive: true);
+  //   }
+  //   emit(SetSaveRecordSuccessState());
+  //
+  //   return sdPath + "/test_${i++}.mp3";
+  //
+  // }
+
+ AnalysisModel ?analysisModel;
+  double ?GPA=3.9;
+  String? Subject1='B', Subject2='A-', Subject3='C',
+          Subject4='B',Subject5='D',Subject6='A-';
+
+  String? subject1Titles='Image', subject2Titles='Compiler', subject3Titles='Network',
+      subject4Titles='Automata',subject5Titles='Distributed',subject6Titles='Cloud';
+
+  void postAnalyis(
+      {
+        required int studentid,
+        required int year,
+        required String dep,
+      }){
+
+    DioHelperAnalysis.postDate(
+        url: '',
+        data: {
+          'studentid':studentid,
+          'year':year,
+          'dep':dep,
+        }
+    ).then((value) {
+
+      print(value.data);
+      // analysisModel=AnalysisModel.fromJson(value.data);
+      // print(analysisModel?.GRADES[0]);
+        GPA= double.parse(value.data['GPA']);
+        Subject1=value.data['GRADES'][0];
+        Subject2=value.data['GRADES'][1];
+        Subject3=value.data['GRADES'][2];
+        Subject4=value.data['GRADES'][3];
+        Subject5=value.data['GRADES'][4];
+        Subject6=value.data['GRADES'][5];
+        print(value.data['GRADES'][5]);
+        subject1Titles=value.data['LABELS'][0];
+        subject2Titles=value.data['LABELS'][1];
+        subject3Titles=value.data['LABELS'][2];
+        subject4Titles=value.data['LABELS'][3];
+        subject5Titles=value.data['LABELS'][4];
+        subject6Titles=value.data['LABELS'][5];
+      emit(PostAnalysisSuccessState());
+    }).catchError((error){
+      print('Error in postAnalysis is ${error.toString()}');
+      emit(PostAnalysisErrorState());
+    });
+
+  }
+
+  Map Grades={
+    'GPA':3.4,
+    'Grade':[
+      'A',
+      'B+',
+      'C-',
+      'A+',
+      'A+',
+    ],
+    'Label':[
+      'CS',
+      'IS',
+      'SC',
+      'AI',
+      'BU',
+    ]
+  };
+
+  void printAnalysis(){
+
+    print(Grades['Grade'][0]);
+  }
+  // File? uploadedChatImage ;
+  //
+  // Future <void> getChatImage() async {
+  //   final pickedFile = await picker.pickImage(
+  //     source: ImageSource.gallery,
+  //   );
+  //   if (pickedFile != null) {
+  //     uploadedChatImage = File(pickedFile.path);
+  //     emit(UploadChatImageSuccessState());
+  //   } else {
+  //     print('No Image selected.');
+  //     emit(UploadChatImageErrorState());
+  //   }
+  // }
+  //
+  // String ?chatImage='';
+  // Future createUrlImage ()async
+  // {
+  //   firebase_storage.FirebaseStorage.instance
+  //       .ref()
+  //       .child('ChatImages/${Uri.file(uploadedChatImage!.path)
+  //       .pathSegments.last}').putFile(uploadedChatImage!)
+  //       .then((value){
+  //
+  //     value.ref.getDownloadURL().then((value) {
+  //
+  //       chatImage=value.toString();
+  //       print('image url ${value.toString()}');
+  //       emit(UploadChatImageSuccessState());
+  //     }).catchError((error){
+  //       print('Error When Create post with image : ${error.toString()}');
+  //       emit(UploadChatImageErrorState());
+  //     });
+  //   }).catchError((error){
+  //     print('Error When Upload image in Firesorage : ${error.toString()}');
+  //     emit(UploadChatImageSuccessState());
+  //   });
+  // }
+  //
+  // void removeChatImage() {
+  //   uploadedChatImage = null;
+  //   emit(RemoveChatImageSuccessState());
+  // }
+
+  List ?messagesBot=[];
+
+  List ?messagesBotRespond=[];
+  var messageController = TextEditingController();
+
+  String ?messageValue;
+  void chatBotMessages(String? message){
+
+    messagesBot?.add(message);
+    messageValue=message;
+    messageController.text='';
+    print(messagesBot![0]);
+    emit(AddChatBotMessageSuccessState());
+  }
+
+  // void chatBotMessagesRespond(){
+  //
+  //
+  //   emit(AddChatBotMessageSuccessState());
+  // }
+
+  bool ?checkRespond=false;
+  List <String> chatBotCourses=[];
+
+  String ?chatBotCourse1,chatBotCourse2,chatBotCourse3;
+  String ?typeRespond;
+
+  String ?totalCourses;
+
+  void postChatBot(String question,String courseField){
+
+    checkRespond=false;
+    emit(PostChatBotLoadingState());
+    DioHelperChatBot.postDate(
+        url:'',
+        data: {
+          "question":question,
+          "course_field":courseField
+        }
+    ).then((value) {
+
+
+      print(value.data.runtimeType);
+      typeRespond='${value.data.runtimeType}';
+      if(typeRespond=='String'){
+        messagesBotRespond?.add(value.data);
+      }
+      else{
+        chatBotCourse1=value.data[0];
+        chatBotCourse2=value.data[1];
+        chatBotCourse3=value.data[2];
+        totalCourses='1-${value.data[0] } \n \n 2-${value.data[1]}  \n  \n 3-${value.data[2]} ' ;
+        messagesBotRespond?.add(totalCourses);
+      }
+      checkRespond=true;
+
+      emit(PostChatBotSuccessState());
+    }).catchError((error){
+      print('Error in post ChatBot is ${error.toString()}');
+      emit(PostChatBotErrorState());
+    });
+  }
+
+  String programmingField = '';
+
+
+  void selectProgrammingField (value)
+  {
+    programmingField = value ;
+    print(value);
+    emit(SelectProgrammingFiled());
+  }
 
 }

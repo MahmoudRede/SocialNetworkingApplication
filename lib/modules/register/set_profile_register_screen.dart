@@ -129,12 +129,62 @@ class SetProfileRegister extends StatelessWidget {
                                   ),
                                 ),
                                 SizedBox(
+                                  height: MediaQuery.of(context).size.height * 0.02,
+                                ),
+                                if(
+                                (cubit.gradeValue=='Third' && cubit.departmentValue=='General')
+                                ||
+                                (cubit.gradeValue=='Fourth' && cubit.departmentValue=='General')
+                                )
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(width: 1,color: Colors.black),
+                                      borderRadius: BorderRadius.circular(5)
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          20,
+                                          0,
+                                          20,
+                                          0
+                                      ),
+                                      child: DropdownButton(
+                                        dropdownColor: Colors.grey[300],
+                                        elevation: 0,
+                                        hint: RegisterCubit.get(context).dropDownValue3.isEmpty
+                                            ? const Text('Specialist', style: TextStyle(color: Colors.black, fontSize: 16.0 , fontWeight: FontWeight.bold),)
+                                            : Text(
+                                          RegisterCubit.get(context).dropDownValue3,
+                                          style: const TextStyle(color: Colors.black , fontSize: 16.0, fontWeight: FontWeight.bold),
+                                        ),
+                                        isExpanded: true,
+                                        iconSize: 30.0,
+                                        style: const TextStyle(color: Colors.black , fontSize: 16.0 , fontWeight: FontWeight.bold),
+                                        items: ['CS', 'IS', 'SC' , 'AI'].map(
+                                              (value) {
+                                            return DropdownMenuItem<String>(
+                                              value: value,
+                                              child: Text(value),
+                                            );
+                                          },
+                                        ).toList(),
+                                        onChanged: (value) {
+                                          RegisterCubit.get(context).changeDropDownValue3(value);
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
                                   height: MediaQuery.of(context).size.height * 0.05,
                                 ),
                                 cubit.checkRegister==false?
                                 const Center(
                                   child: CircularProgressIndicator(),
-                                ):Container(
+                                ):
+                                Container(
                                     padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                                     height: MediaQuery.of(context).size.height * .063,
                                     width: MediaQuery.of(context).size.width * .60,

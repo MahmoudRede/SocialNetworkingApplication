@@ -89,6 +89,7 @@ class StudentMaterialScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 10,),
+                        AppCubit.get(context).coursesTitle.isNotEmpty?
                         GridView.count(
                           crossAxisCount: 2,
                           physics: const NeverScrollableScrollPhysics(),
@@ -102,6 +103,25 @@ class StudentMaterialScreen extends StatelessWidget {
                                       AppCubit.get(context).colorsContainer[index],
                                       AppCubit.get(context).colorsItem[index],
                                       context) ),
+                        ):
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                          child: GridView.count(
+                            crossAxisCount: 2,
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            crossAxisSpacing: 15,
+                            mainAxisSpacing: 15,
+                            childAspectRatio: 1/.8,
+                            children: List.generate(6,
+                                    (index) => Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey[300],
+                                    borderRadius: BorderRadius.circular(10),
+
+                                  ),
+                                ) ),
+                          ),
                         ),
                       ],
                     ),
@@ -171,6 +191,7 @@ Widget Block_Materials(String text,Color colorContainer,Color colorItem,context)
                 padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
                 child: Text(
                   text,
+                  overflow: TextOverflow.ellipsis,
                   style: GoogleFonts.openSans(
                   color: colorItem,
                   fontSize: 17,

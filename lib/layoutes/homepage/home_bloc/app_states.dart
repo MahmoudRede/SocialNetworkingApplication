@@ -32,6 +32,10 @@ class GetGeneralStudent1ErrorState extends AppState{}
 class GetMaterialSuccessState extends AppState{}
 class GetMaterialErrorState extends AppState{}
 
+
+class GetGroupDoctorSuccessState extends AppState{}
+class GetGroupDoctorErrorState extends AppState{}
+
 class UploadPostImageSuccessState extends AppState{}
 class UploadPostImageErrorState extends AppState{}
 class RemovePostImageState extends AppState{}
@@ -91,3 +95,29 @@ class GetCoursesErrorState extends AppState{}
 
 class GetSectionsSuccessState extends AppState{}
 class GetSectionsErrorState extends AppState{}
+
+class SetPermissionSuccessState extends AppState{}
+class SetPlayRecordSuccessState extends AppState{}
+class SetStartRecordSuccessState extends AppState{}
+class SetPauseRecordSuccessState extends AppState{}
+class SetStopRecordSuccessState extends AppState{}
+class SetSaveRecordSuccessState extends AppState{}
+
+class SelectedValueSuccessState extends AppState{}
+
+class PostAnalysisLoadingState extends AppState{}
+class PostAnalysisSuccessState extends AppState{}
+class PostAnalysisErrorState extends AppState{}
+
+class UploadChatImageSuccessState extends AppState{}
+class UploadChatImageErrorState extends AppState{}
+class RemoveChatImageSuccessState extends AppState{}
+
+class AddChatBotMessageSuccessState extends AppState{}
+class AddChatBotMessageRespondSuccessState extends AppState{}
+
+class PostChatBotLoadingState extends AppState{}
+class PostChatBotSuccessState extends AppState{}
+class PostChatBotErrorState extends AppState{}
+
+class SelectProgrammingFiled extends AppState{}

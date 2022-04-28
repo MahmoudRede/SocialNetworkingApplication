@@ -1,5 +1,7 @@
 import 'package:final_project/modules/login/login_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnBoardingScreen extends StatefulWidget {
@@ -18,27 +20,23 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     List<OnBoardingModel> onBoardingItems =
     [
       OnBoardingModel(
-          image: 'assets/images/onboard1.png',
+          image: 'assets/images/onboarding1.json',
           title: 'onBoarding Screen 1',
           body: 'onBoarding body 1',
       ),
       OnBoardingModel(
-        image: 'assets/images/onboard2.png',
-        title: 'onBoarding Screen 2',
-        body: 'onBoarding body 2',
+        image: 'assets/images/onboarding2.json',
+        title: 'COMMUNICATE',
+        body: 'Room Chat contain groups for materials and allow to communicate with friends',
       ),
       OnBoardingModel(
-        image: 'assets/images/onboard3.png',
+        image: 'assets/images/onboarding3.json',
         title: 'onBoarding Screen 3',
         body: 'onBoarding body 3',
       ),
     ];
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0.0,
-      ),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -143,16 +141,15 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.03),
+          padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.04),
           child: Container(
-            alignment: Alignment.topCenter,
-            child: Image(
-              image: AssetImage(model.image),
-            ),
+            alignment: Alignment.center,
+            child: Lottie.asset(model.image),
+            height: 320,
           ),
         ),
         SizedBox(
-          height: MediaQuery.of(context).size.height*0.14,
+          height: MediaQuery.of(context).size.height*0.1,
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -161,19 +158,19 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             children: [
               Text(
                 model.title,
-                style: const TextStyle(
+                style: GoogleFonts.candal(
                   fontSize: 22.0,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.bold,
                   color: Colors.white,
-                ),
+                )
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height*0.03,
+                height: MediaQuery.of(context).size.height*0.05,
               ),
               Text(
                 model.body,
-                style: const TextStyle(
-                  fontSize: 16.0,
+                style: GoogleFonts.lato(
+                  fontSize: 19.0,
                   color: Colors.white,
                 ),
               ),

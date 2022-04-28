@@ -8,6 +8,7 @@ import 'package:final_project/shared/local/cash_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 
 import 'Labs/lab_screen.dart';
 
@@ -29,9 +30,9 @@ class ContantScreen extends StatelessWidget {
 
   List  carouselImages =[
 
-    'https://img.freepik.com/free-photo/professional-programmer-working-late-dark-office_1098-18705.jpg?w=740',
-    'https://img.freepik.com/free-photo/close-up-hand-writing-notebook-top-view_23-2148888824.jpg?w=740',
-    'https://img.freepik.com/free-vector/online-tutorials-concept_52683-37481.jpg?w=740'
+    'assets/images/slider1.json',
+    'assets/images/slider2.json',
+    'assets/images/slider3.json'
 
   ];
 
@@ -68,11 +69,12 @@ class ContantScreen extends StatelessWidget {
             iconTheme: const IconThemeData(
                 color: Colors.black
             ),
-            title: const Text(
+            title:  Text(
               'Materials',
               style: TextStyle(
-                color: Colors.black,
+                color: mainColorLayout,
                 fontSize: 19,
+                fontWeight: FontWeight.bold
               ),
             ),
           ),
@@ -82,9 +84,7 @@ class ContantScreen extends StatelessWidget {
               children: [
                 CarouselSlider(
                   items: carouselImages.map((e) {
-                    return Image(
-                      image: NetworkImage('$e'),
-                    );
+                    return Lottie.asset(e);
                   }).toList(),
                   options: CarouselOptions(
                     height: 250,
@@ -153,7 +153,7 @@ Widget itemBlock(String text,String image,Function function,context,String mater
       height: 90,
       margin: const EdgeInsets.all(10),
       child:  Material(
-        color: Colors.lightBlue,
+        color: mainColorLayout.withOpacity(.8),
         borderRadius: BorderRadius.circular(10),
         elevation: 5,
         child: Padding(

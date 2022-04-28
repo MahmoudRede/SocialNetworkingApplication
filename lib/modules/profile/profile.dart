@@ -1,4 +1,5 @@
 import 'package:final_project/constants/componts.dart';
+import 'package:final_project/constants/constants.dart';
 import 'package:final_project/layoutes/homepage/container_screen.dart';
 import 'package:final_project/layoutes/homepage/home_bloc/app_cubit.dart';
 import 'package:flutter/material.dart';
@@ -30,15 +31,15 @@ class ProfileScreen extends StatelessWidget {
                   onPressed: (){
                     navigateTo(context, const ContainerScreen());
                   },
-                  icon:const Icon(
+                  icon: Icon(
                     Icons.arrow_back,
-                    color: Colors.blue,
+                    color: mainColorLayout,
                   ),
                 ),
                 title: Text(
                   'My Profile',
                   style: GoogleFonts.lato(
-                    color: Colors.blue,
+                    color: mainColorLayout,
                     fontWeight: FontWeight.w900,
                     fontSize: 18,
                   ),
@@ -60,7 +61,7 @@ class ProfileScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(0),
 
                           ),
-                          height: MediaQuery.of(context).size.height * 0.25,
+                          height: MediaQuery.of(context).size.height * 0.3,
                           width: MediaQuery.of(context).size.width,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
