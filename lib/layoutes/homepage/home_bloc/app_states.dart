@@ -121,3 +121,5 @@ class PostChatBotSuccessState extends AppState{}
 class PostChatBotErrorState extends AppState{}
 
 class SelectProgrammingFiled extends AppState{}
+
+class LikeRunTimeState extends AppState{}

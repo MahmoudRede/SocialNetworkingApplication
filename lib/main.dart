@@ -34,7 +34,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'firebase_options.dart';
-import 'modules/chatScreen/image_screen.dart';
 
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -79,7 +78,7 @@ class MyApp extends StatelessWidget {
                 Theme.of(context).textTheme,
               ),
             ),
-            home: ContainerScreen(),
+            home: SplashScreen(),
           );
         },
       ),
