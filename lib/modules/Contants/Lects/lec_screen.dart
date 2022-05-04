@@ -1,5 +1,6 @@
 import 'package:final_project/constants/componts.dart';
 import 'package:final_project/constants/constants.dart';
+import 'package:final_project/layoutes/homepage/container_screen.dart';
 import 'package:final_project/layoutes/homepage/home_bloc/app_cubit.dart';
 import 'package:final_project/layoutes/homepage/home_bloc/app_states.dart';
 import 'package:final_project/models/materialModel.dart';
@@ -28,27 +29,37 @@ class LecScreen extends StatelessWidget {
         var cubit = AppCubit.get(context);
         List lectures = AppCubit.get(context).lecture;
         var key= GlobalKey<ScaffoldState>();
-        int ?i;
+        int i=0;
 
         return Scaffold(
             key: key,
             backgroundColor: Colors.white,
             appBar: AppBar(
+              leading: IconButton(
+                icon: const Icon(
+                    Icons.arrow_back_ios
+                ),
+                onPressed: (){
+                  navigateAndFinish(context, ContainerScreen());
+                },
+              ),
+
               actions: [
                 if(cubit.doctorCheck==true)
                   IconButton(
                       onPressed: (){
                         key.currentState?.showBottomSheet(
                                 (context) => Container(
-                              padding: EdgeInsets.only(left: 10),
+                              padding: const EdgeInsets.only(left: 10),
                               alignment: Alignment.topLeft,
                               color: Colors.black87,
                               width: double.infinity,
                               height: 50,
                               child: TextButton(
                                 onPressed: (){
-                                  cubit.getPdf(title:titleScreen,index: i!).then((value) {
-                                    navigateTo(context, ContantScreen(materialName: titleScreen));
+                                  cubit.getPdf(title:titleScreen,index: i).then((value) {
+
+                                    // navigateTo(context, ContantScreen(materialName: titleScreen));
                                   });
                                 },
                                 child: Text('Add Lecture',style: GoogleFonts.lato(
@@ -85,9 +96,31 @@ class LecScreen extends StatelessWidget {
             body: Container(
               child: Column(
                 children: [
+                  cubit.isUpload==false?
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
+                      child: GridView.count(
+                        crossAxisCount: 2,
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        crossAxisSpacing: 15,
+                        mainAxisSpacing: 15,
+                        childAspectRatio: 1/.8,
+                        children: List.generate(15,
+                                (index) => Container(
+                              decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(10),
+
+                              ),
+                            ) ),
+                      ),
+                    ),
+                  ) :
                   Expanded(
                     child: Container(
-                      margin: EdgeInsets.all(10),
+                      margin: const EdgeInsets.all(10),
                       child: GridView.count(
                         physics: const BouncingScrollPhysics(),
                         crossAxisCount: 2,
@@ -141,14 +174,15 @@ class LecScreen extends StatelessWidget {
                     '${lecture.title}',
                     style:  const TextStyle(
                       fontSize: 15,
+                      fontWeight: FontWeight.bold
                     ),
                   ),
                   const SizedBox(width: 5,),
                   Text(
                     '${index+1}',
-                    style: const TextStyle(
+                    style:  TextStyle(
                       fontSize: 15,
-                      color: Colors.blue,
+                      color: mainColorLayout,
                       fontWeight: FontWeight.bold
                     ),
                   ),

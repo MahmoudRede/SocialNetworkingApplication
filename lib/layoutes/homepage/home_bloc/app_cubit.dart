@@ -2556,14 +2556,12 @@ class AppCubit extends Cubit<AppState> {
           .collection('Material')
           .doc(courseName)
           .collection('section')
-          .get().then((value) {
-        value.docs.forEach((element) {
+          .snapshots().listen((event) {
+        section=[];
+        event.docs.forEach((element) {
           section.add(MaterialModel.fromFire(element.data()));
         });
         emit(GetSectionsSuccessState());
-      }).catchError((error){
-        print('Error when get Material : ${error.toString()}');
-        emit(GetSectionsErrorState());
       });
 
     }
@@ -2573,14 +2571,12 @@ class AppCubit extends Cubit<AppState> {
           .collection('Material')
           .doc(courseName)
           .collection('section')
-          .get().then((value) {
-        value.docs.forEach((element) {
+          .snapshots().listen((event) {
+        section=[];
+        event.docs.forEach((element) {
           section.add(MaterialModel.fromFire(element.data()));
         });
         emit(GetSectionsSuccessState());
-      }).catchError((error){
-        print('Error when get Material : ${error.toString()}');
-        emit(GetSectionsErrorState());
       });
     }
     else if(CashHelper.getData(key: 'gradeDrop')=='Third'){
@@ -2589,14 +2585,12 @@ class AppCubit extends Cubit<AppState> {
           .collection('Material')
           .doc(courseName)
           .collection('section')
-          .get().then((value) {
-        value.docs.forEach((element) {
+          .snapshots().listen((event) {
+        section=[];
+        event.docs.forEach((element) {
           section.add(MaterialModel.fromFire(element.data()));
         });
         emit(GetSectionsSuccessState());
-      }).catchError((error){
-        print('Error when get Material : ${error.toString()}');
-        emit(GetSectionsErrorState());
       });
     }
     else {
@@ -2605,14 +2599,12 @@ class AppCubit extends Cubit<AppState> {
           .collection('Material')
           .doc(courseName)
           .collection('section')
-          .get().then((value) {
-        value.docs.forEach((element) {
+          .snapshots().listen((event) {
+        section=[];
+        event.docs.forEach((element) {
           section.add(MaterialModel.fromFire(element.data()));
         });
         emit(GetSectionsSuccessState());
-      }).catchError((error){
-        print('Error when get Material : ${error.toString()}');
-        emit(GetSectionsErrorState());
       });
     }
 
@@ -2628,16 +2620,14 @@ class AppCubit extends Cubit<AppState> {
           .collection('Material')
           .doc(courseName)
           .collection('lecture')
-          .get().then((value) {
-        value.docs.forEach((element) {
-          lecture.add(MaterialModel.fromFire(element.data()));
+          .snapshots().listen((event) {
+          lecture=[];
+
+        event.docs.forEach((element) {
+            lecture.add(MaterialModel.fromFire(element.data()));
+          });
+          emit(GetMaterialSuccessState());
         });
-        print('lecture size : ${lecture.length}');
-        emit(GetMaterialSuccessState());
-      }).catchError((error){
-        print('Error when get Material : ${error.toString()}');
-        emit(GetMaterialErrorState());
-      });
 
     }
     else if(CashHelper.getData(key: 'gradeDrop')=='Second'){
@@ -2646,15 +2636,13 @@ class AppCubit extends Cubit<AppState> {
           .collection('Material')
           .doc(courseName)
           .collection('lecture')
-          .get().then((value) {
-        value.docs.forEach((element) {
+          .snapshots().listen((event) {
+        lecture=[];
+
+        event.docs.forEach((element) {
           lecture.add(MaterialModel.fromFire(element.data()));
         });
-        print('lecture size : ${lecture.length}');
         emit(GetMaterialSuccessState());
-      }).catchError((error){
-        print('Error when get Material : ${error.toString()}');
-        emit(GetMaterialErrorState());
       });
     }
     else if(CashHelper.getData(key: 'gradeDrop')=='Third'){
@@ -2663,15 +2651,13 @@ class AppCubit extends Cubit<AppState> {
           .collection('Material')
           .doc(courseName)
           .collection('lecture')
-          .get().then((value) {
-        value.docs.forEach((element) {
+          .snapshots().listen((event) {
+        lecture=[];
+
+        event.docs.forEach((element) {
           lecture.add(MaterialModel.fromFire(element.data()));
         });
-        print('lecture size : ${lecture.length}');
         emit(GetMaterialSuccessState());
-      }).catchError((error){
-        print('Error when get Material : ${error.toString()}');
-        emit(GetMaterialErrorState());
       });
     }
     else {
@@ -2680,15 +2666,13 @@ class AppCubit extends Cubit<AppState> {
           .collection('Material')
           .doc(courseName)
           .collection('lecture')
-          .get().then((value) {
-        for (var element in value.docs) {
+          .snapshots().listen((event) {
+        lecture=[];
+
+        event.docs.forEach((element) {
           lecture.add(MaterialModel.fromFire(element.data()));
-        }
-        print('lecture size : ${lecture.length}');
+        });
         emit(GetMaterialSuccessState());
-      }).catchError((error){
-        print('Error when get Material : ${error.toString()}');
-        emit(GetMaterialErrorState());
       });
     }
 
@@ -2729,19 +2713,24 @@ class AppCubit extends Cubit<AppState> {
 
   String url= "";
 
-
+  bool isUpload=true;
   Future getPdf({
     required String title,
     int index=0,
   })async{
-
-    FilePickerResult ?result=await FilePicker.platform.pickFiles();
+    isUpload=true;
+    emit(UploadPDFSuccessState());
+    print('start upload');
+    FilePickerResult? result=await FilePicker.platform.pickFiles();
     File pick= File(result!.files.single.path.toString());
     var file =pick.readAsBytesSync();
+    isUpload=false;
+    emit(UploadPDFSuccessState());
     String name =DateTime.now().millisecondsSinceEpoch.toString();
-
     // upload to firebase
 
+
+    print('${CashHelper.getData(key: 'type')}');
     var pdfFile =  FirebaseStorage.instance.ref().child(CashHelper.getData(key: 'departmentDrop'))
         .child(CashHelper.getData(key: 'gradeDrop'))
         .child(CashHelper.getData(key: 'type'))
@@ -2757,142 +2746,311 @@ class AppCubit extends Cubit<AppState> {
       url: url,
     );
 
-    if(departmentDropMenu=='General'){
-      if(gradeDropMenu=='First'){
-        await FirebaseFirestore.instance.collection('General')
-            .doc('grade1').collection('Material').doc(title).collection('lecture').doc('${lecture.length+1}')
-            .set(materialModel.toMap()).then((value) {
-          print('Upload Success');
-          emit(UploadPDFSuccessState());
-        });
+    if(CashHelper.getData(key: 'type')=='Lectures'){
 
+      if(departmentDropMenu=='General'){
+        if(gradeDropMenu=='First'){
+          await FirebaseFirestore.instance.collection('General')
+              .doc('grade1').collection('Material').doc(title).collection('lecture').doc('${lecture.length+1}')
+              .set(materialModel.toMap()).then((value) {
+            print('Upload Success');
+            isUpload=true;
+            emit(UploadPDFSuccessState());
+          });
+
+        }
+        else if (gradeDropMenu=='Second'){
+          await FirebaseFirestore.instance.collection('General')
+              .doc('grade2').collection('Material').doc(title).collection('lecture').doc('${lecture.length+1}')
+              .set(materialModel.toMap()).then((value) {
+            print('Upload Success');
+            isUpload=true;
+            emit(UploadPDFSuccessState());
+          });
+        }
+        else if (gradeDropMenu=='Third'){
+          await FirebaseFirestore.instance.collection('General')
+              .doc('grade3').collection(userSpecial!).doc(title).collection('lecture').doc('${lecture.length+1}')
+              .set(materialModel.toMap()).then((value) {
+            print('Upload Success');
+            isUpload=true;
+            emit(UploadPDFSuccessState());
+          });
+        }
+        else{
+          await FirebaseFirestore.instance.collection('General')
+              .doc('grade4').collection(userSpecial!).doc(title).collection('lecture').doc('${lecture.length+1}')
+              .set(materialModel.toMap()).then((value) {
+            print('Upload Success');
+            isUpload=true;
+            emit(UploadPDFSuccessState());
+          });
+        }
       }
-      else if (gradeDropMenu=='Second'){
-        await FirebaseFirestore.instance.collection('General')
-            .doc('grade2').collection('Material').doc(title).collection('lecture').doc('${lecture.length+1}')
-            .set(materialModel.toMap()).then((value) {
-          print('Upload Success');
-          emit(UploadPDFSuccessState());
-        });
+      else if(departmentDropMenu=='Medical'){
+        if(gradeDropMenu=='First'){
+          await FirebaseFirestore.instance.collection('Medical')
+              .doc('grade1').collection('Material').doc(title).collection('lecture').doc('${lecture.length+1}')
+              .set(materialModel.toMap()).then((value) {
+            print('Upload Success');
+            isUpload=true;
+            emit(UploadPDFSuccessState());
+          });
+        }
+        else if (gradeDropMenu=='Second'){
+          await FirebaseFirestore.instance.collection('Medical')
+              .doc('grade2').collection('Material').doc(title).collection('lecture').doc('${lecture.length+1}')
+              .set(materialModel.toMap()).then((value) {
+            print('Upload Success');
+            isUpload=true;
+            emit(UploadPDFSuccessState());
+          });
+        }
+        else if (gradeDropMenu=='Third'){
+          await FirebaseFirestore.instance.collection('Medical')
+              .doc('grade3').collection('Material').doc(title).collection('lecture').doc('${lecture.length+1}')
+              .set(materialModel.toMap()).then((value) {
+            print('Upload Success');
+            isUpload=true;
+            emit(UploadPDFSuccessState());
+          });
+        }
+        else{
+          await FirebaseFirestore.instance.collection('Medical')
+              .doc('grade4').collection('Material').doc(title).collection('lecture').doc('${lecture.length+1}')
+              .set(materialModel.toMap()).then((value) {
+            print('Upload Success');
+            isUpload=true;
+            emit(UploadPDFSuccessState());
+          });
+        }
       }
-      else if (gradeDropMenu=='Third'){
-        await FirebaseFirestore.instance.collection('General')
-            .doc('grade3').collection(userSpecial!).doc(title).collection('lecture').doc('${lecture.length+1}')
-            .set(materialModel.toMap()).then((value) {
-          print('Upload Success');
-          emit(UploadPDFSuccessState());
-        });
+      else if(departmentDropMenu=='Security'){
+        emit(UploadPDFLoadingState());
+        if(gradeDropMenu=='First'){
+          await FirebaseFirestore.instance.collection('Security')
+              .doc('grade1').collection('Material').doc(title).collection('lecture').doc('${lecture.length+1}')
+              .set(materialModel.toMap()).then((value) {
+            print('Upload Success');
+            isUpload=true;
+            emit(UploadPDFSuccessState());
+          });
+        }
+        else if (gradeDropMenu=='Second'){
+          await FirebaseFirestore.instance.collection('Security')
+              .doc('grade2').collection('Material').doc(title).collection('lecture').doc('${lecture.length+1}')
+              .set(materialModel.toMap()).then((value) {
+            print('Upload Success');
+            emit(UploadPDFSuccessState());
+          });
+        }
+        else if (gradeDropMenu=='Third'){
+          await FirebaseFirestore.instance.collection('Security')
+              .doc('grade3').collection('Material').doc(title).collection('lecture').doc('${lecture.length+1}')
+              .set(materialModel.toMap()).then((value) {
+            print('Upload Success');
+            emit(UploadPDFSuccessState());
+          });
+        }
+        else{
+          await FirebaseFirestore.instance.collection('Security')
+              .doc('grade4').collection('Material').doc(title).collection('lecture').doc('${lecture.length+1}')
+              .set(materialModel.toMap()).then((value) {
+            print('Upload Success');
+            emit(UploadPDFSuccessState());
+          });
+        }
       }
       else{
-        await FirebaseFirestore.instance.collection('General')
-            .doc('grade4').collection(userSpecial!).doc(title).collection('lecture').doc('${lecture.length+1}')
-            .set(materialModel.toMap()).then((value) {
-          print('Upload Success');
-          emit(UploadPDFSuccessState());
-        });
+        emit(UploadPDFLoadingState());
+
+        if(gradeDropMenu=='First'){
+          await FirebaseFirestore.instance.collection('Network')
+              .doc('grade1').collection('Material').doc(title).collection('lecture').doc('${lecture.length+1}')
+              .set(materialModel.toMap()).then((value) {
+            print('Upload Success');
+            isUpload=true;
+            emit(UploadPDFSuccessState());
+          });
+        }
+        else if (gradeDropMenu=='Second'){
+          await FirebaseFirestore.instance.collection('Network')
+              .doc('grade2').collection('Material').doc(title).collection('lecture').doc('${lecture.length+1}')
+              .set(materialModel.toMap()).then((value) {
+            print('Upload Success');
+            emit(UploadPDFSuccessState());
+          });
+        }
+        else if (gradeDropMenu=='Third'){
+          await FirebaseFirestore.instance.collection('Network')
+              .doc('grade3').collection('Material').doc(title).collection('lecture').doc('${lecture.length+1}')
+              .set(materialModel.toMap()).then((value) {
+            print('Upload Success');
+            emit(UploadPDFSuccessState());
+          });
+        }
+        else{
+          await FirebaseFirestore.instance.collection('Network')
+              .doc('grade4').collection('Material').doc(title).collection('lecture').doc('${lecture.length+1}')
+              .set(materialModel.toMap()).then((value) {
+            print('Upload Success');
+            emit(UploadPDFSuccessState());
+          });
+        }
       }
-    }
-    else if(departmentDropMenu=='Medical'){
-      if(gradeDropMenu=='First'){
-        await FirebaseFirestore.instance.collection('Medical')
-            .doc('grade1').collection('Material').doc(title).collection('lecture').doc('${lecture.length+1}')
-            .set(materialModel.toMap()).then((value) {
-          print('Upload Success');
-          emit(UploadPDFSuccessState());
-        });
-      }
-      else if (gradeDropMenu=='Second'){
-        await FirebaseFirestore.instance.collection('Medical')
-            .doc('grade2').collection('Material').doc(title).collection('lecture').doc('${lecture.length+1}')
-            .set(materialModel.toMap()).then((value) {
-          print('Upload Success');
-          emit(UploadPDFSuccessState());
-        });
-      }
-      else if (gradeDropMenu=='Third'){
-        await FirebaseFirestore.instance.collection('Medical')
-            .doc('grade3').collection('Material').doc(title).collection('lecture').doc('${lecture.length+1}')
-            .set(materialModel.toMap()).then((value) {
-          print('Upload Success');
-          emit(UploadPDFSuccessState());
-        });
-      }
-      else{
-        await FirebaseFirestore.instance.collection('Medical')
-            .doc('grade4').collection('Material').doc(title).collection('lecture').doc('${lecture.length+1}')
-            .set(materialModel.toMap()).then((value) {
-          print('Upload Success');
-          emit(UploadPDFSuccessState());
-        });
-      }
-    }
-    else if(departmentDropMenu=='Security'){
-      if(gradeDropMenu=='First'){
-        await FirebaseFirestore.instance.collection('Security')
-            .doc('grade1').collection('Material').doc(title).collection('lecture').doc('${lecture.length+1}')
-            .set(materialModel.toMap()).then((value) {
-          print('Upload Success');
-          emit(UploadPDFSuccessState());
-        });
-      }
-      else if (gradeDropMenu=='Second'){
-        await FirebaseFirestore.instance.collection('Security')
-            .doc('grade2').collection('Material').doc(title).collection('lecture').doc('${lecture.length+1}')
-            .set(materialModel.toMap()).then((value) {
-          print('Upload Success');
-          emit(UploadPDFSuccessState());
-        });
-      }
-      else if (gradeDropMenu=='Third'){
-        await FirebaseFirestore.instance.collection('Security')
-            .doc('grade3').collection('Material').doc(title).collection('lecture').doc('${lecture.length+1}')
-            .set(materialModel.toMap()).then((value) {
-          print('Upload Success');
-          emit(UploadPDFSuccessState());
-        });
-      }
-      else{
-        await FirebaseFirestore.instance.collection('Security')
-            .doc('grade4').collection('Material').doc(title).collection('lecture').doc('${lecture.length+1}')
-            .set(materialModel.toMap()).then((value) {
-          print('Upload Success');
-          emit(UploadPDFSuccessState());
-        });
-      }
+
     }
     else{
-      if(gradeDropMenu=='First'){
-        await FirebaseFirestore.instance.collection('Network')
-            .doc('grade1').collection('Material').doc(title).collection('lecture').doc('${lecture.length+1}')
-            .set(materialModel.toMap()).then((value) {
-          print('Upload Success');
-          emit(UploadPDFSuccessState());
-        });
+      if(departmentDropMenu=='General'){
+        if(gradeDropMenu=='First'){
+          await FirebaseFirestore.instance.collection('General')
+              .doc('grade1').collection('Material').doc(title).collection('section').doc('${section.length+1}')
+              .set(materialModel.toMap()).then((value) {
+            print('Upload Success');
+            emit(UploadPDFSuccessState());
+          });
+
+        }
+        else if (gradeDropMenu=='Second'){
+          await FirebaseFirestore.instance.collection('General')
+              .doc('grade2').collection('Material').doc(title).collection('section').doc('${section.length+1}')
+              .set(materialModel.toMap()).then((value) {
+            print('Upload Success');
+            isUpload=true;
+            emit(UploadPDFSuccessState());
+          });
+        }
+        else if (gradeDropMenu=='Third'){
+          await FirebaseFirestore.instance.collection('General')
+              .doc('grade3').collection(userSpecial!).doc(title).collection('section').doc('${section.length+1}')
+              .set(materialModel.toMap()).then((value) {
+            print('Upload Success');
+            isUpload=true;
+            emit(UploadPDFSuccessState());
+          });
+        }
+        else{
+          await FirebaseFirestore.instance.collection('General')
+              .doc('grade4').collection(userSpecial!).doc(title).collection('section').doc('${section.length+1}')
+              .set(materialModel.toMap()).then((value) {
+            print('Upload Success');
+            isUpload=true;
+            emit(UploadPDFSuccessState());
+          });
+        }
       }
-      else if (gradeDropMenu=='Second'){
-        await FirebaseFirestore.instance.collection('Network')
-            .doc('grade2').collection('Material').doc(title).collection('lecture').doc('${lecture.length+1}')
-            .set(materialModel.toMap()).then((value) {
-          print('Upload Success');
-          emit(UploadPDFSuccessState());
-        });
+      else if(departmentDropMenu=='Medical'){
+        if(gradeDropMenu=='First'){
+          await FirebaseFirestore.instance.collection('Medical')
+              .doc('grade1').collection('Material').doc(title).collection('section').doc('${section.length+1}')
+              .set(materialModel.toMap()).then((value) {
+            print('Upload Success');
+            isUpload=true;
+            emit(UploadPDFSuccessState());
+          });
+        }
+        else if (gradeDropMenu=='Second'){
+          await FirebaseFirestore.instance.collection('Medical')
+              .doc('grade2').collection('Material').doc(title).collection('section').doc('${section.length+1}')
+              .set(materialModel.toMap()).then((value) {
+            print('Upload Success');
+            isUpload=true;
+            emit(UploadPDFSuccessState());
+          });
+        }
+        else if (gradeDropMenu=='Third'){
+          await FirebaseFirestore.instance.collection('Medical')
+              .doc('grade3').collection('Material').doc(title).collection('section').doc('${section.length+1}')
+              .set(materialModel.toMap()).then((value) {
+            print('Upload Success');
+            isUpload=true;
+            emit(UploadPDFSuccessState());
+          });
+        }
+        else{
+          await FirebaseFirestore.instance.collection('Medical')
+              .doc('grade4').collection('Material').doc(title).collection('section').doc('${section.length+1}')
+              .set(materialModel.toMap()).then((value) {
+            print('Upload Success');
+            isUpload=true;
+            emit(UploadPDFSuccessState());
+          });
+        }
       }
-      else if (gradeDropMenu=='Third'){
-        await FirebaseFirestore.instance.collection('Network')
-            .doc('grade3').collection('Material').doc(title).collection('lecture').doc('${lecture.length+1}')
-            .set(materialModel.toMap()).then((value) {
-          print('Upload Success');
-          emit(UploadPDFSuccessState());
-        });
+      else if(departmentDropMenu=='Security'){
+        emit(UploadPDFLoadingState());
+        if(gradeDropMenu=='First'){
+          await FirebaseFirestore.instance.collection('Security')
+              .doc('grade1').collection('Material').doc(title).collection('section').doc('${section.length+1}')
+              .set(materialModel.toMap()).then((value) {
+            print('Upload Success');
+            isUpload=true;
+            emit(UploadPDFSuccessState());
+          });
+        }
+        else if (gradeDropMenu=='Second'){
+          await FirebaseFirestore.instance.collection('Security')
+              .doc('grade2').collection('Material').doc(title).collection('section').doc('${section.length+1}')
+              .set(materialModel.toMap()).then((value) {
+            print('Upload Success');
+            emit(UploadPDFSuccessState());
+          });
+        }
+        else if (gradeDropMenu=='Third'){
+          await FirebaseFirestore.instance.collection('Security')
+              .doc('grade3').collection('Material').doc(title).collection('section').doc('${section.length+1}')
+              .set(materialModel.toMap()).then((value) {
+            print('Upload Success');
+            emit(UploadPDFSuccessState());
+          });
+        }
+        else{
+          await FirebaseFirestore.instance.collection('Security')
+              .doc('grade4').collection('Material').doc(title).collection('section').doc('${section.length+1}')
+              .set(materialModel.toMap()).then((value) {
+            print('Upload Success');
+            emit(UploadPDFSuccessState());
+          });
+        }
       }
       else{
-        await FirebaseFirestore.instance.collection('Network')
-            .doc('grade4').collection('Material').doc(title).collection('lecture').doc('${lecture.length+1}')
-            .set(materialModel.toMap()).then((value) {
-          print('Upload Success');
-          emit(UploadPDFSuccessState());
-        });
+        emit(UploadPDFLoadingState());
+
+        if(gradeDropMenu=='First'){
+          await FirebaseFirestore.instance.collection('Network')
+              .doc('grade1').collection('Material').doc(title).collection('lecture').doc('${lecture.length+1}')
+              .set(materialModel.toMap()).then((value) {
+            print('Upload Success');
+            isUpload=true;
+            emit(UploadPDFSuccessState());
+          });
+        }
+        else if (gradeDropMenu=='Second'){
+          await FirebaseFirestore.instance.collection('Network')
+              .doc('grade2').collection('Material').doc(title).collection('lecture').doc('${lecture.length+1}')
+              .set(materialModel.toMap()).then((value) {
+            print('Upload Success');
+            emit(UploadPDFSuccessState());
+          });
+        }
+        else if (gradeDropMenu=='Third'){
+          await FirebaseFirestore.instance.collection('Network')
+              .doc('grade3').collection('Material').doc(title).collection('lecture').doc('${lecture.length+1}')
+              .set(materialModel.toMap()).then((value) {
+            print('Upload Success');
+            emit(UploadPDFSuccessState());
+          });
+        }
+        else{
+          await FirebaseFirestore.instance.collection('Network')
+              .doc('grade4').collection('Material').doc(title).collection('lecture').doc('${lecture.length+1}')
+              .set(materialModel.toMap()).then((value) {
+            print('Upload Success');
+            emit(UploadPDFSuccessState());
+          });
+        }
       }
+
     }
 
     emit(GetPDFState());
@@ -3039,6 +3197,7 @@ class AppCubit extends Cubit<AppState> {
 
   String ?messageValue;
   void chatBotMessages(String? message){
+
 
     messagesBot?.add(message);
     messageValue=message;

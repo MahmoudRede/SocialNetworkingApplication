@@ -1,3 +1,5 @@
+import 'package:final_project/constants/constants.dart';
+import 'package:final_project/layoutes/homepage/container_screen.dart';
 import 'package:final_project/modules/Contants/contant_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,12 +27,20 @@ class LabScreen extends StatelessWidget {
         var cubit = AppCubit.get(context);
         List lectures = AppCubit.get(context).section;
         var key= GlobalKey<ScaffoldState>();
-        int ?i;
+        int i=0;
 
         return Scaffold(
             key:key,
             backgroundColor: Colors.white,
             appBar: AppBar(
+              leading: IconButton(
+                icon: const Icon(
+                    Icons.arrow_back_ios
+                ),
+                onPressed: (){
+                  navigateAndFinish(context, ContainerScreen());
+                },
+              ),
               actions: [
                 if(cubit.doctorCheck==true)
                   IconButton(
@@ -44,8 +54,8 @@ class LabScreen extends StatelessWidget {
                               height: 50,
                               child: TextButton(
                                 onPressed: (){
-                                  cubit.getPdf(title:titleScreen,index: i!).then((value) {
-                                    navigateTo(context, ContantScreen(materialName: titleScreen));
+                                   cubit.getPdf(title:titleScreen,index: i).then((value) {
+                                    // navigateTo(context, ContantScreen(materialName: titleScreen));
                                   });
                                 },
                                 child: Text('Add Section',style: GoogleFonts.lato(
@@ -76,6 +86,28 @@ class LabScreen extends StatelessWidget {
             body: Container(
               child: Column(
                 children: [
+                  cubit.isUpload==false?
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
+                      child: GridView.count(
+                        crossAxisCount: 2,
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        crossAxisSpacing: 15,
+                        mainAxisSpacing: 15,
+                        childAspectRatio: 1/.8,
+                        children: List.generate(16,
+                                (index) => Container(
+                              decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(10),
+
+                              ),
+                            ) ),
+                      ),
+                    ),
+                  ):
                   Expanded(
                     child: Container(
                       margin: EdgeInsets.all(10),
@@ -136,9 +168,9 @@ class LabScreen extends StatelessWidget {
                   const SizedBox(width: 5,),
                   Text(
                     '${index+1}',
-                    style: const TextStyle(
+                    style: TextStyle(
                         fontSize: 15,
-                        color: Colors.blue,
+                        color: mainColorLayout,
                         fontWeight: FontWeight.bold
                     ),
                   ),

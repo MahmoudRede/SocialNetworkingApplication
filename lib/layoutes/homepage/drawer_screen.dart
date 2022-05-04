@@ -1,4 +1,5 @@
 import 'package:final_project/constants/componts.dart';
+import 'package:final_project/constants/constants.dart';
 import 'package:final_project/layoutes/homepage/home_bloc/app_cubit.dart';
 import 'package:final_project/layoutes/homepage/home_bloc/app_states.dart';
 import 'package:final_project/modules/BotScreen/BotScreen.dart';
@@ -10,6 +11,7 @@ import 'package:final_project/modules/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:line_icons/line_icons.dart';
 
 class ItemModel {
   String? text;
@@ -47,8 +49,8 @@ class DrawerScreen extends StatelessWidget {
           }),
 
       ItemModel(
-          text: 'Groups',
-          icon: Icons.group_add_outlined,
+          text: 'About',
+          icon: Icons.info,
           function: () {
             print('Groups');
           }),
@@ -90,7 +92,7 @@ class DrawerScreen extends StatelessWidget {
           builder:(context,state) {
             var cubit = AppCubit.get(context);
             return Container(
-              color: Colors.blueAccent,
+              color: mainColorLayout,
               height: double.infinity,
               padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
               child: Column(
@@ -113,7 +115,7 @@ class DrawerScreen extends StatelessWidget {
                                 },
                                 child: CircleAvatar(
                                   radius: 25,
-                                  backgroundImage: NetworkImage('${cubit.userModel!.image}'),
+                                  backgroundImage: NetworkImage((cubit.userModel!.image)!),
                                 ),
                               ),
                             ),
@@ -123,7 +125,7 @@ class DrawerScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                    '${cubit.userModel!.fullName}',
+                                    (cubit.userModel!.fullName)!,
                                     style: GoogleFonts.lato(
                                         color: Colors.white,
                                         fontSize: 15,
@@ -169,12 +171,12 @@ class DrawerScreen extends StatelessWidget {
                                 fontSize: 15,
                                 color: Colors.white
                             ),),
-                            const Spacer(),
-                            Container(
-                                height: 25,
-                                width: 25,
-                                child: const Image(image: AssetImage('assets/images/idea.png')
-                                )),
+                            // const Spacer(),
+                            // Container(
+                            //     height: 25,
+                            //     width: 25,
+                            //     child: const Image(image: AssetImage('assets/images/idea.png')
+                            //     )),
                           ],
                         ),
                       ),

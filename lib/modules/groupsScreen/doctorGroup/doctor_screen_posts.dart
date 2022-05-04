@@ -44,7 +44,7 @@ class _DoctorPostsGroupScreenState extends State<DoctorPostsGroupScreen> {
                       shape: RoundedRectangleBorder(
                       ),
                       child: Image(
-                        image: NetworkImage('https://firebasestorage.googleapis.com/v0/b/buy-it-736d7.appspot.com/o/bfcai.jpg?alt=media&token=f4e16d91-2406-4c4c-b113-b23e769671b6'),
+                        image:  AssetImage('assets/images/bfcai.jpg'),
                       ),
                     ),
                   ),

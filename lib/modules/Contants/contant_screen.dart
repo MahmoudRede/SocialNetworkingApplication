@@ -4,6 +4,7 @@ import 'package:final_project/constants/constants.dart';
 import 'package:final_project/layoutes/homepage/home_bloc/app_cubit.dart';
 import 'package:final_project/layoutes/homepage/home_bloc/app_states.dart';
 import 'package:final_project/modules/Contants/Lects/lec_screen.dart';
+import 'package:final_project/modules/materialsScreen/materials_screen.dart';
 import 'package:final_project/shared/local/cash_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -49,11 +50,26 @@ class ContantScreen extends StatelessWidget {
     List <Function> functionItem =[
 
           (){
+            CashHelper.saveData(key: 'type',value: 'Lectures');
+            if(CashHelper.getData(key: 'isDoctor')==true){
+              AppCubit.get(context).getDoctorMaterial();
+            }
+            else{
+              AppCubit.get(context).getMaterial();
 
-        navigateTo(context, LecScreen(titleScreen: materialName));
-      },
+            }
+            navigateTo(context, LecScreen(titleScreen: materialName));
+          },
+
           (){
-        navigateTo(context, LabScreen(titleScreen: materialName));
+            CashHelper.saveData(key: 'type',value: 'Sections');
+            if(CashHelper.getData(key: 'isDoctor')==true){
+              AppCubit.get(context).getDoctorSection();
+            }
+            else{
+              AppCubit.get(context).getSection();
+            }
+            navigateTo(context, LabScreen(titleScreen: materialName));
       }
 
     ];
@@ -65,7 +81,15 @@ class ContantScreen extends StatelessWidget {
       builder: (context,state){
         return  Scaffold(
           appBar: AppBar(
-            elevation: 1,
+            leading: IconButton(
+              icon: const Icon(
+                  Icons.arrow_back_ios
+              ),
+              onPressed: (){
+                navigateTo(context, MaterialsScreen());
+              },
+            ),
+            elevation: 0,
             iconTheme: const IconThemeData(
                 color: Colors.black
             ),
@@ -146,7 +170,6 @@ Widget itemBlock(String text,String image,Function function,context,String mater
     onTap: (){
 
       function();
-      CashHelper.saveData(key: 'type',value: text);
 
     },
     child: Container(

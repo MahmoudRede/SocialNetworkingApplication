@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
-
 import '../../layoutes/homepage/home_bloc/app_cubit.dart';
 
 class ChatScreen extends StatefulWidget {

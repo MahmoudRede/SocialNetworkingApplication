@@ -78,7 +78,7 @@ class MyApp extends StatelessWidget {
                 Theme.of(context).textTheme,
               ),
             ),
-            home: SplashScreen(),
+            home: ContainerScreen(),
           );
         },
       ),

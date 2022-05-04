@@ -40,23 +40,23 @@ class LayoutScreen extends StatelessWidget {
                       SalomonBottomBarItem(
                         icon: const Icon(Icons.home),
                         title: const Text('Home'),
-                        selectedColor:Colors.blue,
+                        selectedColor:mainColorLayout,
                       ),
                       SalomonBottomBarItem(
                         icon: const Icon(Icons.group),
                         title: const Text('Groups'),
-                        selectedColor:Colors.blue,
+                        selectedColor:mainColorLayout,
                       ),
 
                       SalomonBottomBarItem(
                         icon: const Icon(Icons.my_library_books),
                         title: const Text('Materials'),
-                        selectedColor:Colors.blue,
+                        selectedColor:mainColorLayout,
                       ),
                       SalomonBottomBarItem(
                         icon: const Icon(Icons.notifications_active),
                         title: const Text('Notifications'),
-                        selectedColor:Colors.blue,
+                        selectedColor:mainColorLayout,
                       ),
                     ],
                   )

@@ -33,7 +33,7 @@ class StudentMaterialScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         Container(
-                          margin: const EdgeInsets.fromLTRB(10, 20, 10, 20),
+                          margin: const EdgeInsets.fromLTRB(10, 10, 10, 20),
                           padding: const EdgeInsets.fromLTRB(10, 15, 10, 5),
                           decoration: BoxDecoration(
                             color: const Color.fromRGBO(11, 24, 82, .9),

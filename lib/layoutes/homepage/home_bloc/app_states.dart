@@ -83,6 +83,7 @@ class GetCommentsErrorState extends AppState {}
 class GetTitlesSuccessState extends AppState {}
 class GetTitlesErrorState extends AppState {}
 
+class UploadPDFLoadingState extends AppState{}
 class UploadPDFSuccessState extends AppState{}
 class UploadPDFImageErrorState extends AppState{}
 class GetPDFState extends AppState{}

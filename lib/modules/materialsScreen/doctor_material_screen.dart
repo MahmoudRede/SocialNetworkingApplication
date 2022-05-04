@@ -34,7 +34,7 @@ class DoctorMaterialScreen extends StatelessWidget {
                     top: 0,
                     left: 10,
                     child: Container(
-                      margin: const EdgeInsets.fromLTRB(10, 20, 10, 20),
+                      margin: const EdgeInsets.fromLTRB(10, 10, 10, 20),
                       padding: const EdgeInsets.fromLTRB(20, 15, 20, 5),
                       decoration: BoxDecoration(
                         color: const Color.fromRGBO(11, 24, 82, .9),
@@ -80,13 +80,11 @@ class DoctorMaterialScreen extends StatelessWidget {
                     right: 20,
                     top: MediaQuery.of(context).size.height*.34,
                     child: Material(
-                      elevation: 3,
+                      color: mainColorLayout.withOpacity(.8),
+                      elevation: 5,
                       shadowColor: mainColorLight,
-                      borderRadius: BorderRadius.circular(25),
-                      child: CircleAvatar(
-                        backgroundColor: mainColorButton,
-                        radius: 23,
-                        child: IconButton(
+                      borderRadius: BorderRadius.circular(10),
+                      child: IconButton(
                           onPressed: (){
                             AppCubit.get(context).getDoctorMaterialTitles().then((value) {
                               navigateTo(context, MaterialsScreen()).then((value) {
@@ -98,10 +96,11 @@ class DoctorMaterialScreen extends StatelessWidget {
                           icon: const Icon(
                             Icons.done,
                             color: Colors.white,
+                            size: 30,
                           ),
                         ),
                       ),
-                    ),
+
                   ),
                   Positioned(
                     top: MediaQuery.of(context).size.height * .54,

@@ -98,6 +98,8 @@ class BotDesign extends StatelessWidget {
                           ),
                           ),
                             onPressed: (){
+                              AppCubit.get(context).messagesBot=[];
+                              AppCubit.get(context).messagesBotRespond=[];
                               print(AppCubit.get(context).programmingField);
                               navigateTo(context, BotScreen());
                         }

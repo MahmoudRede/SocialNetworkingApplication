@@ -19,27 +19,96 @@ class BotScreen extends StatelessWidget {
               titleSpacing: 0.0,
               backgroundColor: mainColorLayout,
               title: Row(
-                children: const [
-                  CircleAvatar(
-                    radius: 20.0,
-                    backgroundImage: AssetImage('assets/images/robot.png'),
+                children: [
+                  Stack(
+                    children:  [
+                      const CircleAvatar(
+                        radius: 20.0,
+                        backgroundImage: AssetImage('assets/images/robot.png'),
+                      ),
+                      Positioned(
+                        bottom: 0,
+                        right: 0,
+                        child: CircleAvatar(
+                          radius: 6.0,
+                          backgroundColor: mainColorLayout,
+                          child: const CircleAvatar(
+                            radius: 4.0,
+                            backgroundColor: Colors.green,
+                          ),
+                        ),
+                      ),
+
+                    ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 15.0,
                   ),
-                  Text(
-                    'Elise',
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w900,
-                      height: 1.3,
+                  Padding(
+                    padding: const EdgeInsets.all(0.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: const [
+                        Text(
+                          'Elise',
+                          style: TextStyle(
+                            fontSize: 17.0,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                        SizedBox(height: 2,),
+                        Text(
+                          'online',
+                          style: TextStyle(
+                            fontSize: 14.0,
+                            height: 1.3,
+                          ),
+                        ),
+
+
+                      ],
                     ),
-                  ),
+                  )
                 ],
               ),
             ),
             body: Column(
               children: [
+                const SizedBox(height: 10,),
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          const CircleAvatar(
+                            radius: 20.0,
+                            backgroundImage: AssetImage('assets/images/robot.png'),
+                          ),
+                          const SizedBox(width: 10,),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 15.0 , vertical: 10.0),
+                            decoration: const BoxDecoration(
+                              color: Colors.lightGreen,
+                              borderRadius: BorderRadiusDirectional.only(
+                                topStart: Radius.circular(10.0),
+                                topEnd: Radius.circular(10.0),
+                                bottomEnd: Radius.circular(10.0),
+                              ),
+                            ),
+                            child: const Text(
+                              'Hello!! \nI am Elise you can turn to \nme if you nee anything',
+                              style:  TextStyle(
+                                fontSize: 15.0,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
                 Expanded(
                   child: ListView.separated(
                     physics: const BouncingScrollPhysics(),
@@ -156,59 +225,69 @@ class BotScreen extends StatelessWidget {
                 child: Text(
                   text!,
                   style:  const TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w600,
+                    fontSize: 15.0,
                     color: Colors.white,
                   ),
                 ),
               ),
             ),
             const SizedBox(height: 10,),
-            Align(
-              widthFactor: 300,
-              alignment: Alignment.topLeft,
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0 , vertical: 10.0),
-                decoration: const BoxDecoration(
-                  color: Colors.lightGreen,
-                  borderRadius: BorderRadiusDirectional.only(
-                    topStart: Radius.circular(15.0),
-                    topEnd: Radius.circular(15.0),
-                    bottomEnd: Radius.circular(15.0),
-
-                  ),
+            Row(
+              children: [
+                const CircleAvatar(
+                  radius: 20.0,
+                  backgroundImage: AssetImage('assets/images/robot.png'),
                 ),
-                child:AppCubit.get(context).messagesBotRespond!.length==index!?
-                     const Icon(Icons.more_horiz,color: Colors.white,size: 25,)
-                    : AppCubit.get(context).typeRespond=='String'?
-                Text(
-                    AppCubit.get(context).messagesBotRespond![index],style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 15
-                )) :Container(
-                  child: Column(
-                    children:[
-                      const SizedBox(height: 5,),
-                      Text(AppCubit.get(context).messagesBotRespond![index],style: const TextStyle(
+                const SizedBox(width: 10,),
+                Expanded(
+                  child: Align(
+                    widthFactor: 250,
+                    alignment: Alignment.topLeft,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 15.0 , vertical: 10.0),
+                      decoration: const BoxDecoration(
+                        color: Colors.lightGreen,
+                        borderRadius: BorderRadiusDirectional.only(
+                          topStart: Radius.circular(15.0),
+                          topEnd: Radius.circular(15.0),
+                          bottomEnd: Radius.circular(15.0),
+
+                        ),
+                      ),
+                      child:AppCubit.get(context).messagesBotRespond!.length==index!?
+                           const Icon(Icons.more_horiz,color: Colors.white,size: 25,)
+                          : AppCubit.get(context).typeRespond=='String'?
+                      Text(
+                          AppCubit.get(context).messagesBotRespond![index],style: const TextStyle(
                           color: Colors.white,
                           fontSize: 15
-                      ),),
-                      // const SizedBox(height: 5,),
-                      // Text(AppCubit.get(context).chatBotCourse2!,style: const TextStyle(
-                      //     color: Colors.white,
-                      //     fontSize: 15
-                      // ),),
-                      // const SizedBox(height: 5,),
-                      // Text(AppCubit.get(context).chatBotCourse3!,style: const TextStyle(
-                      //     color: Colors.white,
-                      //     fontSize: 15
-                      // ),),
-                      // const SizedBox(height: 5,),
-                    ],
-                  ),
+                      )) :Container(
+                        child: Column(
+                          children:[
+                            const SizedBox(height: 5,),
+                            Text(AppCubit.get(context).messagesBotRespond![index],style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 15
+                            ),),
+                            // const SizedBox(height: 5,),
+                            // Text(AppCubit.get(context).chatBotCourse2!,style: const TextStyle(
+                            //     color: Colors.white,
+                            //     fontSize: 15
+                            // ),),
+                            // const SizedBox(height: 5,),
+                            // Text(AppCubit.get(context).chatBotCourse3!,style: const TextStyle(
+                            //     color: Colors.white,
+                            //     fontSize: 15
+                            // ),),
+                            // const SizedBox(height: 5,),
+                          ],
+                        ),
 
+                      ),
+                    ),
+                  ),
                 ),
-              ),
+              ],
             )
           ],
         )

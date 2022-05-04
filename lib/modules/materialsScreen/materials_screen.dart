@@ -23,10 +23,10 @@ class MaterialsScreen extends StatelessWidget {
             iconTheme: const IconThemeData(
               color: Colors.black87
             ),
-            elevation: 1,
+            elevation: 0,
             title: Text(
               'Materials',style: GoogleFonts.lato(
-                color: mainColorDark,
+                color: mainColorLayout,
                 fontSize: 20,
                 fontWeight: FontWeight.bold
             ),
@@ -34,7 +34,25 @@ class MaterialsScreen extends StatelessWidget {
             centerTitle: true,
           ),
           body: AppCubit.get(context).coursesDoctorTitle.isEmpty?
-          const Center(child: CircularProgressIndicator(),):
+          Padding(
+            padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
+            child: GridView.count(
+              crossAxisCount: 2,
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              crossAxisSpacing: 15,
+              mainAxisSpacing: 15,
+              childAspectRatio: 1/.8,
+              children: List.generate(15,
+                      (index) => Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: BorderRadius.circular(10),
+
+                    ),
+                  ) ),
+            ),
+          ) :
           Container(
             child: GridView.count(
               physics:const BouncingScrollPhysics(),

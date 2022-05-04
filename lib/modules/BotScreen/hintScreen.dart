@@ -57,15 +57,19 @@ class _HintScreenState extends State<HintScreen> {
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
-                                        Text('Select Programming filed that interests you',textAlign: TextAlign.center,style: GoogleFonts.lato(
-                                            color: mainColorLayout,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold
-                                        ),),
-                                        const SizedBox(height: 10,),
                                         Container(
-                                          height: 1,
-                                          color: Colors.black,
+                                          child:Text(
+                                            'Select Programming track that interests you',
+                                            textAlign: TextAlign.center,style: GoogleFonts.lato(
+                                              color: Colors.white,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold
+                                          ),),
+                                          padding: EdgeInsets.all(10),
+                                          decoration: BoxDecoration(
+                                            color: mainColorLayout,
+                                            borderRadius: BorderRadius.circular(10)
+                                          ),
                                         ),
                                         const SizedBox(height: 25,),
                                         CircleAvatar(
