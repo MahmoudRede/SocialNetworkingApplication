@@ -10,56 +10,46 @@ class MessageScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     List<Widget> tabScreens = const [
-      MessagesTab(),
       GroupTab(),
       FriendsTab(),
     ];
 
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.blue,
-          title: const Text(
-            'Chats',
-            style: TextStyle(
-              fontSize: 28.0,
-              fontWeight: FontWeight.w900,
+          centerTitle: true,
+          leading: IconButton(
+            onPressed: (){
+              Navigator.pop(context);
+            },
+            icon: const Icon(
+              Icons.arrow_back,
             ),
-            textAlign: TextAlign.center,
           ),
-          actions: [
-            IconButton(
-                onPressed: (){},
-                icon: const Icon(
-                  Icons.person_add,
-                  size: 30.0,
-                ),
-            ),
-            IconButton(
-              onPressed: (){},
-              icon: const Icon(
-                Icons.search,
-                size: 30.0,
+          title: Row(
+            children: const [
+              CircleAvatar(
+                backgroundImage: AssetImage('assets/images/Logo .jpg'),
+                radius: 25.0,
               ),
-            ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width*0.03,
-            ),
-          ],
+               SizedBox(
+                 width: 10.0,
+               ),
+               Text(
+                'Chats',
+                style: TextStyle(
+                  fontSize: 28.0,
+                  fontWeight: FontWeight.w900,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
           bottom: const TabBar(
             indicatorColor: Colors.white,
             tabs: [
-              Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Text(
-                  'Message',
-                  style : TextStyle(
-                    fontSize: 16.0,
-                    //fontWeight: FontWeight.w800,
-                  ),
-                ),
-              ),
               Padding(
                 padding: EdgeInsets.all(10.0),
                 child: Text(

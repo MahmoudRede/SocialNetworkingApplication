@@ -2,6 +2,7 @@
 import 'package:final_project/layoutes/homepage/container_screen.dart';
 import 'package:final_project/layoutes/homepage/home_bloc/app_cubit.dart';
 import 'package:final_project/layoutes/homepage/home_bloc/app_states.dart';
+import 'package:final_project/modules/AboutScreen/AboutScreen.dart';
 import 'package:final_project/modules/BotScreen/BotScreen.dart';
 import 'package:final_project/modules/BotScreen/botContainer.dart';
 import 'package:final_project/modules/BotScreen/botDesign.dart';
@@ -35,7 +36,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'firebase_options.dart';
 
-void main()async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(
@@ -65,12 +66,6 @@ class MyApp extends StatelessWidget {
               primaryColor: Colors.blue,
               scaffoldBackgroundColor: Colors.white,
               appBarTheme: const AppBarTheme(
-                backwardsCompatibility: false,
-                systemOverlayStyle: SystemUiOverlayStyle(
-                  statusBarColor: Color.fromRGBO(11, 24, 82, .9),
-                  statusBarIconBrightness: Brightness.light,
-                  statusBarBrightness: Brightness.light
-                ),
                 backgroundColor: Colors.white,
                 elevation: 0.0,
               ),
@@ -78,7 +73,7 @@ class MyApp extends StatelessWidget {
                 Theme.of(context).textTheme,
               ),
             ),
-            home: ContainerScreen(),
+            home: const MessageScreen(),
           );
         },
       ),

@@ -2,6 +2,7 @@ import 'package:final_project/constants/componts.dart';
 import 'package:final_project/constants/constants.dart';
 import 'package:final_project/layoutes/homepage/home_bloc/app_cubit.dart';
 import 'package:final_project/layoutes/homepage/home_bloc/app_states.dart';
+import 'package:final_project/modules/AboutScreen/AboutScreen.dart';
 import 'package:final_project/modules/BotScreen/BotScreen.dart';
 import 'package:final_project/modules/BotScreen/botContainer.dart';
 import 'package:final_project/modules/BotScreen/botDesign.dart';
@@ -52,7 +53,7 @@ class DrawerScreen extends StatelessWidget {
           text: 'About',
           icon: Icons.info,
           function: () {
-            print('Groups');
+           navigateTo(context, const AboutScreen());
           }),
 
       ItemModel(

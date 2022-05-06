@@ -15,21 +15,6 @@ class MessagesTab extends StatelessWidget {
           SizedBox(
             height: MediaQuery.of(context).size.height*0.01,
           ),
-          Container(
-            height: MediaQuery.of(context).size.height*0.15,
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: ListView.separated(
-              physics: const BouncingScrollPhysics(),
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context , index)=> storyItem(),
-              separatorBuilder: (context , index)=> const SizedBox(width: 10.0,),
-              itemCount: 10,
-            ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height*0.01,
-          ),
           ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -41,60 +26,6 @@ class MessagesTab extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-
-  Widget storyItem ()
-  {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: Stack(
-            alignment: AlignmentDirectional.bottomEnd,
-            children: [
-              Stack(
-                alignment: AlignmentDirectional.center,
-                children: const [
-                  CircleAvatar(
-                    backgroundColor: Colors.lightBlue,
-                    radius: 35.0,
-                  ),
-                  CircleAvatar(
-                    backgroundImage: AssetImage('assets/images/profile.png'),
-                    radius: 33.0,
-                  ),
-                ],
-
-              ),
-              Padding(
-                padding: const EdgeInsets.all(3.0),
-                child: Stack(
-                  alignment: AlignmentDirectional.center,
-                  children: const[
-                    CircleAvatar(
-                      backgroundColor: Colors.white,
-                      radius: 11.0,
-                    ),
-                    CircleAvatar(
-                      backgroundColor: Colors.amber,
-                      radius: 9.0,
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-        const Text(
-          'Mohamed',
-          style: TextStyle(
-            fontSize: 16.0,
-          ),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-      ],
     );
   }
 
