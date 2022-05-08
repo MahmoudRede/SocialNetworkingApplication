@@ -41,7 +41,7 @@ class ProfileScreen extends StatelessWidget {
                   style: GoogleFonts.lato(
                     color: mainColorLayout,
                     fontWeight: FontWeight.w900,
-                    fontSize: 18,
+                    fontSize: 17,
                   ),
                 ),
                 centerTitle: true,

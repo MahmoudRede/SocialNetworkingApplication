@@ -1,4 +1,5 @@
 import 'package:final_project/constants/componts.dart';
+import 'package:final_project/constants/constants.dart';
 import 'package:final_project/layoutes/homepage/home_bloc/app_states.dart';
 import 'package:final_project/modules/chatScreen/SingleChat.dart';
 import 'package:flutter/material.dart';
@@ -143,9 +144,9 @@ class FriendsTab extends StatelessWidget {
                   Stack(
                     alignment: AlignmentDirectional.center,
                     children:  [
-                      const CircleAvatar(
-                        backgroundColor: Colors.lightBlue,
-                        radius: 30.0,
+                      CircleAvatar(
+                        backgroundColor: mainColorLayout,
+                        radius: 29.0,
                       ),
                       CircleAvatar(
                         backgroundImage: NetworkImage('${model.image}'),
@@ -161,11 +162,11 @@ class FriendsTab extends StatelessWidget {
                       children: const[
                         CircleAvatar(
                           backgroundColor: Colors.white,
-                          radius: 9.0,
+                          radius: 7.0,
                         ),
                         CircleAvatar(
-                          backgroundColor: Colors.amber,
-                          radius: 7.0,
+                          backgroundColor: Colors.lightGreen,
+                          radius: 5.0,
                         ),
                       ],
                     ),
@@ -182,9 +183,8 @@ class FriendsTab extends StatelessWidget {
                 children:  [
                   Text(
                     '${model.fullName}',
-                    style: const TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
+                    style: GoogleFonts.aBeeZee(
+                      fontSize: 17.0,
                     ),
                   ),
                   const SizedBox(

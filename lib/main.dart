@@ -1,4 +1,5 @@
 // @dart=2.9
+import 'package:final_project/constants/constants.dart';
 import 'package:final_project/layoutes/homepage/container_screen.dart';
 import 'package:final_project/layoutes/homepage/home_bloc/app_cubit.dart';
 import 'package:final_project/layoutes/homepage/home_bloc/app_states.dart';
@@ -56,7 +57,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => AppCubit()..getUserData()..getHomePost()..getGroupPosts()..printAnalysis(),
+      create: (BuildContext context) => AppCubit()..getHomePost()..getUserData()..getGroupPosts()..printAnalysis(),
       child: BlocConsumer<AppCubit,AppState>(
         listener: (context,state){},
         builder: (context,state){
@@ -65,7 +66,13 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primaryColor: Colors.blue,
               scaffoldBackgroundColor: Colors.white,
-              appBarTheme: const AppBarTheme(
+              appBarTheme: AppBarTheme(
+                backwardsCompatibility: false,
+                systemOverlayStyle: SystemUiOverlayStyle(
+                  statusBarColor: mainColorLayout,
+                  statusBarBrightness: Brightness.light,
+                  statusBarIconBrightness:Brightness.light,
+                ),
                 backgroundColor: Colors.white,
                 elevation: 0.0,
               ),
@@ -73,7 +80,7 @@ class MyApp extends StatelessWidget {
                 Theme.of(context).textTheme,
               ),
             ),
-            home: const MessageScreen(),
+            home:LoginScreen(),
           );
         },
       ),

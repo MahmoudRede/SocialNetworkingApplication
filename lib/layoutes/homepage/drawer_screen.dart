@@ -104,6 +104,52 @@ class DrawerScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(height: 10,),
+                        cubit.userModel!.image==null || cubit.userModel!.fullName==null || cubit.userModel!.bio==null?
+                        Row(
+                          children: [
+                            const SizedBox(width: 0,),
+                            CircleAvatar(
+                              radius: 28,
+                              backgroundColor: Colors.grey[300],
+                            ),
+                            const SizedBox(width: 10,),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  height: 10,
+                                  width: 120,
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey[300],
+                                      borderRadius: BorderRadius.circular(20)
+
+                                  ),
+                                ),
+                                const SizedBox(height: 5,),
+                                Container(
+                                  height: 10,
+                                  width: 150,
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey[300],
+                                      borderRadius: BorderRadius.circular(20)
+
+                                  ),
+                                ),
+                                const SizedBox(height: 5,),
+                                Container(
+                                  height: 10,
+                                  width: 140,
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey[300],
+                                      borderRadius: BorderRadius.circular(20)
+
+                                  ),
+                                ),
+                                const SizedBox(height: 5,),
+                              ],
+                            )
+                          ],
+                        ):
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [

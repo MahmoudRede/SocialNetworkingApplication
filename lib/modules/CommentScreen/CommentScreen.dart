@@ -1,4 +1,5 @@
 import 'package:conditional_builder/conditional_builder.dart';
+import 'package:final_project/constants/constants.dart';
 import 'package:final_project/layoutes/homepage/home_bloc/app_cubit.dart';
 import 'package:final_project/layoutes/homepage/home_bloc/app_states.dart';
 import 'package:final_project/models/CommentModel.dart';
@@ -37,7 +38,7 @@ class CommentScreen extends StatelessWidget {
                 title: Text(
                   'Comments',
                   style: GoogleFonts.lato(
-                    color: Colors.blue,
+                    color: mainColorLayout,
                     fontSize: 18.0,
                     fontWeight: FontWeight.bold,
                   ),
@@ -49,9 +50,9 @@ class CommentScreen extends StatelessWidget {
                     AppCubit.get(context).groupComments = [];
                     Navigator.pop(context);
                   },
-                  icon: const Icon(
+                  icon:  Icon(
                     Icons.arrow_back,
-                    color: Colors.blue,
+                    color: mainColorLayout,
                   ),
                 ),
               ),

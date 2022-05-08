@@ -231,7 +231,7 @@ class GroupScreen extends StatelessWidget {
                 ),
               ),
               floatingActionButton:FloatingActionButton(
-                backgroundColor: Colors.blue,
+                backgroundColor: mainColorLayout,
                 onPressed:(){
                     navigateTo(context, const AddPost());
                 },

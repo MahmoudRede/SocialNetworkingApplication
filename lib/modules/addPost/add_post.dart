@@ -26,13 +26,13 @@ class AddPost extends StatelessWidget {
               },
               icon:  Icon(
                 Icons.arrow_back,
-                color: mainColorButton,
+                color: mainColorLayout,
               ),
             ),
             title: Text(
               'Create Post',
               style: TextStyle(
-                color: mainColorDark,
+                color: mainColorLayout,
                 fontSize: 18,
                 fontWeight: FontWeight.bold
               ),
@@ -40,8 +40,8 @@ class AddPost extends StatelessWidget {
             centerTitle: true,
             actions: [
               CircleAvatar(
-                backgroundColor: mainColorButton,
-                radius: 18,
+                backgroundColor: mainColorLayout,
+                radius: 20,
                 child: IconButton(
                   onPressed: (){
                     var dateNow = DateTime.now();
@@ -138,40 +138,42 @@ class AddPost extends StatelessWidget {
                   height: 30.0,
                 ),
                 if(AppCubit.get(context).uploadedPostGroupImage != null)
-                  Stack(
-                    alignment: AlignmentDirectional.topEnd,
-                    children: [
-                      Container(
-                        width: double.infinity,
-                        child: Card(
-                          clipBehavior: Clip.antiAliasWithSaveLayer,
-                          child: Image(
-                            image: FileImage(AppCubit.get(context).uploadedPostGroupImage!),
-                            fit: BoxFit.scaleDown,
-                            height: 200.0,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          top: 10.0,
-                          left: 10.0,
-                          right: 10.0,
-                        ),
-                        child: CircleAvatar(
-                          radius: 20.0,
-                          child: IconButton(
-                            onPressed: () {
-                              AppCubit.get(context).removePostGroupImage();
-                            },
-                            icon: const Icon(
-                              Icons.close,
-                              size: 18.0,
+                  Expanded(
+                    child: Stack(
+                      alignment: AlignmentDirectional.topEnd,
+                      children: [
+                        Container(
+                          width: double.infinity,
+                          child: Card(
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            child: Image(
+                              image: FileImage(AppCubit.get(context).uploadedPostGroupImage!),
+                              fit: BoxFit.scaleDown,
+                              height: 200.0,
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 10.0,
+                            left: 10.0,
+                            right: 10.0,
+                          ),
+                          child: CircleAvatar(
+                            radius: 20.0,
+                            child: IconButton(
+                              onPressed: () {
+                                AppCubit.get(context).removePostGroupImage();
+                              },
+                              icon: const Icon(
+                                Icons.close,
+                                size: 18.0,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 const SizedBox(
                   height: 20.0,
@@ -194,22 +196,23 @@ class AddPost extends StatelessWidget {
                             ),
                             Text(
                               'Add Photo',
+                              
                             ),
                           ],
                         ),
                       ),
                     ),
-                    Expanded(
-                      child: TextButton(
-                        onPressed: (){},
-                        child: const Text(
-                          'Add File',
-                          style: TextStyle(
-                            fontSize: 16.0,
-                          ),
-                        ),
-                      ),
-                    ),
+                    // Expanded(
+                    //   child: TextButton(
+                    //     onPressed: (){},
+                    //     child: const Text(
+                    //       'Add File',
+                    //       style: TextStyle(
+                    //         fontSize: 16.0,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ],

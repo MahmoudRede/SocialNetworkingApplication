@@ -1,4 +1,5 @@
 import 'package:final_project/constants/componts.dart';
+import 'package:final_project/constants/constants.dart';
 import 'package:final_project/layoutes/homepage/home_bloc/app_cubit.dart';
 import 'package:final_project/layoutes/homepage/home_bloc/app_states.dart';
 import 'package:final_project/models/chatModel/controller/controller.dart';
@@ -84,34 +85,34 @@ class _GroupTabState extends State<GroupTab> {
                 children: [
                   Stack(
                     alignment: AlignmentDirectional.center,
-                    children: const [
+                    children: [
                       CircleAvatar(
-                        backgroundColor: Colors.lightBlue,
-                        radius: 30.0,
+                        backgroundColor: mainColorLayout,
+                        radius: 29.0,
                       ),
-                      CircleAvatar(
-                        backgroundImage: AssetImage('assets/images/profile.png'),
+                      const CircleAvatar(
+                        backgroundImage: NetworkImage('https://img.freepik.com/free-vector/people-meeting-online-via-video-conference-flat-illustration-cartoon-group-colleagues-virtual-collective-chat-during-lockdown_74855-14136.jpg?t=st=1652004200~exp=1652004800~hmac=c996b47470bfc84b6133de60ac13265f986d40aca7310d381ed0e1d6bc15b18d&w=740'),
                         radius: 28.0,
                       ),
                     ],
 
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(3.0),
-                    child: Stack(
-                      alignment: AlignmentDirectional.center,
-                      children: const[
-                        CircleAvatar(
-                          backgroundColor: Colors.white,
-                          radius: 9.0,
-                        ),
-                        CircleAvatar(
-                          backgroundColor: Colors.amber,
-                          radius: 7.0,
-                        ),
-                      ],
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.all(3.0),
+                  //   child: Stack(
+                  //     alignment: AlignmentDirectional.center,
+                  //     children: const[
+                  //       CircleAvatar(
+                  //         backgroundColor: Colors.white,
+                  //         radius: 9.0,
+                  //       ),
+                  //       CircleAvatar(
+                  //         backgroundColor: Colors.amber,
+                  //         radius: 7.0,
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                 ],
               ),
             ),
@@ -124,8 +125,8 @@ class _GroupTabState extends State<GroupTab> {
                 children:  [
                   Text(
                     groupName,
-                    style: const TextStyle(
-                      fontSize: 18.0,
+                    style: GoogleFonts.aBeeZee(
+                      fontSize: 17.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -158,7 +159,7 @@ class _GroupTabState extends State<GroupTab> {
                   height: 5.0,
                 ),
                 CircleAvatar(
-                  backgroundColor: Colors.lightBlue,
+                  backgroundColor: mainColorLayout,
                   radius: 13,
                   child: Text('7',style: GoogleFonts.lato(
                     color: Colors.white,

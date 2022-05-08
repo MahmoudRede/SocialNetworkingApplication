@@ -28,7 +28,7 @@ class SearchScreen extends StatelessWidget {
                   style: GoogleFonts.lato(
                     color: mainColorLayout,
                     fontWeight: FontWeight.w900,
-                    fontSize: 22.0,
+                    fontSize: 21.0,
                   ),
                 ),
                 leading: IconButton(

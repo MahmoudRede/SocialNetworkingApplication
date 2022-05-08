@@ -11,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../layoutes/homepage/container_screen.dart';
 import 'Labs/lab_screen.dart';
 
 class ContantScreen extends StatelessWidget {
@@ -86,7 +87,7 @@ class ContantScreen extends StatelessWidget {
                   Icons.arrow_back_ios
               ),
               onPressed: (){
-                navigateTo(context, MaterialsScreen());
+                navigateTo(context, ContainerScreen());
               },
             ),
             elevation: 0,

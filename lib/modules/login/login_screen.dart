@@ -10,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../layoutes/homepage/container_screen.dart';
+import '../../layoutes/homepage/home_bloc/app_cubit.dart';
 import '../../shared/local/cash_helper.dart';
 import 'logincubit/bloc.dart';
 
@@ -27,6 +28,7 @@ class LoginScreen extends StatelessWidget {
                value: state.uId).then((value)
            {
              customToast('Login Successful',Colors.green);
+             AppCubit.get(context).getUserData();
              navigateAndFinish(context, const ContainerScreen());
            });
          }

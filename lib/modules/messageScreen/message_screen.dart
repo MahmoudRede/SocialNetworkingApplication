@@ -1,7 +1,9 @@
+import 'package:final_project/constants/constants.dart';
 import 'package:final_project/modules/messageScreen/tabScreens/friendsTab/friends_tab.dart';
 import 'package:final_project/modules/messageScreen/tabScreens/groupTab/group_tab.dart';
 import 'package:final_project/modules/messageScreen/tabScreens/messagesTab/messages_tab.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class MessageScreen extends StatelessWidget {
   const MessageScreen({Key? key}) : super(key: key);
@@ -18,7 +20,7 @@ class MessageScreen extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.blue,
+          backgroundColor: mainColorLayout,
           centerTitle: true,
           leading: IconButton(
             onPressed: (){
@@ -29,21 +31,24 @@ class MessageScreen extends StatelessWidget {
             ),
           ),
           title: Row(
-            children: const [
-              CircleAvatar(
-                backgroundImage: AssetImage('assets/images/Logo .jpg'),
-                radius: 25.0,
-              ),
-               SizedBox(
-                 width: 10.0,
-               ),
-               Text(
-                'Chats',
-                style: TextStyle(
-                  fontSize: 28.0,
-                  fontWeight: FontWeight.w900,
+            children: [
+              Text(
+                  'Chats',
+                  style: GoogleFonts.aBeeZee(
+                    fontSize: 27,
+                    color: Colors.white,
+                  )),
+              const Spacer(),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
+                child: CircleAvatar(
+                  radius: 26,
+                  backgroundColor: mainColorLayout,
+                  child: const CircleAvatar(
+                    backgroundImage: AssetImage('assets/images/Logo .jpg'),
+                    radius: 24.0,
+                  ),
                 ),
-                textAlign: TextAlign.center,
               ),
             ],
           ),
