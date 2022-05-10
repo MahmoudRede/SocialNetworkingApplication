@@ -30,7 +30,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   void initState() {
-    socket = IO.io("http://192.168.1.4:5000", <String, dynamic>{
+    socket = IO.io("http://192.168.1.10:5000", <String, dynamic>{
       "transports": ["websocket"],
       "autoConnect": false,
     },);

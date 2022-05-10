@@ -222,28 +222,22 @@ class AppCubit extends Cubit<AppState> {
   {
     homePost = [];
     FirebaseFirestore.instance
-        .collection('homePost')
-        .orderBy('postDate')
-        .get()
-        .then((value) {
-          value.docs.forEach((element) {
+        .collection('homePost').orderBy('postDate')
+        .snapshots().listen((event) {
+      event.docs.forEach((element) {
             element.reference.collection('comments').get().then((value) {
               homeCommentsNumber.add(value.docs.length);
               homePostsId.add(element.id);
               homePost.add(PostModel.fromFire(element.data()));
             });
-            element.reference.collection('likes').get().then((value) {
-              homeLikes.add(value.docs.length);
-            }).catchError((error){});
+            element.reference.collection('likes').snapshots().listen((event) {
+              homeLikes.add(event.docs.length);
+            });
           });
           print(homePost[0].username);
           emit(GetHomePostSuccessState());
-    }).catchError((error){
-      print('Error when get Home post : ${error.toString()}');
-      emit(GetHomePostErrorState());
     });
   }
-
 
 
   List <GroupModel> groupPosts=[];
@@ -258,9 +252,6 @@ class AppCubit extends Cubit<AppState> {
   }
 
 
-
-
-
   void getGroupPosts(){
     groupPosts=[];
 
@@ -269,9 +260,8 @@ class AppCubit extends Cubit<AppState> {
       FirebaseFirestore.instance.collection(departmentGroup!)
           .doc('grade1')
           .collection('posts').orderBy('postDate')
-          .get()
-          .then((value) {
-        value.docs.forEach((element) {
+          .snapshots().listen((event) {
+        event.docs.forEach((element) {
           element.reference.collection('comments').get().then((value) {
             groupCommentsNumber.add(value.docs.length);
             groupPostsId.add(element.id);
@@ -282,18 +272,14 @@ class AppCubit extends Cubit<AppState> {
           });
         });
         emit(GetPostGroupSuccessState());
-      }).catchError((error){
-
-        print('Error in Get GroupPost is ${error.toString()}');
-        emit(GetPostGroupErrorState());
       });
     }
     else if(gradeGroup =='Second'){
       FirebaseFirestore.instance.collection(departmentGroup!)
           .doc('grade2')
-          .collection('posts')
-          .get().then((value) {
-        value.docs.forEach((element) {
+          .collection('posts').orderBy('postDate')
+          .snapshots().listen((event) {
+        event.docs.forEach((element) {
           element.reference.collection('comments').get().then((value) {
             groupCommentsNumber.add(value.docs.length);
             groupPostsId.add(element.id);
@@ -304,20 +290,15 @@ class AppCubit extends Cubit<AppState> {
           });
         });
         emit(GetPostGroupSuccessState());
-      }).catchError((error){
-
-        print('Error in Get GroupPost is ${error.toString()}');
-        emit(GetPostGroupErrorState());
       });
-
 
     }
     else if(gradeGroup =='Third'){
       FirebaseFirestore.instance.collection(departmentGroup!)
           .doc('grade3')
-          .collection('posts')
-          .get().then((value) {
-        value.docs.forEach((element) {
+          .collection('posts').orderBy('postDate')
+          .snapshots().listen((event) {
+        event.docs.forEach((element) {
           element.reference.collection('comments').get().then((value) {
             groupCommentsNumber.add(value.docs.length);
             groupPostsId.add(element.id);
@@ -328,20 +309,14 @@ class AppCubit extends Cubit<AppState> {
           });
         });
         emit(GetPostGroupSuccessState());
-      }).catchError((error){
-
-        print('Error in Get GroupPost is ${error.toString()}');
-        emit(GetPostGroupErrorState());
       });
-
-
     }
     else if(gradeGroup =='Fourth'){
       FirebaseFirestore.instance.collection(departmentGroup!)
           .doc('grade4')
-          .collection('posts')
-          .get().then((value) {
-        value.docs.forEach((element) {
+          .collection('posts').orderBy('postDate')
+          .snapshots().listen((event) {
+        event.docs.forEach((element) {
           element.reference.collection('comments').get().then((value) {
             groupCommentsNumber.add(value.docs.length);
             groupPostsId.add(element.id);
@@ -352,15 +327,9 @@ class AppCubit extends Cubit<AppState> {
           });
         });
         emit(GetPostGroupSuccessState());
-      }).catchError((error){
-
-        print('Error in Get GroupPost is ${error.toString()}');
-        emit(GetPostGroupErrorState());
       });
-
     }
-
-  }
+    }
 
 
   String ?selectedGrade;
@@ -375,9 +344,8 @@ class AppCubit extends Cubit<AppState> {
       FirebaseFirestore.instance.collection(selectedDepartment!)
           .doc('grade1')
           .collection('posts').orderBy('postDate')
-          .get()
-          .then((value) {
-        value.docs.forEach((element) {
+          .snapshots().listen((event) {
+            event.docs.forEach((element) {
           element.reference.collection('comments').get().then((value) {
             groupCommentsNumber.add(value.docs.length);
             groupPostsId.add(element.id);
@@ -389,18 +357,14 @@ class AppCubit extends Cubit<AppState> {
           });
         });
         emit(GetGroupDoctorSuccessState());
-      }).catchError((error){
-
-        print('Error in Get GroupPost is ${error.toString()}');
-        emit(GetGroupDoctorErrorState());
       });
     }
     else if(selectedGrade =='Second'){
       FirebaseFirestore.instance.collection(selectedDepartment!)
           .doc('grade2')
-          .collection('posts')
-          .get().then((value) {
-        value.docs.forEach((element) {
+          .collection('posts').orderBy('postDate')
+          .snapshots().listen((event) {
+            event.docs.forEach((element) {
           element.reference.collection('comments').get().then((value) {
             groupCommentsNumber.add(value.docs.length);
             groupPostsId.add(element.id);
@@ -413,20 +377,15 @@ class AppCubit extends Cubit<AppState> {
           });
         });
         emit(GetGroupDoctorSuccessState());
-      }).catchError((error){
-
-        print('Error in Get GroupPost is ${error.toString()}');
-        emit(GetGroupDoctorErrorState());
       });
-
 
     }
     else if(selectedGrade =='Third'){
       FirebaseFirestore.instance.collection(selectedDepartment!)
           .doc('grade3')
-          .collection('posts')
-          .get().then((value) {
-        value.docs.forEach((element) {
+          .collection('posts').orderBy('postDate')
+          .snapshots().listen((event) {
+        event.docs.forEach((element) {
           element.reference.collection('comments').get().then((value) {
             groupCommentsNumber.add(value.docs.length);
             groupPostsId.add(element.id);
@@ -439,20 +398,15 @@ class AppCubit extends Cubit<AppState> {
           });
         });
         emit(GetGroupDoctorSuccessState());
-      }).catchError((error){
-
-        print('Error in Get GroupPost is ${error.toString()}');
-        emit(GetGroupDoctorErrorState());
       });
-
 
     }
     else if(selectedGrade =='Fourth'){
       FirebaseFirestore.instance.collection(selectedDepartment!)
           .doc('grade4')
-          .collection('posts')
-          .get().then((value) {
-        value.docs.forEach((element) {
+          .collection('posts').orderBy('postDate')
+          .snapshots().listen((event) {
+        event.docs.forEach((element) {
           element.reference.collection('comments').get().then((value) {
             groupCommentsNumber.add(value.docs.length);
             groupPostsId.add(element.id);
@@ -464,16 +418,10 @@ class AppCubit extends Cubit<AppState> {
           });
         });
         emit(GetGroupDoctorSuccessState());
-      }).catchError((error){
-
-        print('Error in Get GroupPost is ${error.toString()}');
-        emit(GetGroupDoctorErrorState());
       });
 
     }
     emit(GetGroupDoctorSuccessState());
-
-
    }
 
   void selectedDoctorValue(int indexGrade,int indexDepartment) {
@@ -717,17 +665,13 @@ class AppCubit extends Cubit<AppState> {
        case 'First' : {
          FirebaseFirestore.instance.collection('General')
              .doc('grade1')
-             .collection('posts')
-             .get().then((value) {
-               value.docs.forEach((element) {
+             .collection('posts').snapshots().listen((event) {
+               event.docs.forEach((element) {
                  if(element.data()['userId'] == userModel!.uId){
                    userPosts.add(PostModel.fromFire(element.data()));
                  }
                });
                emit(GetUserPostSuccessState());
-         }).catchError((error){
-           print('Error When get user Posts : ${error.toString()}');
-           emit(GetUserPostErrorState());
          });
          break;
        }
@@ -736,17 +680,14 @@ class AppCubit extends Cubit<AppState> {
         FirebaseFirestore.instance.collection('General')
             .doc('grade2')
             .collection('posts')
-            .get().then((value) {
-          value.docs.forEach((element) {
+            .snapshots().listen((event) {
+          event.docs.forEach((element) {
             if(element.data()['userId'] == userModel!.uId){
               userPosts.add(PostModel.fromFire(element.data()));
             }
           });
           print(userPosts.length);
           emit(GetUserPostSuccessState());
-        }).catchError((error){
-          print('Error When get user Posts : ${error.toString()}');
-          emit(GetUserPostErrorState());
         });
         break;
       }
@@ -754,16 +695,13 @@ class AppCubit extends Cubit<AppState> {
         FirebaseFirestore.instance.collection('General')
             .doc('grade3')
             .collection('posts')
-            .get().then((value) {
-          value.docs.forEach((element) {
+            .snapshots().listen((event) {
+          event.docs.forEach((element) {
             if(element.data()['userId'] == userModel!.uId){
               userPosts.add(PostModel.fromFire(element.data()));
             }
           });
           emit(GetUserPostSuccessState());
-        }).catchError((error){
-          print('Error When get user Posts : ${error.toString()}');
-          emit(GetUserPostErrorState());
         });
         break;
       }
@@ -772,16 +710,13 @@ class AppCubit extends Cubit<AppState> {
         FirebaseFirestore.instance.collection('General')
             .doc('grade4')
             .collection('posts')
-            .get().then((value) {
-          value.docs.forEach((element) {
+            .snapshots().listen((event) {
+              event.docs.forEach((element) {
             if(element.data()['userId'] == userModel!.uId){
               userPosts.add(PostModel.fromFire(element.data()));
             }
           });
           emit(GetUserPostSuccessState());
-        }).catchError((error){
-          print('Error When get user Posts : ${error.toString()}');
-          emit(GetUserPostErrorState());
         });
         break;
       }
@@ -888,7 +823,7 @@ class AppCubit extends Cubit<AppState> {
     }
   }
 
-  Future getDoctorMaterialTitles ()async
+  Future getDoctorMaterialTitles () async
   {
     coursesDoctorTitle=[];
     if(CashHelper.getData(key: 'gradeDrop')=='First'){
@@ -1018,8 +953,8 @@ class AppCubit extends Cubit<AppState> {
       FirebaseFirestore.instance
           .collection('homePost')
           .doc(postId)
-          .collection('likes').get().then((value) {
-        homeLikes.add(value.docs.length);
+          .collection('likes').snapshots().listen((event) {
+        homeLikes.add(event.docs.length);
         emit(LikeRunTimeState());
       });
       emit(LikePostsSuccessState());
@@ -1028,6 +963,7 @@ class AppCubit extends Cubit<AppState> {
       emit(LikePostsErrorState());
     });
   }
+
   void dislikeHomePost (String postId) {
     FirebaseFirestore.instance
         .collection('homePost')
@@ -1038,8 +974,8 @@ class AppCubit extends Cubit<AppState> {
       FirebaseFirestore.instance
           .collection('homePost')
           .doc(postId)
-          .collection('likes').get().then((value) {
-        homeLikes.add(value.docs.length);
+          .collection('likes').snapshots().listen((event) {
+        homeLikes.add(event.docs.length);
         emit(DisLikePostsSuccessState());
       });
     }).catchError((error) {
@@ -1062,8 +998,8 @@ class AppCubit extends Cubit<AppState> {
         FirebaseFirestore.instance
             .collection('homePost')
             .doc(postId)
-            .collection('likes').get().then((value) {
-          homeLikes.add(value.docs.length);
+            .collection('likes').snapshots().listen((event) {
+          homeLikes.add(event.docs.length);
           emit(LikeRunTimeState());
         });
         print('disliked post');
@@ -1077,8 +1013,8 @@ class AppCubit extends Cubit<AppState> {
         FirebaseFirestore.instance
             .collection('homePost')
             .doc(postId)
-            .collection('likes').get().then((value) {
-          homeLikes.add(value.docs.length);
+            .collection('likes').snapshots().listen((event) {
+          homeLikes.add(event.docs.length);
           emit(LikePostsSuccessState());
         });
         print('liked post');
@@ -1104,13 +1040,12 @@ class AppCubit extends Cubit<AppState> {
               'like': true,
               'userName' : userModel!.fullName,
             }).then((value) {
-
               FirebaseFirestore.instance.collection('General')
                   .doc('grade1')
                   .collection('posts')
                   .doc(postId)
-                  .collection('likes').get().then((value) {
-                groupLikes.add(value.docs.length);
+                  .collection('likes').snapshots().listen((event) {
+                groupLikes.add(event.docs.length);
                 emit(LikePostsSuccessState());
               });
               emit(LikePostsSuccessState());
@@ -1135,8 +1070,8 @@ class AppCubit extends Cubit<AppState> {
                   .doc('grade2')
                   .collection('posts')
                   .doc(postId)
-                  .collection('likes').get().then((value) {
-                groupLikes.add(value.docs.length);
+                  .collection('likes').snapshots().listen((event) {
+                groupLikes.add(event.docs.length);
                 emit(LikePostsSuccessState());
               });
               emit(LikePostsSuccessState());
@@ -1161,8 +1096,8 @@ class AppCubit extends Cubit<AppState> {
                   .doc('grade3')
                   .collection('posts')
                   .doc(postId)
-                  .collection('likes').get().then((value) {
-                groupLikes.add(value.docs.length);
+                  .collection('likes').snapshots().listen((event) {
+                groupLikes.add(event.docs.length);
                 emit(LikePostsSuccessState());
               });
               emit(LikePostsSuccessState());
@@ -1187,8 +1122,8 @@ class AppCubit extends Cubit<AppState> {
                   .doc('grade4')
                   .collection('posts')
                   .doc(postId)
-                  .collection('likes').get().then((value) {
-                groupLikes.add(value.docs.length);
+                  .collection('likes').snapshots().listen((event) {
+                groupLikes.add(event.docs.length);
                 emit(LikePostsSuccessState());
               });
               emit(LikePostsSuccessState());
@@ -1221,8 +1156,8 @@ class AppCubit extends Cubit<AppState> {
                   .doc('grade1')
                   .collection('posts')
                   .doc(postId)
-                  .collection('likes').get().then((value) {
-                groupLikes.add(value.docs.length);
+                  .collection('likes').snapshots().listen((event) {
+                groupLikes.add(event.docs.length);
                 emit(LikePostsSuccessState());
               });
               emit(LikePostsSuccessState());
@@ -1247,8 +1182,8 @@ class AppCubit extends Cubit<AppState> {
                   .doc('grade2')
                   .collection('posts')
                   .doc(postId)
-                  .collection('likes').get().then((value) {
-                groupLikes.add(value.docs.length);
+                  .collection('likes').snapshots().listen((event) {
+                groupLikes.add(event.docs.length);
                 emit(LikePostsSuccessState());
               });
               emit(LikePostsSuccessState());
@@ -1273,8 +1208,8 @@ class AppCubit extends Cubit<AppState> {
                   .doc('grade3')
                   .collection('posts')
                   .doc(postId)
-                  .collection('likes').get().then((value) {
-                groupLikes.add(value.docs.length);
+                  .collection('likes').snapshots().listen((event) {
+                groupLikes.add(event.docs.length);
                 emit(LikePostsSuccessState());
               });
               emit(LikePostsSuccessState());
@@ -1299,8 +1234,8 @@ class AppCubit extends Cubit<AppState> {
                   .doc('grade4')
                   .collection('posts')
                   .doc(postId)
-                  .collection('likes').get().then((value) {
-                groupLikes.add(value.docs.length);
+                  .collection('likes').snapshots().listen((event) {
+                groupLikes.add(event.docs.length);
                 emit(LikePostsSuccessState());
               });
               emit(LikePostsSuccessState());
@@ -1332,8 +1267,8 @@ class AppCubit extends Cubit<AppState> {
                   .doc('grade1')
                   .collection('posts')
                   .doc(postId)
-                  .collection('likes').get().then((value) {
-                groupLikes.add(value.docs.length);
+                  .collection('likes').snapshots().listen((event) {
+                groupLikes.add(event.docs.length);
                 emit(LikePostsSuccessState());
               });
               emit(LikePostsSuccessState());
@@ -1358,8 +1293,8 @@ class AppCubit extends Cubit<AppState> {
                   .doc('grade2')
                   .collection('posts')
                   .doc(postId)
-                  .collection('likes').get().then((value) {
-                groupLikes.add(value.docs.length);
+                  .collection('likes').snapshots().listen((event) {
+                groupLikes.add(event.docs.length);
                 emit(LikePostsSuccessState());
               });
               emit(LikePostsSuccessState());
@@ -1384,8 +1319,8 @@ class AppCubit extends Cubit<AppState> {
                   .doc('grade3')
                   .collection('posts')
                   .doc(postId)
-                  .collection('likes').get().then((value) {
-                groupLikes.add(value.docs.length);
+                  .collection('likes').snapshots().listen((event) {
+                groupLikes.add(event.docs.length);
                 emit(LikePostsSuccessState());
               });
               emit(LikePostsSuccessState());
@@ -1410,8 +1345,8 @@ class AppCubit extends Cubit<AppState> {
                   .doc('grade4')
                   .collection('posts')
                   .doc(postId)
-                  .collection('likes').get().then((value) {
-                groupLikes.add(value.docs.length);
+                  .collection('likes').snapshots().listen((event) {
+                groupLikes.add(event.docs.length);
                 emit(LikePostsSuccessState());
               });
               emit(LikePostsSuccessState());
@@ -1443,8 +1378,8 @@ class AppCubit extends Cubit<AppState> {
                   .doc('grade1')
                   .collection('posts')
                   .doc(postId)
-                  .collection('likes').get().then((value) {
-                groupLikes.add(value.docs.length);
+                  .collection('likes').snapshots().listen((event) {
+                groupLikes.add(event.docs.length);
                 emit(LikePostsSuccessState());
               });
               emit(LikePostsSuccessState());
@@ -1469,8 +1404,8 @@ class AppCubit extends Cubit<AppState> {
                   .doc('grade2')
                   .collection('posts')
                   .doc(postId)
-                  .collection('likes').get().then((value) {
-                groupLikes.add(value.docs.length);
+                  .collection('likes').snapshots().listen((event) {
+                groupLikes.add(event.docs.length);
                 emit(LikePostsSuccessState());
               });
               emit(LikePostsSuccessState());
@@ -1495,8 +1430,8 @@ class AppCubit extends Cubit<AppState> {
                   .doc('grade3')
                   .collection('posts')
                   .doc(postId)
-                  .collection('likes').get().then((value) {
-                groupLikes.add(value.docs.length);
+                  .collection('likes').snapshots().listen((event) {
+                groupLikes.add(event.docs.length);
                 emit(LikePostsSuccessState());
               });
               emit(LikePostsSuccessState());
@@ -1521,8 +1456,8 @@ class AppCubit extends Cubit<AppState> {
                   .doc('grade3')
                   .collection('posts')
                   .doc(postId)
-                  .collection('likes').get().then((value) {
-                groupLikes.add(value.docs.length);
+                  .collection('likes').snapshots().listen((event) {
+                groupLikes.add(event.docs.length);
                 emit(LikePostsSuccessState());
               });
               emit(LikePostsSuccessState());
@@ -3066,7 +3001,7 @@ class AppCubit extends Cubit<AppState> {
     emit(SetGradeDropState());
   }
 
-//
+
   void setDepartmentDrop(value){
     departmentDropMenu=value;
     CashHelper.saveData(key: 'departmentDrop',value: departmentDropMenu);
@@ -3146,49 +3081,6 @@ class AppCubit extends Cubit<AppState> {
 
     print(Grades['Grade'][0]);
   }
-  // File? uploadedChatImage ;
-  //
-  // Future <void> getChatImage() async {
-  //   final pickedFile = await picker.pickImage(
-  //     source: ImageSource.gallery,
-  //   );
-  //   if (pickedFile != null) {
-  //     uploadedChatImage = File(pickedFile.path);
-  //     emit(UploadChatImageSuccessState());
-  //   } else {
-  //     print('No Image selected.');
-  //     emit(UploadChatImageErrorState());
-  //   }
-  // }
-  //
-  // String ?chatImage='';
-  // Future createUrlImage ()async
-  // {
-  //   firebase_storage.FirebaseStorage.instance
-  //       .ref()
-  //       .child('ChatImages/${Uri.file(uploadedChatImage!.path)
-  //       .pathSegments.last}').putFile(uploadedChatImage!)
-  //       .then((value){
-  //
-  //     value.ref.getDownloadURL().then((value) {
-  //
-  //       chatImage=value.toString();
-  //       print('image url ${value.toString()}');
-  //       emit(UploadChatImageSuccessState());
-  //     }).catchError((error){
-  //       print('Error When Create post with image : ${error.toString()}');
-  //       emit(UploadChatImageErrorState());
-  //     });
-  //   }).catchError((error){
-  //     print('Error When Upload image in Firesorage : ${error.toString()}');
-  //     emit(UploadChatImageSuccessState());
-  //   });
-  // }
-  //
-  // void removeChatImage() {
-  //   uploadedChatImage = null;
-  //   emit(RemoveChatImageSuccessState());
-  // }
 
   List ?messagesBot=[];
 
@@ -3206,11 +3098,6 @@ class AppCubit extends Cubit<AppState> {
     emit(AddChatBotMessageSuccessState());
   }
 
-  // void chatBotMessagesRespond(){
-  //
-  //
-  //   emit(AddChatBotMessageSuccessState());
-  // }
 
   bool ?checkRespond=false;
   List <String> chatBotCourses=[];

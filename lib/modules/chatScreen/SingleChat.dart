@@ -29,7 +29,7 @@ class _SingleChatState extends State<SingleChat> {
   }
 
   void connect() {
-    socket = IO.io("http://192.168.1.4:5000",  OptionBuilder()
+    socket = IO.io("http://192.168.1.10:5000",  OptionBuilder()
         .setTransports(['websocket'])
         .build(),
     );

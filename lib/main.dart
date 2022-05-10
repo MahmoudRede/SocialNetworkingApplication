@@ -9,6 +9,7 @@ import 'package:final_project/modules/BotScreen/botContainer.dart';
 import 'package:final_project/modules/BotScreen/botDesign.dart';
 import 'package:final_project/modules/CommentScreen/CommentScreen.dart';
 import 'package:final_project/modules/NewPost/NewPost.dart';
+import 'package:final_project/modules/RoadMapScreen/RoadMapScreen.dart';
 import 'package:final_project/modules/addPost/add_post.dart';
 import 'package:final_project/modules/analysisScreen/analysis_screen.dart';
 import 'package:final_project/modules/chatScreen/chat_screen.dart';
@@ -57,7 +58,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => AppCubit()..getHomePost()..getUserData()..getGroupPosts()..printAnalysis(),
+      create: (BuildContext context) => AppCubit()..getUserData()..getHomePost()..getGroupPosts()..printAnalysis(),
       child: BlocConsumer<AppCubit,AppState>(
         listener: (context,state){},
         builder: (context,state){
@@ -66,13 +67,7 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primaryColor: Colors.blue,
               scaffoldBackgroundColor: Colors.white,
-              appBarTheme: AppBarTheme(
-                backwardsCompatibility: false,
-                systemOverlayStyle: SystemUiOverlayStyle(
-                  statusBarColor: mainColorLayout,
-                  statusBarBrightness: Brightness.light,
-                  statusBarIconBrightness:Brightness.light,
-                ),
+              appBarTheme: const AppBarTheme(
                 backgroundColor: Colors.white,
                 elevation: 0.0,
               ),
@@ -80,7 +75,7 @@ class MyApp extends StatelessWidget {
                 Theme.of(context).textTheme,
               ),
             ),
-            home:LoginScreen(),
+            home: const RoadMapScreen(),
           );
         },
       ),

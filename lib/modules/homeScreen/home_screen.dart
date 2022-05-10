@@ -297,7 +297,7 @@ Widget postItem(PostModel model ,index  , context){
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children:  [
-              Text('23',
+              Text('${AppCubit.get(context).homeLikes[index]}',
                 style: GoogleFonts.lato(
                     color: Colors.grey,
                     fontSize: 14,
@@ -313,7 +313,7 @@ Widget postItem(PostModel model ,index  , context){
                 ),),
               const Spacer(),
               Text(
-                '6',
+                '${AppCubit.get(context).homeCommentsNumber[index]}',
                 style: GoogleFonts.lato(
                     color: Colors.grey,
                     fontSize: 14,
