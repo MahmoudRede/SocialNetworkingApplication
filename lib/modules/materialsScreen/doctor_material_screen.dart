@@ -4,6 +4,7 @@ import 'package:final_project/layoutes/homepage/home_bloc/app_cubit.dart';
 import 'package:final_project/layoutes/homepage/home_bloc/app_states.dart';
 import 'package:final_project/modules/Contants/contant_screen.dart';
 import 'package:final_project/modules/materialsScreen/materials_screen.dart';
+import 'package:final_project/modules/materialsScreen/special_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -86,11 +87,23 @@ class DoctorMaterialScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                       child: IconButton(
                           onPressed: (){
-                            AppCubit.get(context).getDoctorMaterialTitles().then((value) {
-                              navigateTo(context, MaterialsScreen()).then((value) {
+                            if( AppCubit.get(context).departmentDropMenu=='General'){
+                              if(AppCubit.get(context).gradeDropMenu=='Fourth' || AppCubit.get(context).gradeDropMenu=='Third'){
+                                navigateTo(context, SpeicalScreen());
+                              }
+                              else{
+                                AppCubit.get(context).getDoctorMaterialTitles().then((value) {
+                                  navigateTo(context, const MaterialsScreen()).then((value) {
+                                  });
+                                });
+                              }
+                              }
+                            else{
+                              AppCubit.get(context).getDoctorMaterialTitles().then((value) {
+                                navigateTo(context, const MaterialsScreen()).then((value) {
+                                });
                               });
-                            });
-
+                            }
 
                           },
                           icon: const Icon(
@@ -159,6 +172,7 @@ class DoctorMaterialScreen extends StatelessWidget {
                       ],
                     ),
                   ),
+
                   Positioned(
                     top: MediaQuery.of(context).size.height * .40,
                     left: 22,

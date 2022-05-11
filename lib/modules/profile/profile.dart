@@ -52,13 +52,24 @@ class ProfileScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       Material(
+                        color: mainColorLayout.withOpacity(.95),
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            
+
+                          ),
+                        ),
                         elevation: 10,
                         child: Container(
                           margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                           padding: const EdgeInsets.fromLTRB(20, 25 , 20, 5),
-                          decoration: BoxDecoration(
-                            color: const Color.fromRGBO(11, 24, 82, .9),
-                            borderRadius: BorderRadius.circular(0),
+                          decoration: const BoxDecoration(
+                            color: Color.fromRGBO(11, 24, 82, .9),
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(200),
+                              bottomRight: Radius.circular(200),
+
+                            ),
 
                           ),
                           height: MediaQuery.of(context).size.height * 0.3,

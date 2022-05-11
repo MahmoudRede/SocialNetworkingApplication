@@ -70,9 +70,11 @@ class AppCubit extends Cubit<AppState> {
 
   void changeBottomNavigate(index){
     currentIndex=index;
-    // if(index==1){
-    // getMaterialTitles();
-    // }
+    if(index==2){
+    getMaterialTitles();
+    getMaterial();
+
+    }
     emit(ChangeBottomNavigateState());
   }
 
@@ -626,12 +628,19 @@ class AppCubit extends Cubit<AppState> {
 
   }
 
+  Future refreshApp() async {
+    await Future.delayed(const Duration(seconds: 3));
+    getUserData();
+    getHomePost();
+    getGroupPosts();
+    emit(RefreashApp());
+  }
 
 
   Future refreshData() async {
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 3));
     getGroupPosts();
-    emit(GetPostGroupSuccessState());
+    emit(RefreashApp());
   }
 
   List <UserModel> userFriends = [] ;
@@ -823,6 +832,8 @@ class AppCubit extends Cubit<AppState> {
     }
   }
 
+  String ? valueSpeical='';
+
   Future getDoctorMaterialTitles () async
   {
     coursesDoctorTitle=[];
@@ -857,10 +868,40 @@ class AppCubit extends Cubit<AppState> {
         emit(GetMaterialErrorState());
       });
     }
-    else if(CashHelper.getData(key: 'gradeDrop')=='Third'){
+    else if(CashHelper.getData(key: 'gradeDrop')=='Third' && CashHelper.getData(key: 'departmentDrop') !='General'){
       FirebaseFirestore.instance.collection('${CashHelper.getData(key: 'departmentDrop')}')
           .doc('grade3')
           .collection('Material')
+          .get().then((value) {
+        value.docs.forEach((element) {
+          coursesDoctorTitle.add(element.id.toString());
+        });
+        print('lecture size : ${lecture.length}');
+        emit(GetMaterialSuccessState());
+      }).catchError((error){
+        print('Error when get Material : ${error.toString()}');
+        emit(GetMaterialErrorState());
+      });
+    }
+    else if(CashHelper.getData(key: 'gradeDrop')=='Third' && CashHelper.getData(key: 'departmentDrop') =='General'){
+      FirebaseFirestore.instance.collection('${CashHelper.getData(key: 'departmentDrop')}')
+          .doc('grade3')
+          .collection(valueSpeical!)
+          .get().then((value) {
+        value.docs.forEach((element) {
+          coursesDoctorTitle.add(element.id.toString());
+        });
+        print('lecture size : ${lecture.length}');
+        emit(GetMaterialSuccessState());
+      }).catchError((error){
+        print('Error when get Material : ${error.toString()}');
+        emit(GetMaterialErrorState());
+      });
+    }
+    else if(CashHelper.getData(key: 'gradeDrop')=='Fourth' && CashHelper.getData(key: 'departmentDrop') =='General'){
+      FirebaseFirestore.instance.collection('${CashHelper.getData(key: 'departmentDrop')}')
+          .doc('grade4')
+          .collection(valueSpeical!)
           .get().then((value) {
         value.docs.forEach((element) {
           coursesDoctorTitle.add(element.id.toString());

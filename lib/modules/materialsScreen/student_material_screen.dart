@@ -18,8 +18,8 @@ class StudentMaterialScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Builder(
       builder: (context) {
-        AppCubit.get(context).getMaterialTitles();
-        AppCubit.get(context).getMaterial();
+        // AppCubit.get(context).getMaterialTitles();
+        // AppCubit.get(context).getMaterial();
         return BlocConsumer <AppCubit , AppState>(
           listener: (context , state){},
           builder: (context , state){

@@ -13,8 +13,10 @@ import 'package:final_project/modules/RoadMapScreen/RoadMapScreen.dart';
 import 'package:final_project/modules/addPost/add_post.dart';
 import 'package:final_project/modules/analysisScreen/analysis_screen.dart';
 import 'package:final_project/modules/chatScreen/chat_screen.dart';
+import 'package:final_project/modules/complaintScreen/complaint_screen.dart';
 import 'package:final_project/modules/login/login_screen.dart';
 import 'package:final_project/modules/materialsScreen/doctor_material_screen.dart';
+import 'package:final_project/modules/materialsScreen/special_screen.dart';
 import 'package:final_project/modules/messageScreen/message_screen.dart';
 import 'package:final_project/modules/onboardingScreen/onboarding_screen.dart';
 import 'package:final_project/modules/profile/profile.dart';
@@ -36,7 +38,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:record_mp3/record_mp3.dart';
 import 'firebase_options.dart';
+import 'modules/test_record.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -67,7 +71,11 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primaryColor: Colors.blue,
               scaffoldBackgroundColor: Colors.white,
-              appBarTheme: const AppBarTheme(
+              appBarTheme: AppBarTheme(
+                systemOverlayStyle: SystemUiOverlayStyle(
+                  statusBarColor: mainColorLayout,
+                  statusBarIconBrightness: Brightness.light
+                ),
                 backgroundColor: Colors.white,
                 elevation: 0.0,
               ),
@@ -75,7 +83,7 @@ class MyApp extends StatelessWidget {
                 Theme.of(context).textTheme,
               ),
             ),
-            home: const RoadMapScreen(),
+            home: ContainerScreen(),
           );
         },
       ),

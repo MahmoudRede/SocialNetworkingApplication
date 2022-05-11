@@ -30,171 +30,174 @@ class LayoutScreen extends StatelessWidget {
               child: Scaffold(
                   backgroundColor: Colors.grey.shade100,
                   appBar: appBar(AppBar().preferredSize.height , context),
-                  body: cubit.doctorCheck==null? SizedBox(
-                    height:500,
-                    child: ListView.separated(
-                      itemBuilder: (context,index){
-                        return Container(
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  const SizedBox(width: 20,),
-                                  CircleAvatar(
-                                    radius: 28,
-                                    backgroundColor: Colors.grey[300],
-                                  ),
-                                  const SizedBox(width: 10,),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        height: 10,
-                                        width: 120,
-                                        decoration: BoxDecoration(
-                                            color: Colors.grey[300],
-                                            borderRadius: BorderRadius.circular(20)
-
-                                        ),
-                                      ),
-                                      const SizedBox(height: 5,),
-                                      Container(
-                                        height: 10,
-                                        width: 150,
-                                        decoration: BoxDecoration(
-                                            color: Colors.grey[300],
-                                            borderRadius: BorderRadius.circular(20)
-
-                                        ),
-                                      ),
-                                      const SizedBox(height: 5,),
-                                      Container(
-                                        height: 10,
-                                        width: 140,
-                                        decoration: BoxDecoration(
-                                            color: Colors.grey[300],
-                                            borderRadius: BorderRadius.circular(20)
-
-                                        ),
-                                      ),
-                                      const SizedBox(height: 5,),
-                                    ],
-                                  )
-                                ],
-                              ),
-                              const SizedBox(height: 10,),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    margin: const EdgeInsets.only(left: 20),
-                                    height: 10,
-                                    width: 300,
-                                    decoration: BoxDecoration(
-                                        color: Colors.grey[300],
-                                        borderRadius: BorderRadius.circular(20)
-
+                  body: RefreshIndicator(
+                    onRefresh: AppCubit.get(context).refreshApp,
+                    child: cubit.doctorCheck==null? SizedBox(
+                      height:500,
+                      child: ListView.separated(
+                        itemBuilder: (context,index){
+                          return Container(
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    const SizedBox(width: 20,),
+                                    CircleAvatar(
+                                      radius: 28,
+                                      backgroundColor: Colors.grey[300],
                                     ),
-                                  ),
-                                  const SizedBox(height: 5,),
-                                  Container(
-                                    margin: const EdgeInsets.only(left: 20),
-                                    height: 10,
-                                    width: 280,
-                                    decoration: BoxDecoration(
-                                        color: Colors.grey[300],
-                                        borderRadius: BorderRadius.circular(20)
+                                    const SizedBox(width: 10,),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          height: 10,
+                                          width: 120,
+                                          decoration: BoxDecoration(
+                                              color: Colors.grey[300],
+                                              borderRadius: BorderRadius.circular(20)
 
+                                          ),
+                                        ),
+                                        const SizedBox(height: 5,),
+                                        Container(
+                                          height: 10,
+                                          width: 150,
+                                          decoration: BoxDecoration(
+                                              color: Colors.grey[300],
+                                              borderRadius: BorderRadius.circular(20)
+
+                                          ),
+                                        ),
+                                        const SizedBox(height: 5,),
+                                        Container(
+                                          height: 10,
+                                          width: 140,
+                                          decoration: BoxDecoration(
+                                              color: Colors.grey[300],
+                                              borderRadius: BorderRadius.circular(20)
+
+                                          ),
+                                        ),
+                                        const SizedBox(height: 5,),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                                const SizedBox(height: 10,),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      margin: const EdgeInsets.only(left: 20),
+                                      height: 10,
+                                      width: 300,
+                                      decoration: BoxDecoration(
+                                          color: Colors.grey[300],
+                                          borderRadius: BorderRadius.circular(20)
+
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(height: 10,),
-                                  Container(
-                                    height: 220,
-                                    width: 350,
-                                    decoration: BoxDecoration(
+                                    const SizedBox(height: 5,),
+                                    Container(
+                                      margin: const EdgeInsets.only(left: 20),
+                                      height: 10,
+                                      width: 280,
+                                      decoration: BoxDecoration(
+                                          color: Colors.grey[300],
+                                          borderRadius: BorderRadius.circular(20)
+
+                                      ),
+                                    ),
+                                    const SizedBox(height: 10,),
+                                    Container(
+                                      height: 220,
+                                      width: 350,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey[300],
+                                      ),
+                                    ),
+                                    const SizedBox(height: 5,),
+                                    Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Container(
+                                              margin: const EdgeInsets.only(left: 20),
+                                              height: 12,
+                                              width: 12,
+                                              decoration: BoxDecoration(
+                                                  color: Colors.grey[300],
+                                                  borderRadius: BorderRadius.circular(20)
+
+                                              ),
+                                            ),
+                                            const SizedBox(width: 5,),
+                                            Container(
+                                              height: 12,
+                                              width: 12,
+                                              decoration: BoxDecoration(
+                                                  color: Colors.grey[300],
+                                                  borderRadius: BorderRadius.circular(20)
+
+                                              ),
+                                            ),
+                                            const SizedBox(width: 5,),
+                                            Container(
+                                              height: 12,
+                                              width: 12,
+                                              decoration: BoxDecoration(
+                                                  color: Colors.grey[300],
+                                                  borderRadius: BorderRadius.circular(20)
+
+                                              ),
+                                            ),
+                                            const SizedBox(width: 5,),
+                                            Container(
+                                              height: 10,
+                                              width: 70,
+                                              decoration: BoxDecoration(
+                                                  color: Colors.grey[300],
+                                                  borderRadius: BorderRadius.circular(20)
+
+                                              ),
+                                            ),
+                                            const SizedBox(width: 5,),
+                                            const Spacer(),
+                                            Container(
+                                              height: 10,
+                                              width: 100,
+                                              decoration: BoxDecoration(
+                                                  color: Colors.grey[300],
+                                                  borderRadius: BorderRadius.circular(20)
+
+                                              ),
+                                            ),
+                                            const SizedBox(width: 10,),
+
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    const SizedBox(height: 10,),
+                                    Container(
+                                      height: 20,
                                       color: Colors.grey[300],
-                                    ),
-                                  ),
-                                  const SizedBox(height: 5,),
-                                  Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Container(
-                                            margin: const EdgeInsets.only(left: 20),
-                                            height: 12,
-                                            width: 12,
-                                            decoration: BoxDecoration(
-                                                color: Colors.grey[300],
-                                                borderRadius: BorderRadius.circular(20)
+                                    )
+                                  ],
+                                )
 
-                                            ),
-                                          ),
-                                          const SizedBox(width: 5,),
-                                          Container(
-                                            height: 12,
-                                            width: 12,
-                                            decoration: BoxDecoration(
-                                                color: Colors.grey[300],
-                                                borderRadius: BorderRadius.circular(20)
-
-                                            ),
-                                          ),
-                                          const SizedBox(width: 5,),
-                                          Container(
-                                            height: 12,
-                                            width: 12,
-                                            decoration: BoxDecoration(
-                                                color: Colors.grey[300],
-                                                borderRadius: BorderRadius.circular(20)
-
-                                            ),
-                                          ),
-                                          const SizedBox(width: 5,),
-                                          Container(
-                                            height: 10,
-                                            width: 70,
-                                            decoration: BoxDecoration(
-                                                color: Colors.grey[300],
-                                                borderRadius: BorderRadius.circular(20)
-
-                                            ),
-                                          ),
-                                          const SizedBox(width: 5,),
-                                          const Spacer(),
-                                          Container(
-                                            height: 10,
-                                            width: 100,
-                                            decoration: BoxDecoration(
-                                                color: Colors.grey[300],
-                                                borderRadius: BorderRadius.circular(20)
-
-                                            ),
-                                          ),
-                                          const SizedBox(width: 10,),
-
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                  const SizedBox(height: 10,),
-                                  Container(
-                                    height: 20,
-                                    color: Colors.grey[300],
-                                  )
-                                ],
-                              )
-
-                            ],
-                          ),
-                        );
-                      },
-                      separatorBuilder: (context,index){
-                        return const SizedBox(height: 10,);
-                      },
-                      itemCount: 5 ,
-                    ),
-                  ): cubit.doctorCheck!?cubit.doctorScreens[cubit.currentIndex]:cubit.studentScreens[cubit.currentIndex],
+                              ],
+                            ),
+                          );
+                        },
+                        separatorBuilder: (context,index){
+                          return const SizedBox(height: 10,);
+                        },
+                        itemCount: 5 ,
+                      ),
+                    ): cubit.doctorCheck!?cubit.doctorScreens[cubit.currentIndex]:cubit.studentScreens[cubit.currentIndex],
+                  ),
                   bottomNavigationBar: SalomonBottomBar(
                     onTap: (index){
                       cubit.changeBottomNavigate(index);

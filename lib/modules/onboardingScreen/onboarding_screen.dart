@@ -154,11 +154,15 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Column(
+
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(
+                height: MediaQuery.of(context).size.height*0.02,
+              ),
               Text(
                 model.title,
-                style: GoogleFonts.candal(
+                style: GoogleFonts.aBeeZee(
                   fontSize: 22.0,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,

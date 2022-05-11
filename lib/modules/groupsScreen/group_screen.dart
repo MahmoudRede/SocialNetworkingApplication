@@ -32,9 +32,7 @@ class GroupScreen extends StatelessWidget {
             const Center(child: CircularProgressIndicator()):
             Scaffold(
               backgroundColor: Colors.grey.shade100,
-              body: RefreshIndicator(
-                onRefresh: cubit.refreshData,
-                child: SingleChildScrollView(
+              body:SingleChildScrollView(
                   child: Column(
                     children: [
                       const SizedBox(height: 8,),
@@ -229,7 +227,7 @@ class GroupScreen extends StatelessWidget {
                     ],
                  ),
                 ),
-              ),
+
               floatingActionButton:FloatingActionButton(
                 backgroundColor: mainColorLayout,
                 onPressed:(){

@@ -14,6 +14,10 @@ class NormalScreenState extends AppState{
 
 }
 
+class RefreashApp extends AppState{
+
+}
+
 class ChangeBottomNavigateState extends AppState{
 
 }
