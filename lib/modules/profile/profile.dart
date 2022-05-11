@@ -24,22 +24,23 @@ class ProfileScreen extends StatelessWidget {
             var cubit = AppCubit.get(context);
             List <PostModel> myPosts = cubit.userPosts;
             return Scaffold(
-              backgroundColor: Colors.grey[100],
+              backgroundColor: Colors.white,
               appBar: AppBar(
-                elevation: 2,
+                backgroundColor: mainColorLayout,
+                elevation: 0,
                 leading:IconButton(
                   onPressed: (){
                     navigateTo(context, const ContainerScreen());
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.arrow_back,
-                    color: mainColorLayout,
+                    color: Colors.white,
                   ),
                 ),
                 title: Text(
                   'My Profile',
                   style: GoogleFonts.lato(
-                    color: mainColorLayout,
+                    color: Colors.white,
                     fontWeight: FontWeight.w900,
                     fontSize: 17,
                   ),
@@ -52,26 +53,16 @@ class ProfileScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       Material(
-                        color: mainColorLayout.withOpacity(.95),
+                        color: mainColorLayout,
                         shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
-                            
-
                           ),
                         ),
                         elevation: 10,
                         child: Container(
                           margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                           padding: const EdgeInsets.fromLTRB(20, 25 , 20, 5),
-                          decoration: const BoxDecoration(
-                            color: Color.fromRGBO(11, 24, 82, .9),
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(200),
-                              bottomRight: Radius.circular(200),
-
-                            ),
-
-                          ),
+                          color: mainColorLayout,
                           height: MediaQuery.of(context).size.height * 0.3,
                           width: MediaQuery.of(context).size.width,
                           child: Column(

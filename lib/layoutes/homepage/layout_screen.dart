@@ -269,8 +269,10 @@ class LayoutScreen extends StatelessWidget {
                 children: [
                   InkWell(
                     onTap: (){
-                      AppCubit.get(context).getUserData();
-                      AppCubit.get(context).doSmallScreen();
+                      AppCubit.get(context).getUserData().then((value) {
+                        AppCubit.get(context).doSmallScreen();
+                      });
+
                     },
                     child: Icon(Icons.menu, color: mainColorLayout,),
                   ),

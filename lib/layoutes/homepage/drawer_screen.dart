@@ -104,65 +104,19 @@ class DrawerScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(height: 10,),
-                        cubit.userModel!.image==null || cubit.userModel!.fullName==null || cubit.userModel!.bio==null?
-                        Row(
-                          children: [
-                            const SizedBox(width: 0,),
-                            CircleAvatar(
-                              radius: 28,
-                              backgroundColor: Colors.grey[300],
-                            ),
-                            const SizedBox(width: 10,),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  height: 10,
-                                  width: 120,
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey[300],
-                                      borderRadius: BorderRadius.circular(20)
-
-                                  ),
-                                ),
-                                const SizedBox(height: 5,),
-                                Container(
-                                  height: 10,
-                                  width: 150,
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey[300],
-                                      borderRadius: BorderRadius.circular(20)
-
-                                  ),
-                                ),
-                                const SizedBox(height: 5,),
-                                Container(
-                                  height: 10,
-                                  width: 140,
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey[300],
-                                      borderRadius: BorderRadius.circular(20)
-
-                                  ),
-                                ),
-                                const SizedBox(height: 5,),
-                              ],
-                            )
-                          ],
-                        ):
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             CircleAvatar(
-                              radius: 27,
-                              backgroundColor: Colors.white,
+                              radius: 36,
+                              backgroundColor: mainColorLayout,
                               child: InkWell(
                                 onTap: (){
                                   AppCubit.get(context).doSmallScreen();
                                 },
-                                child: CircleAvatar(
-                                  radius: 25,
-                                  backgroundImage: NetworkImage((cubit.userModel!.image)!),
+                                child: const CircleAvatar(
+                                  radius: 32,
+                                  backgroundImage: AssetImage('assets/images/Logo .jpg'),
                                 ),
                               ),
                             ),
@@ -172,22 +126,11 @@ class DrawerScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                    (cubit.userModel!.fullName)!,
+                                    'BFCAI Community',
                                     style: GoogleFonts.lato(
                                         color: Colors.white,
-                                        fontSize: 15,
+                                        fontSize: 20,
                                         fontWeight: FontWeight.bold)
-                                ),
-                                const SizedBox(height: 7,),
-                                Text(
-                                    '${cubit.userModel!.bio}',
-                                    style: GoogleFonts.lato(
-                                      color: Colors.white,
-                                      fontSize: 13,
-                                    ),
-                                ),
-                                const SizedBox(
-                                  height: 15,
                                 ),
                               ],
                             ),
@@ -200,7 +143,7 @@ class DrawerScreen extends StatelessWidget {
                     children: [
                       const SizedBox(height: 80,),
                       Container(
-                        height:350,
+                        height: MediaQuery.of(context).size.height * 0.50,
                         child: ListView.separated(
                             itemBuilder: (context,index)=> drawerBlock(drawerItems[index]),
                             separatorBuilder: (context,index){
@@ -209,21 +152,23 @@ class DrawerScreen extends StatelessWidget {
                             itemCount: drawerItems.length
                         ),
                       ),
-                      SizedBox(height: MediaQuery.of(context).size.height*.13 ,),
+                      SizedBox(height: MediaQuery.of(context).size.height*.14,),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(17, 15, 17, 0),
                         child: Row(
                           children: [
+                            const Icon(
+                              Icons.lightbulb_outline,
+                              color: Colors.white,
+                            ),
+                            const SizedBox(
+                              width: 5.0,
+                            ),
                             Text('Help Center',style: GoogleFonts.lato(
                                 fontSize: 15,
-                                color: Colors.white
-                            ),),
-                            // const Spacer(),
-                            // Container(
-                            //     height: 25,
-                            //     width: 25,
-                            //     child: const Image(image: AssetImage('assets/images/idea.png')
-                            //     )),
+                                color: Colors.white,
+                            ),
+                            ),
                           ],
                         ),
                       ),

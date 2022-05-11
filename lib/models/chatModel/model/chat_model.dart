@@ -3,8 +3,7 @@ class Message {
   String? sentByMe;
   String? roomName;
 
-  Message(
-      {required this.message, required this.sentByMe, required this.roomName});
+  Message({required this.message, required this.sentByMe, required this.roomName});
 
   factory Message.fromJson(Map<String, dynamic> Json) {
     return Message(

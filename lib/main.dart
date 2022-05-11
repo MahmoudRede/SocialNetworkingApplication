@@ -69,7 +69,7 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
-              primaryColor: Colors.blue,
+              primaryColor: mainColorLayout,
               scaffoldBackgroundColor: Colors.white,
               appBarTheme: AppBarTheme(
                 systemOverlayStyle: SystemUiOverlayStyle(
@@ -83,7 +83,7 @@ class MyApp extends StatelessWidget {
                 Theme.of(context).textTheme,
               ),
             ),
-            home: ContainerScreen(),
+            home: const ContainerScreen(),
           );
         },
       ),

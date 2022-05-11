@@ -42,6 +42,9 @@ class _ChatScreenState extends State<ChatScreen> {
       socket.on("get_group_messages" , (data){
         //print("get messages function : ${data['messages'].toString()}");
         groupMessages = data['messages'];
+        groupMessages.forEach((element) {
+          chatController.chat_message.add(element);
+        });
         print('group message : ${groupMessages.toString()}');
       });
     });
