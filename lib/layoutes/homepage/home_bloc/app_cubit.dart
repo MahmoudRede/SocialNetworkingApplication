@@ -81,7 +81,7 @@ class AppCubit extends Cubit<AppState> {
   List <Widget> studentScreens =[
     const HomeScreen(),
     const GroupScreen(),
-    StudentMaterialScreen(),
+    DoctorMaterialScreen(),
     const SettingScreen(),
   ];
 

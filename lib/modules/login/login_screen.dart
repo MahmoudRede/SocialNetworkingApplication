@@ -2,6 +2,7 @@
 
 import 'package:final_project/constants/componts.dart';
 import 'package:final_project/constants/constants.dart';
+import 'package:final_project/modules/login/ForgetPassword.dart';
 import 'package:final_project/modules/login/logincubit/states.dart';
 import 'package:final_project/modules/register/register_screen.dart';
 import 'package:final_project/modules/register/registercubit/states.dart';
@@ -135,7 +136,7 @@ class LoginScreen extends StatelessWidget {
                               child: dafaultFormField(
                                   label: 'Email',
                                   icon: const Icon(
-                                    Icons.lock,
+                                    Icons.email,
                                     color: Colors.black,
                                   ),
                                   controller: cubit.emailController,
@@ -143,28 +144,51 @@ class LoginScreen extends StatelessWidget {
                                   textValidator: 'Please,enter correct email'))),
                       Positioned(
                           top: MediaQuery.of(context).size.height * .52,
-                          child: Container(
-                              padding: const EdgeInsets.fromLTRB(25, 0, 25, 15),
-                              height: cubit.height,
-                              width: MediaQuery.of(context).size.width * 1,
-                              child: dafaultFormField(
-                                label: 'Password',
-                                icon: const Icon(
-                                  Icons.lock,
-                                  color: Colors.black,
-                                ),
-                                controller: cubit.passController,
-                                textInputType: TextInputType.visiblePassword,
-                                textValidator: 'Please,enter Password',
-                                password: cubit.showPass,
-                                suffixIcon: IconButton(
-                                    icon:cubit.showPass?const Icon(Icons.visibility_off,color: Colors.black):const Icon(Icons.visibility,color: Colors.black),
-                                    onPressed: (){
-                                      cubit.showPassword();
-                                    }
-                                ),
+                          child: Column(
+                            children: [
+                              Container(
+                                  padding: const EdgeInsets.fromLTRB(25, 0, 25, 15),
+                                  height: cubit.height,
+                                  width: MediaQuery.of(context).size.width * 1,
+                                  child: dafaultFormField(
+                                    label: 'Password',
+                                    icon: const Icon(
+                                      Icons.lock,
+                                      color: Colors.black,
+                                    ),
+                                    controller: cubit.passController,
+                                    textInputType: TextInputType.visiblePassword,
+                                    textValidator: 'Please,enter Password',
+                                    password: cubit.showPass,
+                                    suffixIcon: IconButton(
+                                        icon:cubit.showPass?const Icon(Icons.visibility_off,color: Colors.black):const Icon(Icons.visibility,color: Colors.black),
+                                        onPressed: (){
+                                          cubit.showPassword();
+                                        }
+                                    ),
 
-                              ))),
+                                  ),
+                              ),
+                              InkWell(
+                                onTap: (){
+                                  navigateTo(context, const ForgetPasswordScreen());
+                                },
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: const [
+                                    Text(
+                                      'Forget password',
+                                    ),
+                                    Icon(
+                                       Icons.help,
+                                      size: 18.0,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                      ),
                       Positioned(
                         top: MediaQuery.of(context).size.height * .68,
                         left: MediaQuery.of(context).size.width * .23,

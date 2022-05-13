@@ -17,8 +17,8 @@ class LoginCubit extends Cubit<LoginStates>{
 
   static LoginCubit get(context) => BlocProvider.of(context);
 
-  var emailController=TextEditingController();
-  var passController=TextEditingController();
+  var emailController = TextEditingController();
+  var passController = TextEditingController();
   var loginKey = GlobalKey<FormState>();
   bool checkLogin=true;
 
@@ -40,34 +40,6 @@ class LoginCubit extends Cubit<LoginStates>{
 
   }
 
-  // LoginModel ?Model;
-  //
-  // void userLogin({
-  //   required String email,
-  //   required String pass,
-  //   context,
-  //  })
-  // {
-  //   DioHelper.postDate(url: 'auth/local/', data: {
-  //
-  //       "identifier": email,
-  //       "password": pass
-  //
-  //   }).then((value) {
-  //     Model=LoginModel.formJson(value.data);
-  //     print(value.statusMessage);
-  //     customToast('Login Success', Colors.green);
-  //     navigateTo(context, ContainerScreen());
-  //     emit(UserLoginSuccessState());
-  //   }).catchError((error){
-  //     print('Account and Password ');
-  //     customToast('Check Your Account or Password', Colors.red);
-  //
-  //     print('Error in Login is ${error.toString()}');
-  //     emit(UserLoginErrorState());
-  //   });
-  // }
-
   Future userLogin({
     required String email,
     required String pass,
@@ -84,6 +56,9 @@ class LoginCubit extends Cubit<LoginStates>{
         emit(UserLoginErrorState());
       });
   }
+
+
+
 
 
 }

@@ -6,6 +6,7 @@ import 'package:final_project/layoutes/homepage/home_bloc/app_cubit.dart';
 import 'package:final_project/layoutes/homepage/home_bloc/app_states.dart';
 import 'package:final_project/modules/register/registercubit/bloc.dart';
 import 'package:final_project/modules/register/registercubit/states.dart';
+import 'package:final_project/modules/register/set_profile_register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -25,7 +26,7 @@ class EmailVerified extends StatelessWidget {
         listener: (context,state){
 
         },
-      builder: (context,state){
+          builder: (context,state){
           var cubit=RegisterCubit.get(context);
           cubit.otpController.text=cubit.emailValue!;
           return Scaffold(
@@ -51,7 +52,8 @@ class EmailVerified extends StatelessWidget {
                       left:MediaQuery.of(context).size.width*.21,
                       child: Lottie.asset('assets/images/email.json',
                           height: 200
-                      ),),
+                      ),
+                    ),
                     Positioned(
                       top: 300,
                       left: MediaQuery.of(context).size.width*.27,
