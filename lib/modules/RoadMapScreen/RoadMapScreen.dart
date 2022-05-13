@@ -20,36 +20,6 @@ class RoadMapScreen extends StatelessWidget {
     ];
 
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: (){
-            Navigator.pop(context);
-          },
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Color.fromRGBO(11, 24, 82, .9),
-          ),
-        ),
-        title: Row(
-          children: const [
-            Icon(
-              Icons.android,
-              color: Color.fromRGBO(11, 24, 82, .9),
-            ),
-            SizedBox(
-              width: 10.0,
-            ),
-            Text(
-              'Android Road Map ',
-              style: TextStyle(
-                color: Color.fromRGBO(11, 24, 82, .9),
-                fontSize: 20.0,
-                fontWeight: FontWeight.w900,
-              ),
-            ),
-          ],
-        ),
-      ),
       body: Column(
         children: [
           const SizedBox(

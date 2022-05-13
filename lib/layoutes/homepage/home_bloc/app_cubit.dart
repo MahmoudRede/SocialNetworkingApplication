@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:final_project/models/analysisModel/analysis_model.dart';
+import 'package:final_project/modules/RoadMapScreen/RoadMapScreen.dart';
 import 'package:final_project/modules/groupsScreen/doctorGroup/group_doctor_screen.dart';
 import 'package:final_project/shared/local/dio_helper_analysis.dart';
 import 'package:final_project/shared/local/dio_helper_chat_bot.dart';
@@ -22,7 +23,6 @@ import 'package:final_project/modules/groupsScreen/group_screen.dart';
 import 'package:final_project/modules/homeScreen/home_screen.dart';
 import 'package:final_project/modules/materialsScreen/doctor_material_screen.dart';
 import 'package:final_project/modules/materialsScreen/student_material_screen.dart';
-import 'package:final_project/modules/settings/setting_screen.dart';
 import 'package:final_project/shared/local/cash_helper.dart';
 import 'package:final_project/shared/local/diohelper.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -81,15 +81,15 @@ class AppCubit extends Cubit<AppState> {
   List <Widget> studentScreens =[
     const HomeScreen(),
     const GroupScreen(),
-    DoctorMaterialScreen(),
-    const SettingScreen(),
+    StudentMaterialScreen(),
+    const RoadMapScreen(),
   ];
 
   List <Widget> doctorScreens =[
     const HomeScreen(),
     GroupDoctorScreen(),
     DoctorMaterialScreen(),
-    const SettingScreen(),
+    const RoadMapScreen(),
   ];
 
 
