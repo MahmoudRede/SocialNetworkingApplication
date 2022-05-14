@@ -35,6 +35,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import '../../../models/CommentModel.dart';
 import '../../../models/PostModel.dart';
+import '../../../models/complaintModel/complaint_model.dart';
 import '../../../models/userModel/user_model.dart';
 import '../../../shared/Componant/Constants.dart';
 
@@ -3190,6 +3191,52 @@ class AppCubit extends Cubit<AppState> {
     programmingField = value ;
     print(value);
     emit(SelectProgrammingFiled());
+  }
+
+  ComplaintModel? complaintModel;
+  void uploadComplaint({
+    String? title,
+    String? content,
+    String? time,
+  }){
+
+    complaintModel=ComplaintModel(title: title, content: content,time: time);
+    FirebaseFirestore.instance.
+    collection('Complaint').add(complaintModel!.toMap()).then((value) {
+
+      print(value.id);
+      emit(UploadComplaintSuccessState());
+    }).catchError((error){
+
+      print('Error is ${error.toString()}');
+      emit(UploadComplaintErrorState());
+    });
+
+
+  }
+
+  List<ComplaintModel> complaints=[];
+  void getComplaint(){
+
+    FirebaseFirestore.instance.
+    collection('Complaint').get().then((value) {
+
+      value.docs.forEach((element) {
+
+        complaints.add(ComplaintModel.fromFire(element.data()));
+        print(element.data()['title']);
+        print(complaints[0].title);
+
+
+      });
+      emit(GetComplaintSuccessState());
+    }).catchError((error){
+
+      print('Error is ${error.toString()}');
+      emit(GetComplaintErrorState());
+    });
+
+
   }
 
 }

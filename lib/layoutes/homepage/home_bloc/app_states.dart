@@ -26,6 +26,12 @@ class GetUserDataLoadingState extends AppState{}
 class GetUserDataSuccessState extends AppState{}
 class GetUserDataErrorState extends AppState{}
 
+class UploadComplaintSuccessState extends AppState{}
+class UploadComplaintErrorState extends AppState{}
+
+class GetComplaintSuccessState extends AppState{}
+class GetComplaintErrorState extends AppState{}
+
 class CreatePostLoadingState extends AppState {}
 class GetHomePostSuccessState extends AppState{}
 class GetHomePostErrorState extends AppState{}

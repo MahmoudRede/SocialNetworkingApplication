@@ -1,6 +1,9 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:final_project/constants/componts.dart';
 import 'package:final_project/modules/RoadMapScreen/BackEnd.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 
 import 'Android.dart';
 import 'Flutter.dart';
@@ -19,11 +22,44 @@ class RoadMapScreen extends StatelessWidget {
       'Back-End RoadMap ',
     ];
 
+    List  carouselImages =[
+
+      'assets/images/road2.json',
+      'assets/images/road1.json',
+      'assets/images/road3.json'
+
+    ];
     return Scaffold(
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          CarouselSlider(
+            items: carouselImages.map((e) {
+              return Lottie.asset(e);
+            }).toList(),
+            options: CarouselOptions(
+              height: 250,
+              autoPlay: true,
+              autoPlayCurve: Curves.fastOutSlowIn,
+              scrollDirection: Axis.horizontal,
+              viewportFraction: 1.0,
+
+            ),
+          ),
+
           const SizedBox(
-            height: 20.0,
+            height: 10.0,
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(18,0, 0, 10),
+            child: Text('Road Maps :',style: GoogleFonts.mada(
+              color:Colors.black,
+              fontWeight: FontWeight.w700,
+              fontSize: 20,
+            ),),
+          ),
+          const SizedBox(
+            height: 10.0,
           ),
           Expanded(
             child: ListView.separated(
@@ -76,7 +112,7 @@ Widget listViewItem (String title , int index , context){
           title,
           style: const TextStyle(
             color: Colors.white,
-            fontSize: 20.0,
+            fontSize: 17.0,
             fontWeight: FontWeight.w900,
           ),
         ),

@@ -1,15 +1,14 @@
-
-
 import 'package:final_project/constants/componts.dart';
 import 'package:final_project/constants/constants.dart';
 import 'package:final_project/modules/login/ForgetPassword.dart';
 import 'package:final_project/modules/login/logincubit/states.dart';
 import 'package:final_project/modules/register/register_screen.dart';
 import 'package:final_project/modules/register/registercubit/states.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
+import 'package:line_icons/line_icons.dart';
 import '../../layoutes/homepage/container_screen.dart';
 import '../../layoutes/homepage/home_bloc/app_cubit.dart';
 import '../../shared/local/cash_helper.dart';
@@ -136,7 +135,7 @@ class LoginScreen extends StatelessWidget {
                               child: dafaultFormField(
                                   label: 'Email',
                                   icon: const Icon(
-                                    Icons.email,
+                                    LineIcons.user,
                                     color: Colors.black,
                                   ),
                                   controller: cubit.emailController,
@@ -153,7 +152,7 @@ class LoginScreen extends StatelessWidget {
                                   child: dafaultFormField(
                                     label: 'Password',
                                     icon: const Icon(
-                                      Icons.lock,
+                                      LineIcons.lock,
                                       color: Colors.black,
                                     ),
                                     controller: cubit.passController,
@@ -169,26 +168,34 @@ class LoginScreen extends StatelessWidget {
 
                                   ),
                               ),
-                              InkWell(
-                                onTap: (){
-                                  navigateTo(context, const ForgetPasswordScreen());
-                                },
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: const [
-                                    Text(
-                                      'Forget password',
-                                    ),
-                                    Icon(
-                                       Icons.help,
-                                      size: 18.0,
-                                    ),
-                                  ],
-                                ),
-                              ),
+
                             ],
                           ),
                       ),
+                      Positioned(
+                        right: 30,
+                        top: MediaQuery.of(context).size.height * .60,
+
+                        child: InkWell(
+                          onTap: (){
+                            navigateTo(context, const ForgetPasswordScreen());
+                          },
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children:  [
+                              Text(
+                                'Forget password',style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey[700]
+                              ),
+                              ),
+
+                            ],
+                          ),
+                        ),
+                      ),
+
                       Positioned(
                         top: MediaQuery.of(context).size.height * .68,
                         left: MediaQuery.of(context).size.width * .23,

@@ -7,6 +7,7 @@ import 'package:final_project/modules/BotScreen/BotScreen.dart';
 import 'package:final_project/modules/BotScreen/botContainer.dart';
 import 'package:final_project/modules/BotScreen/botDesign.dart';
 import 'package:final_project/modules/analysisScreen/analysis_screen.dart';
+import 'package:final_project/modules/complaintScreen/complaint_screen.dart';
 import 'package:final_project/modules/messageScreen/message_screen.dart';
 import 'package:final_project/modules/profile/profile.dart';
 import 'package:flutter/material.dart';
@@ -108,7 +109,7 @@ class DrawerScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             CircleAvatar(
-                              radius: 36,
+                              radius: 34,
                               backgroundColor: mainColorLayout,
                               child: InkWell(
                                 onTap: (){
@@ -127,7 +128,7 @@ class DrawerScreen extends StatelessWidget {
                               children: [
                                 Text(
                                     'BFCAI Community',
-                                    style: GoogleFonts.lato(
+                                    style: GoogleFonts.aBeeZee(
                                         color: Colors.white,
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold)
@@ -152,24 +153,29 @@ class DrawerScreen extends StatelessWidget {
                             itemCount: drawerItems.length
                         ),
                       ),
-                      SizedBox(height: MediaQuery.of(context).size.height*.14,),
+                      SizedBox(height: MediaQuery.of(context).size.height*.12,),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(17, 15, 17, 0),
-                        child: Row(
-                          children: [
-                            const Icon(
-                              Icons.lightbulb_outline,
-                              color: Colors.white,
-                            ),
-                            const SizedBox(
-                              width: 5.0,
-                            ),
-                            Text('Help Center',style: GoogleFonts.lato(
-                                fontSize: 15,
+                        child: InkWell(
+                          onTap: (){
+                            navigateTo(context, ComplaintScreen());
+                          },
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.lightbulb_outline,
                                 color: Colors.white,
-                            ),
-                            ),
-                          ],
+                              ),
+                              const SizedBox(
+                                width: 5.0,
+                              ),
+                              Text('Help Center',style: GoogleFonts.lato(
+                                  fontSize: 15,
+                                  color: Colors.white,
+                              ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
