@@ -8,6 +8,7 @@ import 'package:final_project/modules/chatScreen/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 
@@ -66,7 +67,7 @@ class _GroupTabState extends State<GroupTab> {
     );
   }
 
-  Widget messageRowItem(String groupName , context,String userName,index)
+  Widget messageRowItem(String groupName , context, String userName,index)
   {
     return InkWell(
       onTap: (){
@@ -97,22 +98,6 @@ class _GroupTabState extends State<GroupTab> {
                     ],
 
                   ),
-                  // Padding(
-                  //   padding: const EdgeInsets.all(3.0),
-                  //   child: Stack(
-                  //     alignment: AlignmentDirectional.center,
-                  //     children: const[
-                  //       CircleAvatar(
-                  //         backgroundColor: Colors.white,
-                  //         radius: 9.0,
-                  //       ),
-                  //       CircleAvatar(
-                  //         backgroundColor: Colors.amber,
-                  //         radius: 7.0,
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
                 ],
               ),
             ),
@@ -131,11 +116,11 @@ class _GroupTabState extends State<GroupTab> {
                     ),
                   ),
                   const SizedBox(
-                    height: 0.2,
+                    height: 2,
                   ),
-                  const Text(
-                    'Hello , this is Message Screen',
-                    style: TextStyle(
+                  Text(
+                    'Hello, Start Chatting in ${groupName}',
+                    style: const TextStyle(
                       fontSize: 14.0,
                     ),
                     maxLines: 1,
@@ -148,25 +133,12 @@ class _GroupTabState extends State<GroupTab> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
               children:  [
-                const Text(
-                  '3m ago',
-                  style: TextStyle(
+                Text(
+                  DateFormat('hh:mm aaa').format(DateTime.now()).toString(),
+                  style: const TextStyle(
                     fontSize: 15.0,
-
                   ),
                 ),
-                const SizedBox(
-                  height: 5.0,
-                ),
-                CircleAvatar(
-                  backgroundColor: mainColorLayout,
-                  radius: 13,
-                  child: Text('7',style: GoogleFonts.lato(
-                    color: Colors.white,
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold
-                  ),),
-                )
               ],
             ),
           ],

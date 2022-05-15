@@ -1,10 +1,15 @@
+import 'package:final_project/constants/constants.dart';
 import 'package:final_project/models/userModel/user_model.dart';
+import 'package:final_project/modules/chatScreen/ChatBloc/cubit.dart';
+import 'package:final_project/modules/chatScreen/ChatBloc/state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:socket_io_client/socket_io_client.dart';
 
 import '../../models/SingleChat/MessageModel.dart';
+import '../../shared/Componant/Constants.dart';
 
 class SingleChat extends StatefulWidget {
   final UserModel? sourceModel;
@@ -18,191 +23,210 @@ class SingleChat extends StatefulWidget {
 class _SingleChatState extends State<SingleChat> {
   IO.Socket? socket;
   TextEditingController messageController = TextEditingController();
-  ScrollController scrollController = ScrollController();
-  List<MessageModel> messages = [];
-  List <dynamic> serverMessages = [];
 
-  @override
-  void initState() {
-    super.initState();
-    connect();
-  }
-
-  void connect() {
-    socket = IO.io("http://192.168.1.10:5000",  OptionBuilder()
-        .setTransports(['websocket'])
-        .build(),
-    );
-
-    socket!.connect();
-    getMessages(widget.sourceModel!.uId! , widget.receiverModel!.uId!);
-    socket!.emit("signin", widget.sourceModel!.uId);
-
-    socket!.onConnect((data) {
-      print("Connected");
-      socket!.on("message", (msg) {
-        print(msg);
-        setMessage("destination", msg["message"]);
-        scrollController.animateTo(scrollController.position.maxScrollExtent,
-            duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
-      });
-
-      socket!.on("get_messages" , (data){
-        //print("get messages function : ${data['messages'].toString()}");
-        serverMessages = data['messages'];
-        serverMessages.forEach((element) {
-          if(element['sender'] == widget.sourceModel!.uId){
-            setMessage("source", element["message"]);
-          } else{
-            setMessage("destination", element["message"]);
-          }
-        });
-      });
-    });
-    print(socket!.connected);
-  }
-
-  void sendMessage(String message, String sourceId, String targetId , String time) {
-    setMessage("source", message);
-    socket!.emit("message",
-        {"message": message, "sourceId": sourceId, "targetId": targetId , "date" : time});
-  }
-
-  void setMessage(String type, String message) {
-    MessageModel messageModel = MessageModel(
-        type: type,
-        message: message,
-        time: DateTime.now().toString().substring(10, 16));
-    print(messages);
-
-    setState(() {
-      messages.add(messageModel);
-    });
-  }
-
-  void getMessages (String sourceId, String targetId) {
-    socket!.emit("get_messages" , {"sourceId": sourceId, "targetId": targetId});
-  }
+  // List<MessageModel> messages = [];
+  // //List <dynamic> serverMessages = [];
+  //
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   connect();
+  // }
+  //
+  // @override
+  // void dispose() {
+  //   // TODO: implement dispose
+  //   socket!.emit('disconnect');
+  //   super.dispose();
+  // }
+  //
+  // void connect() {
+  //   socket = IO.io("http://192.168.1.10:5000",  OptionBuilder()
+  //       .setTransports(['websocket'])
+  //       .build(),
+  //   );
+  //
+  //   socket!.connect();
+  //   getMessages(widget.sourceModel!.uId! , widget.receiverModel!.uId!);
+  //   socket!.emit("signin", widget.sourceModel!.uId);
+  //
+  //   socket!.onConnect((data) {
+  //     print("Connected");
+  //     socket!.on("message", (msg) {
+  //       print(msg);
+  //       setMessage("destination", msg["message"]);
+  //       scrollController.animateTo(scrollController.position.maxScrollExtent,
+  //           duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
+  //     });
+  //
+  //     socket!.on("get_messages" , (data){
+  //       //print("get messages function : ${data['messages'].toString()}");
+  //       if (data != null ) serverMessages = data['messages'];
+  //       serverMessages.forEach((element) {
+  //         if(element['sender'] == widget.sourceModel!.uId){
+  //           setMessage("source", element["message"]);
+  //         } else{
+  //           setMessage("destination", element["message"]);
+  //         }
+  //       });
+  //     });
+  //   });
+  //   print(socket!.connected);
+  // }
+  //
+  // void sendMessage(String message, String sourceId, String targetId , String time) {
+  //   setMessage("source", message);
+  //   socket!.emit("message",
+  //       {"message": message, "sourceId": sourceId, "targetId": targetId , "date" : time});
+  // }
+  //
+  // void setMessage(String type, String message) {
+  //   MessageModel messageModel = MessageModel(
+  //       type: type,
+  //       message: message,
+  //       time: DateTime.now().toString().substring(10, 16));
+  //   print(messages);
+  //
+  //   setState(() {
+  //     messages.add(messageModel);
+  //   });
+  // }
+  //
+  // void getMessages (String sourceId, String targetId) {
+  //   socket!.emit("get_messages" , {"sourceId": sourceId, "targetId": targetId});
+  // }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        titleSpacing: 0.0,
-        backgroundColor: Colors.blue,
-        title: Row(
-          children: [
-            const SizedBox(
-              width: 15.0,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  widget.receiverModel!.fullName!,
-                  style: const TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w900,
-                    height: 1.3,
+    return BlocProvider(
+      create: (BuildContext context) => ChatCubit()..connect(widget.sourceModel!.uId!, widget.receiverModel!.uId!)..getMessages(widget.sourceModel!.uId!, widget.receiverModel!.uId!),
+      child: BlocConsumer <ChatCubit , ChatStates>(
+        listener: (context , state) {},
+        builder: (context , state) {
+          var cubit = ChatCubit.get(context);
+          if(cubit.scrollController.hasClients){
+            cubit.scrollController.animateTo(cubit.scrollController.position.maxScrollExtent, duration: Duration(milliseconds: 300), curve: Curves.linear);
+          }
+          return  Scaffold(
+            appBar: AppBar(
+              titleSpacing: 0.0,
+              backgroundColor: mainColorLayout,
+              title: Row(
+                children: [
+                  const SizedBox(
+                    width: 15.0,
                   ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        widget.receiverModel!.fullName!,
+                        style: const TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.w900,
+                          height: 1.3,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              leading: IconButton(
+                onPressed: (){
+                  Navigator.pop(context);
+                },
+                icon: const Icon(
+                  Icons.arrow_back,
+                  color: Colors.white,
                 ),
-              ],
+              ),
             ),
-          ],
-        ),
-        leading: IconButton(
-          onPressed: (){
-            Navigator.pop(context);
-          },
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          ),
-        ),
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            flex: 9,
-            child: ListView.builder(
-              physics: const BouncingScrollPhysics(),
-              itemBuilder: (context, index) {
-                if (index == messages.length) {
-                  return Container(
-                    height: 70,
-                  );
-                }
-                if (messages[index].type == "source"){
-                  return myMessageItem(true , messages[index].message!);
-                }
-                else{
-                  return myMessageItem(false , messages[index].message!);
-                }
-              },
-              shrinkWrap: true,
-              controller: scrollController,
-              itemCount: messages.length + 1,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
-            child: Row(
+            body: Column(
               children: [
                 Expanded(
-                  child: Container(
-                    height: 45.0,
-                    alignment: Alignment.centerLeft,
-                    padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      color: Colors.grey[200],
-                    ),
-                    child: TextField(
-                      decoration: const InputDecoration(
-                        hintText: 'Type a message here....',
-                        hintStyle: TextStyle(
-                            fontSize: 15
-                        ),
-                        border: InputBorder.none,
-                      ),
-                      controller: messageController,
-                    ),
+                  flex: 9,
+                  child: ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      if (index == cubit.messages.length) {
+                        return Container(
+                          height: 70,
+                        );
+                      }
+                      if (cubit.messages[index].type == "source"){
+                        return myMessageItem(true , cubit.messages[index].message!);
+                      }
+                      else{
+                        return myMessageItem(false , cubit.messages[index].message!);
+                      }
+                    },
+                    shrinkWrap: true,
+                    controller: cubit.scrollController,
+                    itemCount: cubit.messages.length + 1,
                   ),
                 ),
-                Container(
-                  margin: const EdgeInsets.only(left: 5),
-                  height: 40,
-                  width: 40,
-                  decoration: BoxDecoration(
-                      color: Colors.lightBlue,
-                      borderRadius: BorderRadius.circular(10)
-                  ),
-                  child: IconButton(
-                    onPressed: (){
-                      scrollController.animateTo(
-                        scrollController.position.maxScrollExtent,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeOut,
-                      );
-                      sendMessage(
-                        messageController.text,
-                        widget.sourceModel!.uId!,
-                        widget.receiverModel!.uId!,
-                        DateFormat('hh:mm aaa').format(DateTime.now()).toString(),
-                      );
-                      messageController.clear();
-                    },
-                    icon: const Icon(
-                      Icons.send_rounded,
-                      color: Colors.white,
-                      size: 22,
-                    ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          height: 45.0,
+                          alignment: Alignment.centerLeft,
+                          padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            color: Colors.grey[200],
+                          ),
+                          child: TextField(
+                            decoration: const InputDecoration(
+                              hintText: 'Type a message here....',
+                              hintStyle: TextStyle(
+                                  fontSize: 15
+                              ),
+                              border: InputBorder.none,
+                            ),
+                            controller: messageController,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(left: 5),
+                        height: 45,
+                        width: 45,
+                        decoration: BoxDecoration(
+                            color: mainColorLayout,
+                            borderRadius: BorderRadius.circular(10)
+                        ),
+                        child: IconButton(
+                          onPressed: (){
+                            cubit.scrollController.animateTo(
+                              cubit.scrollController.position.maxScrollExtent,
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.easeOut,
+                            );
+                            cubit.sendMessage(
+                              messageController.text,
+                              widget.sourceModel!.uId!,
+                              widget.receiverModel!.uId!,
+                              DateFormat('hh:mm aaa').format(DateTime.now()).toString(),
+                            );
+                            messageController.clear();
+                          },
+                          icon: const Icon(
+                            Icons.send_rounded,
+                            color: Colors.white,
+                            size: 22,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }

@@ -13,8 +13,8 @@ class ComplaintScreen extends StatelessWidget {
   ComplaintScreen({Key? key}) : super(key: key);
 
 
-  var titleController=TextEditingController();
-  var descriptionController=TextEditingController();
+  var titleController = TextEditingController();
+  var descriptionController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,20 +98,21 @@ class ComplaintScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 6,),
                     Padding(
-                        padding: const EdgeInsets.fromLTRB(18, 10, 5, 10),
+                        padding: const EdgeInsets.fromLTRB(22, 10, 5, 10),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
                               height: 110,
                               width: 300,
-                              child: Text('Help Center , You can add your complain or report for some thing you saw it have to handled'
-                                  ', or behavior don\'t like you, and you can add notes to improve your community',
+                              child: Text('Help Center , a Space that can you add your complaints or report for something'
+                                  ' you saw it have to handle, or behavior doesn\'t like it, and you can add notes'
+                                  ' to improve your community.',
                                 style: GoogleFonts.lato(
                                   fontSize: 17,
                                   color: Colors.white,
                                 ),
-
+                                textAlign: TextAlign.center,
                               ),
                             ),
                           ],
@@ -123,7 +124,6 @@ class ComplaintScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 6,),
-
               Padding(
                 padding: const EdgeInsets.fromLTRB(15, 10, 0, 0),
                 child: Align(
@@ -161,8 +161,6 @@ class ComplaintScreen extends StatelessWidget {
                       fontSize: 19,
                       color: mainColorLayout
                   ),
-
-
                 ),
               ),
               const SizedBox(height: 20,),
@@ -216,9 +214,6 @@ class ComplaintScreen extends StatelessWidget {
                   ),),
                 ),
               ),
-
-
-
             ],
           ),
 

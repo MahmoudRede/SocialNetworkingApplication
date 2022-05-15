@@ -39,7 +39,7 @@ class NewPost extends StatelessWidget {
                   if(AppCubit.get(context).uploadedPostImage == null)
                     {
                       AppCubit.get(context).createPost(
-                          postDate: '${DateFormat('EEE, d MMM y     hh:mm aaa').format(DateTime.now())}',
+                          postDate: DateFormat('yyyy-MM-dd hh:mm aaa').format(DateTime.now()).toString(),
                           postText : postTextController.text,
                       );
                     }

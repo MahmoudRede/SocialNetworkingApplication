@@ -36,96 +36,6 @@ class FriendsTab extends StatelessWidget {
     );
   }
 
-  // Widget messageRowItem(UserModel model , context)
-  // {
-  //   return InkWell(
-  //     onTap: (){
-  //       navigateTo(context, SingleChat(sourceModel: AppCubit.get(context).userModel!, receiverModel: model));
-  //     },
-  //     child: Padding(
-  //       padding: const EdgeInsets.symmetric(horizontal: 10.0),
-  //       child: Row(
-  //         children: [
-  //           Padding(
-  //             padding: const EdgeInsets.all(5.0),
-  //             child: Stack(
-  //               alignment: AlignmentDirectional.bottomEnd,
-  //               children: [
-  //                 Stack(
-  //                   alignment: AlignmentDirectional.center,
-  //                   children:  [
-  //                     const CircleAvatar(
-  //                       backgroundColor: Colors.lightBlue,
-  //                       radius: 30.0,
-  //                     ),
-  //                     CircleAvatar(
-  //                       backgroundImage: NetworkImage('${model.image}'),
-  //                       radius: 28.0,
-  //                     ),
-  //                   ],
-  //
-  //                 ),
-  //                 Padding(
-  //                   padding: const EdgeInsets.all(3.0),
-  //                   child: Stack(
-  //                     alignment: AlignmentDirectional.center,
-  //                     children: const[
-  //                       CircleAvatar(
-  //                         backgroundColor: Colors.white,
-  //                         radius: 9.0,
-  //                       ),
-  //                       CircleAvatar(
-  //                         backgroundColor: Colors.amber,
-  //                         radius: 7.0,
-  //                       ),
-  //                     ],
-  //                   ),
-  //                 ),
-  //               ],
-  //             ),
-  //           ),
-  //           const SizedBox(
-  //             width: 10.0,
-  //           ),
-  //           Expanded(
-  //             child: Column(
-  //               crossAxisAlignment: CrossAxisAlignment.start,
-  //               children: [
-  //                 Text(
-  //                   '${model.fullName}',
-  //                   style: GoogleFonts.lato(
-  //                     fontSize: 18.0,
-  //                     fontWeight: FontWeight.bold,
-  //                   ),
-  //                 ),
-  //                 const SizedBox(
-  //                   height: 5.0,
-  //                 ),
-  //                 Text(
-  //                   '${DateFormat('EEE, d MMM y     hh:mm aaa').format(DateTime.now())}',
-  //                   style: const TextStyle(
-  //                     fontSize: 14.0,
-  //                   ),
-  //                   maxLines: 1,
-  //                   overflow: TextOverflow.ellipsis,
-  //                 ),
-  //               ],
-  //             ),
-  //           ),
-  //           IconButton(
-  //               onPressed: (){},
-  //               icon: const Icon(
-  //                 Icons.call,
-  //                 size: 25.0,
-  //                 color: Colors.lightBlue,
-  //               ),
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
-
   Widget messageRowItem(UserModel model , context)
   {
     return InkWell(
@@ -190,9 +100,9 @@ class FriendsTab extends StatelessWidget {
                   const SizedBox(
                     height: 0.2,
                   ),
-                  const Text(
-                    'Hello , this is Message Screen',
-                    style: TextStyle(
+                  Text(
+                    'Start Chatting with ${model.fullName}',
+                    style: const TextStyle(
                       fontSize: 14.0,
                     ),
                     maxLines: 1,
@@ -216,10 +126,10 @@ class FriendsTab extends StatelessWidget {
                   height: 2.0,
                 ),
                 Text(
-                  'status',
+                  'Online',
                   style: TextStyle(
-                    fontSize: 16.0,
-                    color: Colors.grey,
+                    fontSize: 14.0,
+                    color: Colors.green,
                   ),
                 ),
               ],

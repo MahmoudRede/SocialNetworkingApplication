@@ -232,7 +232,7 @@ Widget postItem(PostModel model ,index  , context){
             children:  [
               CircleAvatar(
                 radius: 26,
-                backgroundImage: NetworkImage(model.userImage!)!,
+                backgroundImage: NetworkImage(model.userImage!),
               ),
               const SizedBox(width: 8,),
               Column(

@@ -43,7 +43,7 @@ class _ChatScreenState extends State<ChatScreen> {
         //print("get messages function : ${data['messages'].toString()}");
         groupMessages = data['messages'];
         groupMessages.forEach((element) {
-          chatController.chat_message.add(element);
+          chatController.chat_message.add(Message(message: element['message'], sentByMe: element['sender'], time: element['time'], roomName: roomName));
         });
         print('group message : ${groupMessages.toString()}');
       });
@@ -99,7 +99,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     physics: const BouncingScrollPhysics(),
                     itemBuilder: (context, index) {
                       var currentIndex = chatController.chat_message[index];
-                      return myMessageItem(currentIndex.sentByMe == AppCubit.get(context).userModel!.uId, currentIndex.message!);
+                      return myMessageItem(currentIndex.sentByMe == AppCubit.get(context).userModel!.fullName, currentIndex.message! , currentIndex.sentByMe! , currentIndex.time!);
                     },
                     itemCount: chatController.chat_message.length,
                   ),
@@ -162,7 +162,7 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
 
-  Widget myMessageItem(bool sentByMe, String message) {
+  Widget myMessageItem(bool sentByMe, String message , String userName , String time) {
     print(sentByMe);
     return Align(
       alignment: sentByMe
@@ -188,9 +188,9 @@ class _ChatScreenState extends State<ChatScreen> {
             mainAxisAlignment: sentByMe ? MainAxisAlignment.start : MainAxisAlignment.end,
             crossAxisAlignment: sentByMe ? CrossAxisAlignment.start : CrossAxisAlignment.end,
             children: [
-              const Text(
-                'Mohamed Mamdouh',
-                style: TextStyle(
+               Text(
+                userName,
+                style: const TextStyle(
                   fontSize: 12.0,
                   color: Colors.white,
                 ),
@@ -210,7 +210,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 height: 2,
               ),
               Text(
-                DateFormat('hh:mm aaa').format(DateTime.now()).toString(),
+                time,
                 style: const TextStyle(
                   fontSize: 10.0,
                   color: Colors.white,
@@ -226,7 +226,7 @@ class _ChatScreenState extends State<ChatScreen> {
   void messageFunction(String text , String time) {
     var messageJson = {
       "message": text,
-      'sentByMe': AppCubit.get(context).userModel!.uId,
+      'sentByMe': AppCubit.get(context).userModel!.fullName,
       'roomName': roomName,
       'time' : time,
     };

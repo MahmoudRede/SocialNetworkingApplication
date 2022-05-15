@@ -4,6 +4,7 @@ import 'package:final_project/layoutes/homepage/home_bloc/app_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:line_icons/line_icons.dart';
 
 class AddPost extends StatelessWidget {
@@ -44,11 +45,10 @@ class AddPost extends StatelessWidget {
                 radius: 20,
                 child: IconButton(
                   onPressed: (){
-                    var dateNow = DateTime.now();
                     if(AppCubit.get(context).uploadedPostGroupImage == null)
                     {
                       AppCubit.get(context).createGroupPost(
-                        postDate: dateNow.toString(),
+                        postDate: DateFormat('yyyy-MM-dd hh:mm aaa').format(DateTime.now()).toString(),
                         postText : postController.text,
                         context: context
                       );
