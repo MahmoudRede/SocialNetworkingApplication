@@ -1,3 +1,4 @@
+import 'package:final_project/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:final_project/layoutes/homepage/home_bloc/app_cubit.dart';
@@ -19,46 +20,52 @@ class NewPost extends StatelessWidget {
               onPressed: (){
                 Navigator.pop(context);
               },
-              icon: const Icon(
+              icon:  Icon(
                 Icons.arrow_back,
-                color: Colors.blue,
+                color: mainColorLayout,
               ),
             ),
-            title: const Text(
+            title: Text(
                 'Create Post',
               style: TextStyle(
-                color: Colors.blue,
+                color: mainColorLayout,
                 fontWeight: FontWeight.bold,
               ),
             ),
             centerTitle: true,
             actions: [
-              TextButton(
-                onPressed: (){
-                  var dateNow = DateTime.now();
-                  if(AppCubit.get(context).uploadedPostImage == null)
-                    {
-                      AppCubit.get(context).createPost(
+                CircleAvatar(
+                  backgroundColor: mainColorLayout,
+                  radius: 20,
+                  child: IconButton(
+                    onPressed: (){
+                      var dateNow = DateTime.now();
+                      if(AppCubit.get(context).uploadedPostImage == null)
+                      {
+                        AppCubit.get(context).createPost(
                           postDate: DateFormat('yyyy-MM-dd hh:mm aaa').format(DateTime.now()).toString(),
                           postText : postTextController.text,
-                      );
-                    }
-                  else{
-                    AppCubit.get(context).createPostWithImage(
-                        postDate: '${DateFormat('EEE, d MMM y     hh:mm aaa').format(DateTime.now())}',
-                        postText : postTextController.text,
-                    );
-                  }
+                        );
+                      }
+                      else{
+                        AppCubit.get(context).createPostWithImage(
+                          postDate: '${DateFormat('EEE, d MMM y     hh:mm aaa').format(DateTime.now())}',
+                          postText : postTextController.text,
+                        );
+                      }
 
-                },
-                child: const Text(
-                  'Post',
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w900,
+                    },
+                    icon: const Icon(
+                      Icons.done,
+                      size: 22,
+                      color: Colors.white,
+                    ),
+
                   ),
                 ),
-              ),
+                const SizedBox(width: 10,),
+
+
             ],
           ),
           body: Padding(
@@ -126,41 +133,43 @@ class NewPost extends StatelessWidget {
                   height: 30.0,
                 ),
                 if(AppCubit.get(context).uploadedPostImage != null)
-                  Stack(
-                  alignment: AlignmentDirectional.topEnd,
-                  children: [
-                    Container(
-                      width: double.infinity,
-                      child: Card(
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                        child: Image(
-                          image: FileImage(AppCubit.get(context).uploadedPostImage!),
-                          fit: BoxFit.scaleDown,
-                          height: 200.0,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: 10.0,
-                        left: 10.0,
-                        right: 10.0,
-                      ),
-                      child: CircleAvatar(
-                        radius: 20.0,
-                        child: IconButton(
-                          onPressed: () {
-                            AppCubit.get(context).removePostImage();
-                          },
-                          icon: const Icon(
-                            Icons.close,
-                            size: 18.0,
+                  Expanded(
+                    child: Stack(
+                    alignment: AlignmentDirectional.topEnd,
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        child: Card(
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                          child: Image(
+                            image: FileImage(AppCubit.get(context).uploadedPostImage!),
+                            fit: BoxFit.scaleDown,
+                            height: 200.0,
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top: 10.0,
+                          left: 10.0,
+                          right: 10.0,
+                        ),
+                        child: CircleAvatar(
+                          radius: 20.0,
+                          child: IconButton(
+                            onPressed: () {
+                              AppCubit.get(context).removePostImage();
+                            },
+                            icon: const Icon(
+                              Icons.close,
+                              size: 18.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                 ),
+                  ),
                 const SizedBox(
                   height: 20.0,
                 ),
@@ -187,17 +196,7 @@ class NewPost extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Expanded(
-                      child: TextButton(
-                        onPressed: (){},
-                        child: const Text(
-                          'Add File',
-                          style: TextStyle(
-                            fontSize: 16.0,
-                          ),
-                        ),
-                      ),
-                    ),
+                    
                   ],
                 ),
               ],

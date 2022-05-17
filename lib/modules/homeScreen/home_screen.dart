@@ -25,7 +25,6 @@ class HomeScreen extends StatelessWidget {
               List <PostModel> homePosts = AppCubit.get(context).homePost;
                 return Builder(
                     builder: (context) {
-                      AppCubit.get(context).homePost;
                       return Column(
                         children: [
                           const SizedBox(
@@ -238,13 +237,28 @@ Widget postItem(PostModel model ,index  , context){
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    model.username!,
-                    style: GoogleFonts.lato(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        model.username!,
+                        style: GoogleFonts.lato(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(width: 3,),
+                      CircleAvatar(
+                        radius: 8,
+                        backgroundColor: mainColorLayout,
+                        child: const Icon(
+                          Icons.done,
+                          color: Colors.white,
+                          size: 12,
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 3,),
                   Text(
@@ -255,6 +269,7 @@ Widget postItem(PostModel model ,index  , context){
                     ),),
                 ],
               ),
+
               const Spacer(),
               IconButton(
                   onPressed: (){},

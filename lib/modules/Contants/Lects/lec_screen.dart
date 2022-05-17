@@ -59,7 +59,7 @@ class LecScreen extends StatelessWidget {
                                 onPressed: (){
                                   cubit.getPdf(title:titleScreen,index: i).then((value) {
 
-                                    // navigateTo(context, ContantScreen(materialName: titleScreen));
+                                    navigateTo(context, ContantScreen(materialName: titleScreen));
                                   });
                                 },
                                 child: Text('Add Lecture',style: GoogleFonts.lato(
@@ -96,7 +96,7 @@ class LecScreen extends StatelessWidget {
             body: Container(
               child: Column(
                 children: [
-                  cubit.isUpload==false?
+                  cubit.isUpload==false ||  cubit.lecture.isEmpty?
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
@@ -107,7 +107,7 @@ class LecScreen extends StatelessWidget {
                         crossAxisSpacing: 15,
                         mainAxisSpacing: 15,
                         childAspectRatio: 1/.8,
-                        children: List.generate(15,
+                        children: List.generate(16,
                                 (index) => Container(
                               decoration: BoxDecoration(
                                 color: Colors.grey[300],

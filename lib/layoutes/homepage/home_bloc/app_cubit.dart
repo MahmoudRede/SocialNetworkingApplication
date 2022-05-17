@@ -227,17 +227,20 @@ class AppCubit extends Cubit<AppState> {
     FirebaseFirestore.instance
         .collection('homePost').orderBy('postDate')
         .snapshots().listen((event) {
+         homePost = [];
       event.docs.forEach((element) {
-            element.reference.collection('comments').get().then((value) {
+
+        element.reference.collection('comments').get().then((value) {
               homeCommentsNumber.add(value.docs.length);
               homePostsId.add(element.id);
               homePost.add(PostModel.fromFire(element.data()));
+
             });
             element.reference.collection('likes').snapshots().listen((event) {
               homeLikes.add(event.docs.length);
             });
           });
-          print(homePost[0].username);
+          print(' Length is ${homePost.length}');
           emit(GetHomePostSuccessState());
     });
   }
@@ -264,6 +267,8 @@ class AppCubit extends Cubit<AppState> {
           .doc('grade1')
           .collection('posts').orderBy('postDate')
           .snapshots().listen((event) {
+        groupPosts=[];
+
         event.docs.forEach((element) {
           element.reference.collection('comments').get().then((value) {
             groupCommentsNumber.add(value.docs.length);
@@ -282,6 +287,8 @@ class AppCubit extends Cubit<AppState> {
           .doc('grade2')
           .collection('posts').orderBy('postDate')
           .snapshots().listen((event) {
+        groupPosts=[];
+
         event.docs.forEach((element) {
           element.reference.collection('comments').get().then((value) {
             groupCommentsNumber.add(value.docs.length);
@@ -301,6 +308,8 @@ class AppCubit extends Cubit<AppState> {
           .doc('grade3')
           .collection('posts').orderBy('postDate')
           .snapshots().listen((event) {
+        groupPosts=[];
+
         event.docs.forEach((element) {
           element.reference.collection('comments').get().then((value) {
             groupCommentsNumber.add(value.docs.length);
@@ -319,6 +328,8 @@ class AppCubit extends Cubit<AppState> {
           .doc('grade4')
           .collection('posts').orderBy('postDate')
           .snapshots().listen((event) {
+        groupPosts=[];
+
         event.docs.forEach((element) {
           element.reference.collection('comments').get().then((value) {
             groupCommentsNumber.add(value.docs.length);
@@ -2876,6 +2887,8 @@ class AppCubit extends Cubit<AppState> {
         }
       }
 
+      getMaterial();
+      getDoctorMaterial();
     }
     else{
       if(departmentDropMenu=='General'){
@@ -2915,6 +2928,7 @@ class AppCubit extends Cubit<AppState> {
             emit(UploadPDFSuccessState());
           });
         }
+
       }
       else if(departmentDropMenu=='Medical'){
         if(gradeDropMenu=='First'){
@@ -3027,7 +3041,10 @@ class AppCubit extends Cubit<AppState> {
           });
         }
       }
-
+      getMaterial();
+      getDoctorMaterial();
+      getDoctorSection();
+      getSection();
     }
 
     emit(GetPDFState());

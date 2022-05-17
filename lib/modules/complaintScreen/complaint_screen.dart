@@ -63,7 +63,7 @@ class ComplaintScreen extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(7),
-                    color: mainColorLayout,
+                    color: Colors.white,
 
                 ),
                 margin: const EdgeInsets.fromLTRB(12, 7, 12, 0),
@@ -71,69 +71,73 @@ class ComplaintScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.fromLTRB(5, 5, 5, 0),
-                      width: double.infinity,
-                      child: Material(
-
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50)
-                        ),
-                        child: Padding(
-                            padding: const EdgeInsets.fromLTRB(10, 10, 5, 10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-
-                              children: [
-                                Text('Note', style: GoogleFonts.padauk(
-                                    fontSize: 22,
-                                    color: mainColorLayout,
-                                    fontWeight: FontWeight.w900
-                                )),
-
-                              ],
-                            )
-                        ),
+                    const SizedBox(height: 15,),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children:[
+                          Padding(
+                            padding: const EdgeInsets.only(top: 3.0),
+                            child: Icon(
+                              Icons.star,
+                              size: 18.0,
+                              color: mainColorLayout,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 8.0,
+                          ),
+                          Expanded(
+                            child: Text(
+                              'Help Center , a Space that can you add your complaints or report for something'
+                            ' you saw it have to handle, or behavior doesn\'t like it, and you can add notes'
+                            ' to improve your community.',
+                              style: TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.bold,
+                                color: mainColorLayout
+                              ),
+                              maxLines: 4,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(height: 6,),
-                    Padding(
-                        padding: const EdgeInsets.fromLTRB(22, 10, 5, 10),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              height: 110,
-                              width: 300,
-                              child: Text('Help Center , a Space that can you add your complaints or report for something'
-                                  ' you saw it have to handle, or behavior doesn\'t like it, and you can add notes'
-                                  ' to improve your community.',
-                                style: GoogleFonts.lato(
-                                  fontSize: 17,
-                                  color: Colors.white,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ],
-                        )
 
-                    ),
                     const SizedBox(height: 2,),
                   ],
                 ),
               ),
-              const SizedBox(height: 6,),
+              const SizedBox(height: 12,),
               Padding(
-                padding: const EdgeInsets.fromLTRB(15, 10, 0, 0),
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Text('Add Complaint :',
-                    style: GoogleFonts.aBeeZee(
-                      fontSize: 20,
-                      color: mainColorLayout,
-                      fontWeight: FontWeight.bold
-                    )),
+                padding: const EdgeInsets.fromLTRB(15, 0,0, 0),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 3.0),
+                      child: Icon(
+                        Icons.star,
+                        size: 18.0,
+                        color: mainColorLayout,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 0,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(15, 10, 0, 0),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Text('Add Complaint :',
+                          style: GoogleFonts.lato(
+                            fontSize: 18,
+                            color: mainColorLayout,
+                            fontWeight: FontWeight.bold
+                          )),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(height: 5,),

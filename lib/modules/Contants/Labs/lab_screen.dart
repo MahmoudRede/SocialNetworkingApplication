@@ -1,6 +1,7 @@
 import 'package:final_project/constants/constants.dart';
 import 'package:final_project/layoutes/homepage/container_screen.dart';
 import 'package:final_project/modules/Contants/contant_screen.dart';
+import 'package:final_project/modules/materialsScreen/materials_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -55,7 +56,7 @@ class LabScreen extends StatelessWidget {
                               child: TextButton(
                                 onPressed: (){
                                    cubit.getPdf(title:titleScreen,index: i).then((value) {
-                                    // navigateTo(context, ContantScreen(materialName: titleScreen));
+                                     navigateTo(context,MaterialsScreen());
                                   });
                                 },
                                 child: Text('Add Section',style: GoogleFonts.lato(
@@ -86,7 +87,7 @@ class LabScreen extends StatelessWidget {
             body: Container(
               child: Column(
                 children: [
-                  cubit.isUpload==false?
+                  cubit.isUpload==false ||  cubit.section.isEmpty?
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
