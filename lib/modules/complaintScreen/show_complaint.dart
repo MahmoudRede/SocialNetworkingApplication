@@ -12,12 +12,9 @@ class ShowComplaints extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit,AppState>(
-
-      listener: (context,state){
-
-      },
+      listener: (context,state){},
       builder: (context,state){
-        var cubit=AppCubit.get(context);
+        var cubit = AppCubit.get(context);
         return Scaffold(
           appBar: AppBar(
             backgroundColor: mainColorLayout,

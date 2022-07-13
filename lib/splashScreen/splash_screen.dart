@@ -3,6 +3,7 @@ import 'package:final_project/constants/componts.dart';
 import 'package:final_project/constants/constants.dart';
 import 'package:final_project/layoutes/homepage/container_screen.dart';
 import 'package:final_project/modules/login/login_screen.dart';
+import 'package:final_project/modules/onboardingScreen/onboarding_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
 
     Future.delayed(const Duration(seconds: 6),(){
-      return navigateAndFinish(context, LoginScreen());
+      return navigateAndFinish(context, OnBoardingScreen());
     });
 
     super.initState();

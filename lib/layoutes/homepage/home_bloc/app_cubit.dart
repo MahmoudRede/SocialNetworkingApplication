@@ -50,6 +50,7 @@ class AppCubit extends Cubit<AppState> {
   double scale = 1;
   bool factor = false;
 
+
   void doSmallScreen() {
     if (factor == false) {
       xOffcet = 220;
@@ -227,14 +228,11 @@ class AppCubit extends Cubit<AppState> {
     FirebaseFirestore.instance
         .collection('homePost').orderBy('postDate')
         .snapshots().listen((event) {
-         homePost = [];
       event.docs.forEach((element) {
-
         element.reference.collection('comments').get().then((value) {
               homeCommentsNumber.add(value.docs.length);
               homePostsId.add(element.id);
               homePost.add(PostModel.fromFire(element.data()));
-
             });
             element.reference.collection('likes').snapshots().listen((event) {
               homeLikes.add(event.docs.length);
@@ -513,7 +511,6 @@ class AppCubit extends Cubit<AppState> {
   }
   getGroupPostsDoctor();
   emit(SelectedValueSuccessState());
-
   }
 
 
@@ -743,7 +740,6 @@ class AppCubit extends Cubit<AppState> {
       }
     }
   }
-
 
   void getMaterialTitles ()
   {
@@ -994,6 +990,7 @@ class AppCubit extends Cubit<AppState> {
 
 
   void likeHomePost(String postId) {
+    homeLikes = [];
     FirebaseFirestore.instance
         .collection('homePost')
         .doc(postId)
@@ -1039,6 +1036,7 @@ class AppCubit extends Cubit<AppState> {
 
   bool isLike = false;
   void likeClick (String postId){
+    homeLikes = [];
     FirebaseFirestore.instance
         .collection('homePost')
         .doc(postId)
@@ -3234,7 +3232,7 @@ class AppCubit extends Cubit<AppState> {
 
   List<ComplaintModel> complaints=[];
   void getComplaint(){
-
+    complaints = [];
     FirebaseFirestore.instance.
     collection('Complaint').get().then((value) {
 

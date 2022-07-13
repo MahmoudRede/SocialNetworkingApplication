@@ -21,18 +21,21 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     [
       OnBoardingModel(
           image: 'assets/images/onboarding1.json',
-          title: 'onBoarding Screen 1',
-          body: 'onBoarding body 1',
+          title: 'BFCAI Community',
+          body: 'An application to help students in their university life'
+              ' as it benefits them in more than one way, such as obtaining the materials they study',
       ),
       OnBoardingModel(
         image: 'assets/images/onboarding2.json',
         title: 'COMMUNICATE',
-        body: 'Room Chat contain groups for materials and allow to communicate with friends',
+        body: 'A platform to collect all the student needs of communication, student Groups ,'
+            ' easy of communication with the professor and assistants when you need them.',
       ),
       OnBoardingModel(
         image: 'assets/images/onboarding3.json',
-        title: 'onBoarding Screen 3',
-        body: 'onBoarding body 3',
+        title: 'Chat-bot',
+        body: 'Chat-bot you can ask it any questions about university or any problem'
+            ' that faces you and it can present all solution to fix your problem.',
       ),
     ];
 
@@ -158,7 +161,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                height: MediaQuery.of(context).size.height*0.02,
+                height: MediaQuery.of(context).size.height*0.06,
               ),
               Text(
                 model.title,

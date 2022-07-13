@@ -10,7 +10,7 @@ class DioHelper{
 
     dio = Dio(
        BaseOptions(
-         baseUrl: 'http://192.168.1.12:1337/api/',
+         baseUrl: 'https://cc38-197-121-61-72.eu.ngrok.io',
          receiveDataWhenStatusError: true,
        ) ,
     );
@@ -28,13 +28,12 @@ class DioHelper{
   }
 
   static Future<Response> postDate({
-    required String url,
     Map <String,dynamic> ?query,
     required Map<String,dynamic> data,
   })
   async{
 
-    return await dio!.post(url,queryParameters: query,data: data) ;
+    return await dio!.post("",queryParameters: query,data: data) ;
 
   }
 

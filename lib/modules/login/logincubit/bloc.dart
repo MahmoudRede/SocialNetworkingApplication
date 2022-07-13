@@ -20,7 +20,7 @@ class LoginCubit extends Cubit<LoginStates>{
   var emailController = TextEditingController();
   var passController = TextEditingController();
   var loginKey = GlobalKey<FormState>();
-  bool checkLogin=true;
+  bool checkLogin = true;
 
   var height=70.0;
   void formValidate(context){

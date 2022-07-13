@@ -210,7 +210,9 @@ class ComplaintScreen extends StatelessWidget {
                   ),
                   onPressed: (){
                     AppCubit.get(context).uploadComplaint(title: titleController.text,content: descriptionController.text,time: DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now()));
-
+                    customToast("Complaint sent", Colors.green);
+                    titleController.text = "";
+                    descriptionController.text = "";
                   },
                   child: const Text('Add',style: TextStyle(
                       color: Colors.white,

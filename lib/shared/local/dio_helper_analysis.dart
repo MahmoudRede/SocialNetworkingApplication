@@ -9,7 +9,7 @@ class DioHelperAnalysis{
 
     dio = Dio(
       BaseOptions(
-        baseUrl: 'https://a54f-197-121-123-63.eu.ngrok.io',
+        baseUrl: 'https://1a14-197-121-61-72.eu.ngrok.io',
         receiveDataWhenStatusError: true,
         headers: {
           'Content-Type':'application/Json'

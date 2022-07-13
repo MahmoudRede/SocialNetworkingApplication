@@ -1,5 +1,3 @@
-
-
 class UserModel{
 
      String? uId;
@@ -31,7 +29,6 @@ class UserModel{
      });
 
   UserModel.formJson( Map <String , dynamic> json ){
-
     username = json['username'];
     email=json['email'];
     uId=json['uId'];

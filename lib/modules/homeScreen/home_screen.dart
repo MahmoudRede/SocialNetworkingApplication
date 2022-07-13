@@ -199,7 +199,7 @@ class HomeScreen extends StatelessWidget {
                           Expanded(
                             child:ListView.separated(
                               physics: const BouncingScrollPhysics(),
-                              itemBuilder: (context,index)=>postItem( homePosts[index] , index , context),
+                              itemBuilder: (context,index)=> postItem( homePosts[index] , index , context),
                               separatorBuilder: (context,index){
                                 return  const SizedBox(height: 10,);
                               },

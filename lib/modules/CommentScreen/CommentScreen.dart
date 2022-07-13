@@ -1,8 +1,10 @@
 import 'package:conditional_builder/conditional_builder.dart';
+import 'package:final_project/constants/componts.dart';
 import 'package:final_project/constants/constants.dart';
 import 'package:final_project/layoutes/homepage/home_bloc/app_cubit.dart';
 import 'package:final_project/layoutes/homepage/home_bloc/app_states.dart';
 import 'package:final_project/models/CommentModel.dart';
+import 'package:final_project/shared/local/diohelper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -132,13 +134,30 @@ class CommentScreen extends StatelessWidget {
                             onPressed: (){
                               if(route == 'home')
                                 {
-                                  AppCubit.get(context).commentHomePost(postId!, commentController.text);
+                                  DioHelper.postDate( data: {
+                                    "data" : commentController.text,
+                                  }).then((value) {
+                                    if(value.data['response'] == "comment is normal"){
+                                      print(value.data['response']);
+                                      AppCubit.get(context).commentHomePost(postId!, commentController.text);
+                                    }else{
+                                      customToast("Comment not Allow", Colors.red);
+                                    }
+                                  });
                                 }
                               else if (route == 'group')
                                 {
-                                  AppCubit.get(context).commentGroupPost(postId!, commentController.text);
+                                  DioHelper.postDate( data: {
+                                    "data" : commentController.text,
+                                  }).then((value) {
+                                    if(value.data['response'] == "comment is normal"){
+                                      print(value.data['response']);
+                                      AppCubit.get(context).commentGroupPost(postId!, commentController.text);
+                                    }else{
+                                      customToast("Comment not Allow", Colors.red);
+                                    }
+                                  });
                                 }
-                              commentController.text = '';
                             },
                             icon: const Icon(
                               Icons.send_rounded,

@@ -12,6 +12,7 @@ import 'package:final_project/modules/register/email_verified.dart';
 import 'package:final_project/modules/register/registercubit/states.dart';
 import 'package:final_project/modules/register/set_profile_register_screen.dart';
 import 'package:final_project/modules/register/student_register_screen.dart';
+import 'package:final_project/shared/Componant/Constants.dart';
 import 'package:final_project/shared/local/cash_helper.dart';
 import 'package:final_project/shared/local/diohelper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -23,17 +24,22 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 
 class RegisterCubit extends Cubit<RegisterStates>{
+
   RegisterCubit() : super(InitialState());
 
   static RegisterCubit get(context) => BlocProvider.of(context);
 
-  var emailController=TextEditingController();
+  var emailController = TextEditingController();
   var passController=TextEditingController();
   var usernameController=TextEditingController();
   var conPassController=TextEditingController();
   var startDateController=TextEditingController();
   var setNameController=TextEditingController();
   var setBioController=TextEditingController();
+
+  var updateNameController = TextEditingController();
+  var updateBioController = TextEditingController();
+  var updatePasswordController=TextEditingController();
 
   var otpController=TextEditingController();
   var otp1Controller=TextEditingController();
@@ -44,12 +50,12 @@ class RegisterCubit extends Cubit<RegisterStates>{
   var otp6Controller=TextEditingController();
 
 
-  String? usernameValue=CashHelper.getUserName(key: 'username') ;
-  String ?emailValue=CashHelper.getUserName(key: 'email');
-  String ?passValue=CashHelper.getUserName(key: 'pass');
-  String ?startAtValue=CashHelper.getUserName(key: 'startAt');
-  String ?gradeValue=CashHelper.getUserName(key: 'grade');
-  String ?departmentValue=CashHelper.getUserName(key: 'department');
+  String? usernameValue = CashHelper.getUserName(key: 'username') ;
+  String? emailValue = CashHelper.getUserName(key: 'email');
+  String? passValue = CashHelper.getUserName(key: 'pass');
+  String? startAtValue = CashHelper.getUserName(key: 'startAt');
+  String? gradeValue = CashHelper.getUserName(key: 'grade');
+  String? departmentValue = CashHelper.getUserName(key: 'department');
 
   String? imagePath;
   var registerKey = GlobalKey<FormState>();
@@ -57,7 +63,50 @@ class RegisterCubit extends Cubit<RegisterStates>{
   int ?countValue=0;
   bool isVerify=false;
 
+  var settingFormKey = GlobalKey<FormState>();
 
+  UserModel? userModel;
+
+  Future <void> getUserData() async{
+    emit(GetUserDataLoadingState());
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(uId)
+        .get().then((value) {
+      userModel = UserModel.formJson(value.data()!);
+      print('user Data : ${value.data()}');
+      emit(GetUserDataSuccessState());
+    }).catchError((error) {
+      print('Error when get userData : ${error.toString()}');
+      emit(GetUserDataErrorState());
+    });
+  }
+
+  void updatePassword ({
+    required String newPassword,
+    required var context,
+  }){
+    final currentUser = FirebaseAuth.instance.currentUser!;
+    currentUser.updatePassword(newPassword).then((value) {
+      FirebaseAuth.instance.signOut();
+      navigateAndFinish(context, LoginScreen());
+    }).catchError((error){
+      print('Error when Update password : ${error.toString()}');
+    });
+  }
+
+  void updateUserData ({required UserModel model}){
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(uId)
+        .update(model.toMap()).then((value) {
+          print('update user date successful');
+          emit(UpdateUserDataSuccessState());
+    }).catchError((error){
+      print('Error when update user data : ${error.toString()}');
+      emit(UpdateUserDataErrorState());
+    });
+  }
 
   var height=70.0;
   Future formValidate(context,widget)async{
@@ -231,48 +280,6 @@ class RegisterCubit extends Cubit<RegisterStates>{
     }
     emit(ChangeButtonState());
   }
-
-
-  // RegisterModel ?Model;
-  //
-  // void userRegister({
-  //   required String username,
-  //   required String email,
-  //   required String password,
-  //   required String start_at,
-  //   required String grade,
-  //   required String depertment,
-  //
-  //   String ?image,
-  //   required String fullname,
-  //   required String bio,
-  //   context,
-  // })
-  // {
-  //   DioHelper.postDate(url:'auth/local/register', data: {
-  //
-  //     "username": username,
-  //     "email": email,
-  //     "password": password,
-  //     "start_at": start_at,
-  //     "grade": grade,
-  //     "depertment": depertment,
-  //     "image":image,
-  //     "bio": bio,
-  //     "fullname": fullname
-  //
-  //   }).then((value) {
-  //     Model=RegisterModel.fromJson(value.data);
-  //     print(value.data);
-  //     emit(UserRegisterSuccessState());
-  //   }).catchError((error){
-  //
-  //     print('Error in Register is ${error.toString()}');
-  //     emit(UserRegisterErrorState());
-  //   });
-  // }
-  //
-
 
   Future userRegister({
     required String username,
@@ -606,8 +613,6 @@ class RegisterCubit extends Cubit<RegisterStates>{
     required String uId,
     required bool isDoctor,
     String? specialist,
-
-
   })
   {
 
@@ -655,8 +660,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
     required bool isDoctor,
     String? specialist,
 
-  })
-  {
+  }) {
 
     UserModel model=UserModel(
         username: username,
@@ -701,9 +705,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
     required String uId,
     required bool isDoctor,
     String? specialist,
-
-  })
-  {
+  }) {
 
     UserModel model=UserModel(
         username: username,
@@ -748,12 +750,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
     required String uId,
     required bool isDoctor,
     String? specialist,
-
-
-
-  })
-  {
-
+  }) {
     UserModel model=UserModel(
         username: username,
         email: email,
@@ -789,7 +786,6 @@ class RegisterCubit extends Cubit<RegisterStates>{
   bool ?checkRegister=true;
 
   Future uploadUserImage(){
-
     emit(UploadUserProfileImageLoadingState());
     return firebase_storage.FirebaseStorage.instance.ref()
     .child('users/${Uri.file(profileImage!.path).pathSegments.last}')

@@ -1,10 +1,6 @@
-abstract class RegisterStates {
+abstract class RegisterStates {}
 
-}
-
-class InitialState extends RegisterStates{
-
-}
+class InitialState extends RegisterStates{}
 
 class ValidateState extends RegisterStates{
 
@@ -37,6 +33,13 @@ class ChangeDropDownValeState extends RegisterStates {}
 class UploadProfileImageSuccessState extends RegisterStates{}
 class UploadProfileImageErrorState extends RegisterStates{}
 class ChangeButtonState extends RegisterStates {}
+
+class GetUserDataLoadingState extends RegisterStates {}
+class GetUserDataSuccessState extends RegisterStates {}
+class GetUserDataErrorState extends RegisterStates {}
+
+class UpdateUserDataSuccessState extends RegisterStates {}
+class UpdateUserDataErrorState extends RegisterStates {}
 
 class UserRegisterSuccessState extends RegisterStates{
 

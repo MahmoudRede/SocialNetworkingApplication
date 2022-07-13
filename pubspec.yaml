@@ -65,8 +65,9 @@ dependencies:
   email_auth:
   record_mp3:
   restart_app: ^1.0.0
-
-
+  path_provider:
+  open_file: ^3.2.1
+  flutter_downloader: ^1.8.0+1
 
 
 

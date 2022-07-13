@@ -9,7 +9,7 @@ class DioHelperChatBot{
 
     dio = Dio(
       BaseOptions(
-          baseUrl:'https://b291-197-121-127-67.eu.ngrok.io',
+          baseUrl:'https://42ef-197-121-61-72.eu.ngrok.io',
           receiveDataWhenStatusError: true,
           headers: {
             'Content-Type':'application/Json'
